@@ -1,4 +1,4 @@
-const CACHE = 'casa-nueva-v1';
+const CACHE = 'casa-nueva-v2';
 const ASSETS = [
   '/camarones5048/',
   '/camarones5048/index.html',
