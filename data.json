@@ -1,0 +1,54 @@
+{
+  "gastos": [
+    {
+      "id": 1,
+      "desc": "Compra de la casa",
+      "categoria": "Adquisición",
+      "ambiente": "General",
+      "monto": 0,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-04-18",
+      "notas": "",
+      "vinculadoA": null
+    },
+    {
+      "id": 2,
+      "desc": "Honorarios inmobiliaria",
+      "categoria": "Honorarios",
+      "ambiente": "General",
+      "monto": 0,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-04-18",
+      "notas": "",
+      "vinculadoA": null
+    },
+    {
+      "id": 3,
+      "desc": "Honorarios escribanía",
+      "categoria": "Honorarios",
+      "ambiente": "General",
+      "monto": 0,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-04-18",
+      "notas": "",
+      "vinculadoA": null
+    },
+    {
+      "id": 4,
+      "desc": "Cotización arquitecto",
+      "categoria": "Profesionales",
+      "ambiente": "General",
+      "monto": 0,
+      "estado": "cotizado",
+      "proveedor": "",
+      "fecha": "2026-04-18",
+      "notas": "Estimado inicial",
+      "vinculadoA": null
+    }
+  ],
+  "presupuesto": 190000,
+  "nextId": 5
+}
