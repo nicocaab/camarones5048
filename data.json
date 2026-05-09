@@ -70,7 +70,7 @@
       "proveedor": "",
       "fecha": "2026-05-09",
       "notas": "50% del total",
-      "vinculadoA": null
+      "vinculadoA": 1
     },
     {
       "id": 7,
