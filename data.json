@@ -37,18 +37,6 @@
       "vinculadoA": null
     },
     {
-      "id": 4,
-      "desc": "Obra",
-      "ambiente": "General",
-      "categoria": "Construcción",
-      "monto": 42000,
-      "estado": "cotizado",
-      "proveedor": "",
-      "fecha": "2026-04-18",
-      "notas": "Estimado inicial",
-      "vinculadoA": null
-    },
-    {
       "id": 5,
       "desc": "Honorarios Arquitecto",
       "ambiente": "General",
@@ -58,6 +46,18 @@
       "proveedor": "",
       "fecha": "2026-05-09",
       "notas": "",
+      "vinculadoA": null
+    },
+    {
+      "id": 4,
+      "desc": "Obra",
+      "ambiente": "General",
+      "categoria": "Construcción",
+      "monto": 42000,
+      "estado": "cotizado",
+      "proveedor": "",
+      "fecha": "2026-04-18",
+      "notas": "Estimado inicial",
       "vinculadoA": null
     },
     {
