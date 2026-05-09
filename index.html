@@ -53,6 +53,7 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      overscroll-behavior-y: none;
     }
 
     /* ── BG ORBS ── */
@@ -916,7 +917,7 @@
 
     /* ── DOCS REDESIGN ── */
     .docs-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .docs-cats { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .docs-cats { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; flex: 1; }
     .docs-add-group { display: flex; gap: 6px; flex-shrink: 0; }
     .doc-cat-btn {
       background: var(--surface); border: 1px solid var(--border);
@@ -1002,6 +1003,8 @@
       /* Filters: columna */
       .filters { flex-direction: column; align-items: stretch; gap: 6px; }
       .filters select, .filters input { width: 100%; }
+      .act-toolbar .filters { flex-direction: row; overflow-x: auto; }
+      .act-toolbar .filters select { width: auto; }
       #tab-cotizaciones > div:first-child { flex-direction: column; gap: 8px; }
       #tab-cotizaciones .btn-cyan { width: 100%; justify-content: center; }
 
@@ -1091,7 +1094,7 @@
 <div id="sideMenu">
   <div class="menu-top">
     <div class="menu-brand">
-      <div class="menu-brand-icon-fallback">🏠</div>
+      <div class="menu-brand-icon"><img src="icon.svg" alt="Buga House" /></div>
       <span class="menu-brand-name">Buga House</span>
     </div>
     <button class="menu-close" onclick="closeMenu()">✕</button>
@@ -1122,9 +1125,6 @@
   <!-- Acciones -->
   <div class="menu-section">
     <div class="menu-section-lbl">Datos</div>
-    <button class="menu-action-btn" onclick="saveData();closeMenu()">
-      <span class="m-icon">☁️</span> Guardar en GitHub
-    </button>
     <label class="menu-action-btn" style="cursor:pointer;">
       <span class="m-icon">⬆️</span> Importar JSON
       <input type="file" accept=".json" onchange="importJSON(event)" style="display:none;" />
@@ -1146,19 +1146,11 @@
 <!-- HEADER -->
 <header>
   <div class="header-left" onclick="showTab('resumen')" style="cursor:pointer;">
-    <div class="header-icon-fallback">🏠</div>
+    <div class="header-icon"><img src="icon.svg" alt="Buga House" /></div>
     <span class="header-title">Buga House</span>
   </div>
   <div class="header-right">
     <span class="sync-status" id="syncStatus"></span>
-    <!-- Save -->
-    <button class="icon-btn save-btn" onclick="saveData()" title="Guardar en GitHub">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
-        <polyline points="17 21 17 13 7 13 7 21"/>
-        <polyline points="7 3 7 8 15 8"/>
-      </svg>
-    </button>
     <!-- Hamburger -->
     <button class="ham-btn" id="hamBtn" onclick="toggleMenu()" aria-label="Menú">
       <div class="ham-line"></div>
@@ -1259,15 +1251,15 @@
     <div class="docs-top">
       <div class="docs-cats">
         <button class="doc-cat-btn active" data-cat="todos" onclick="setDocCat('todos',this)">Todos</button>
-        <button class="doc-cat-btn" data-cat="planos" onclick="setDocCat('planos',this)">📐 Planos</button>
-        <button class="doc-cat-btn" data-cat="fotos" onclick="setDocCat('fotos',this)">🖼️ Fotos</button>
-        <button class="doc-cat-btn" data-cat="avances" onclick="setDocCat('avances',this)">🔨 Avances</button>
-        <button class="doc-cat-btn" data-cat="referencias" onclick="setDocCat('referencias',this)">📌 Referencias</button>
-        <button class="doc-cat-btn" data-cat="renders" onclick="setDocCat('renders',this)">✨ Renders</button>
-        <button class="doc-cat-btn" data-cat="planillas" onclick="setDocCat('planillas',this)">📊 Planillas</button>
-        <button class="doc-cat-btn" data-cat="documentos" onclick="setDocCat('documentos',this)">📄 Documentos</button>
-        <button class="doc-cat-btn" data-cat="videos" onclick="setDocCat('videos',this)">🎬 Videos</button>
-        <button class="doc-cat-btn" data-cat="otro" onclick="setDocCat('otro',this)">📁 Otro</button>
+        <button class="doc-cat-btn" data-cat="planos" onclick="setDocCat('planos',this)">Planos</button>
+        <button class="doc-cat-btn" data-cat="fotos" onclick="setDocCat('fotos',this)">Fotos</button>
+        <button class="doc-cat-btn" data-cat="avances" onclick="setDocCat('avances',this)">Avances</button>
+        <button class="doc-cat-btn" data-cat="referencias" onclick="setDocCat('referencias',this)">Referencias</button>
+        <button class="doc-cat-btn" data-cat="renders" onclick="setDocCat('renders',this)">Renders</button>
+        <button class="doc-cat-btn" data-cat="planillas" onclick="setDocCat('planillas',this)">Planillas</button>
+        <button class="doc-cat-btn" data-cat="documentos" onclick="setDocCat('documentos',this)">Documentos</button>
+        <button class="doc-cat-btn" data-cat="videos" onclick="setDocCat('videos',this)">Videos</button>
+        <button class="doc-cat-btn" data-cat="otro" onclick="setDocCat('otro',this)">Otro</button>
       </div>
       <div class="docs-add-group">
         <button class="btn btn-ghost btn-sm" onclick="openDocAdd('url')" title="Agregar desde URL">🔗</button>
@@ -1293,7 +1285,6 @@
     <!-- Sub-nav por ambiente -->
     <div class="mb-nav">
       <button class="mb-nav-btn active" onclick="showMbSection('dormitorio',this)">🛏️ Dormitorio</button>
-      <button class="mb-nav-btn" onclick="showMbSection('boveda',this)">🧱 Bóveda ladrillo</button>
       <button class="mb-nav-btn" onclick="showMbSection('patio',this)">🌿 Patio Interno</button>
       <button class="mb-nav-btn" onclick="showMbSection('cocina',this)">🍳 Cocina</button>
       <button class="mb-nav-btn" onclick="showMbSection('bano',this)">🚿 Baño</button>
@@ -1377,10 +1368,7 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=barndominium+bedroom+wood+beams+black+windows" target="_blank">barndominium bedroom wood beams black windows</a>
         </div>
       </div>
-    </div>
-
-    <!-- ─── BÓVEDA LADRILLO ─── -->
-      <!-- Links pegados -->
+            <!-- Links guardados -->
       <div class="mb-links-section">
         <div class="mb-sec-label">Links guardados</div>
         <div class="mb-link-input-row">
@@ -1389,120 +1377,9 @@
         </div>
         <div class="mb-links-grid" id="mbLinks-dormitorio"></div>
       </div>
-    
-    <div class="mb-section" id="mb-boveda">
-      <div class="mb-header" id="mbHero-boveda">
-      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('boveda',this)"/></label></div>
-        <div class="mb-room-tag">Casa Nueva · Habitación · Techo de ladrillo a la vista</div>
-        <h2>La <em>bóveda</em><br>que define el espacio</h2>
-        <p class="mb-header-sub">El techo de ladrillo a la vista es el elemento arquitectónico más potente de la habitación. No compite — todo lo demás se organiza en función de él, dejándolo respirar.</p>
-        <div class="mb-meta">
-          <div class="mb-meta-item"><div class="mb-meta-label">Elemento clave</div><div class="mb-meta-val">Cielorraso ladrillo visto (bóveda o plana)</div></div>
-          <div class="mb-meta-item"><div class="mb-meta-label">Temperatura</div><div class="mb-meta-val">Cálida · Cruda · Acogedora</div></div>
-          <div class="mb-meta-item"><div class="mb-meta-label">Referencias</div><div class="mb-meta-val">Por construir — te damos el punto de partida</div></div>
-        </div>
-      </div>
-
-      <div class="mb-sec">
-        <div class="mb-sec-label">Direcciones de estilo</div>
-        <div class="mb-styles-row">
-          <div class="mb-style-card">
-            <div class="mb-style-num">1</div>
-            <div class="mb-style-name">Bóveda de Cañón · Loft Histórico</div>
-            <div class="mb-style-desc">El techo curvo de ladrillo visto es la estrella. Las paredes van en blanco o revoque fino para no saturar. Piso de madera oscura, cama baja, sábanas en lino neutro. La iluminación cuelga de la curva del arco — Edison filamento o apliques de hierro negro sobre las paredes.</div>
-            <div class="mb-style-tags"><span class="mb-tag">Bóveda de cañón</span><span class="mb-tag">Ladrillo original</span><span class="mb-tag">Paredes blancas</span><span class="mb-tag">Edison lights</span><span class="mb-tag">Piso madera oscura</span></div>
-          </div>
-          <div class="mb-style-card">
-            <div class="mb-style-num">2</div>
-            <div class="mb-style-name">Techo Plano Expuesto · Rústico Contemporáneo</div>
-            <div class="mb-style-desc">El cielorraso plano con ladrillo a la vista (sin revocar) da calidez sin dramatismo. Se complementa con vigas de madera recuperada que refuerzan la horizontalidad. Iluminación empotrada o rieles industriales, textiles tierra y verde oscuro como acentos de color.</div>
-            <div class="mb-style-tags"><span class="mb-tag">Techo plano expuesto</span><span class="mb-tag">Vigas recuperadas</span><span class="mb-tag">Riel industrial</span><span class="mb-tag">Textiles tierra</span><span class="mb-tag">Verde oscuro acento</span></div>
-          </div>
-        </div>
-        <div class="mb-quote">
-          <div class="mb-quote-text">"Con un techo de ladrillo a la vista, la regla es sencilla: dejalo ser el protagonista. El resto — paredes, muebles, textiles — habla en voz baja."</div>
-        </div>
-      </div>
-
-      <!-- Concept cards (sin refs todavía — construimos el lenguaje visual) -->
-      <div class="mb-sec">
-        <div class="mb-sec-label">Conceptos visuales · punto de partida</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:4px;">
-          <div style="border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#3d2b1f 0%,#6b4a36 40%,#b5674a 100%);padding:28px 22px;min-height:160px;display:flex;flex-direction:column;justify-content:flex-end;">
-            <div style="font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Dirección 1</div>
-            <div style="font-weight:700;font-size:15px;color:#fff;margin-bottom:4px;">Bóveda + blanco</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);">Ladrillo terracota vs paredes blancas · contraste limpio · Edison colgante</div>
-          </div>
-          <div style="border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#1a1410 0%,#2c1f14 40%,#5c3d28 100%);padding:28px 22px;min-height:160px;display:flex;flex-direction:column;justify-content:flex-end;">
-            <div style="font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Versión oscura</div>
-            <div style="font-weight:700;font-size:15px;color:#fff;margin-bottom:4px;">Techo ladrillo + paredes oscuras</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);">El ambiente se vuelve cueva cálida · muy dramático · requiere buena iluminación</div>
-          </div>
-          <div style="border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#2d2520 0%,#5c4a38 40%,#a07850 70%,#c4956a 100%);padding:28px 22px;min-height:160px;display:flex;flex-direction:column;justify-content:flex-end;">
-            <div style="font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Dirección 2</div>
-            <div style="font-weight:700;font-size:15px;color:#fff;margin-bottom:4px;">Ladrillo + vigas madera</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);">Techo plano con vigas horizontales · rústico contemporáneo · tierra + caramel</div>
-          </div>
-          <div style="border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#1c2018 0%,#2d3828 40%,#4a5c40 80%,#6b7c5a 100%);padding:28px 22px;min-height:160px;display:flex;flex-direction:column;justify-content:flex-end;">
-            <div style="font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Acento verde</div>
-            <div style="font-weight:700;font-size:15px;color:#fff;margin-bottom:4px;">Ladrillo + verde bosque</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);">Verde oscuro en pared de frente al techo ladrillo · combinación inesperada · muy rica</div>
-          </div>
-        </div>
-        <div style="margin-top:12px;padding:12px 16px;background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.1);border-radius:8px;font-size:12px;color:var(--text-muted);">
-          💡 <strong style="color:var(--text-sec);">Próximo paso:</strong> usá los links de Pinterest de abajo para empezar a guardar imágenes reales y vamos armando la galería juntos.
-        </div>
-      </div>
-
-      <div class="mb-sec">
-        <div class="mb-sec-label">Paleta de colores</div>
-        <div class="mb-palette">
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#b5674a;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Ladrillo rojizo</div><div class="mb-swatch-role">Techo · elemento protagonista</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#c4956a;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Ladrillo arenoso</div><div class="mb-swatch-role">Alternativa más cálida</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#f2ece4;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Blanco crema</div><div class="mb-swatch-role">Paredes · deja respirar el ladrillo</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#3d2b1f;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Madera oscura</div><div class="mb-swatch-role">Piso · ancla el espacio</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#1e1e1e;border:1px solid rgba(255,255,255,.12);"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Hierro negro</div><div class="mb-swatch-role">Aberturas · iluminación</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#d4c4b0;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Lino natural</div><div class="mb-swatch-role">Textiles · suaviza lo crudo</div></div></div>
-          <div class="mb-swatch"><div class="mb-swatch-color" style="background:#4a5c40;"></div><div class="mb-swatch-info"><div class="mb-swatch-name">Verde bosque</div><div class="mb-swatch-role">Acento — una pared o plantas</div></div></div>
-        </div>
-      </div>
-
-      <div class="mb-sec">
-        <div class="mb-sec-label">Claves de diseño para el techo ladrillo</div>
-        <div class="mb-materiales-grid">
-          <div class="mb-material-card"><div class="mb-material-icon">🧱</div><div class="mb-material-name">El ladrillo manda</div><div class="mb-material-desc">Si el techo es de ladrillo visto, las paredes van simples: blanco, crema o un color que no compita. Nunca ladrillo en pared Y techo — eso satura.</div><div class="mb-material-note">★ Regla de oro</div></div>
-          <div class="mb-material-card"><div class="mb-material-icon">💡</div><div class="mb-material-name">Iluminación rasante</div><div class="mb-material-desc">Apliques de pared o spots de riel que bañen el techo en diagonal resaltan la textura del ladrillo. Evitar downlights directos que lo aplanan. Temperatura 2700K.</div><div class="mb-material-note">★ Clave de materialidad</div></div>
-          <div class="mb-material-card"><div class="mb-material-icon">🪵</div><div class="mb-material-name">Vigas de madera</div><div class="mb-material-desc">Vigas de madera recuperada que corran paralelas o perpendiculares dan escala y calidez. En bóveda de cañón, los arcos son suficientes — sin vigas.</div><div class="mb-material-note">Solo en techo plano</div></div>
-          <div class="mb-material-card"><div class="mb-material-icon">🛏</div><div class="mb-material-name">Cama baja</div><div class="mb-material-desc">Cuanto más alto el protagonismo del techo, más baja la cama. Plataforma de madera o tatami. El ojo sube al ladrillo sin obstáculos.</div><div class="mb-material-note">Composición vertical</div></div>
-          <div class="mb-material-card"><div class="mb-material-icon">🧵</div><div class="mb-material-name">Textiles que suavizan</div><div class="mb-material-desc">Lino lavado, lana, algodón orgánico en tonos crema, tierra o verde musgo. Alfombra de lana gruesa bajo la cama. El textil humaniza lo crudo del ladrillo.</div><div class="mb-material-note">Cálido vs áspero</div></div>
-          <div class="mb-material-card"><div class="mb-material-icon">🌿</div><div class="mb-material-name">Una planta grande</div><div class="mb-material-desc">Una sola planta grande en rincón — monstera, filodendro o enredadera que sube por la pared. La presencia vegetal equilibra el peso visual del ladrillo.</div><div class="mb-material-note">Verde como contrapunto</div></div>
-        </div>
-      </div>
-
-      <div class="mb-sec">
-        <div class="mb-sec-label">Empezar a guardar referencias en Pinterest</div>
-        <div class="mb-searches">
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=bedroom+brick+barrel+vault+ceiling+warm" target="_blank">bedroom brick barrel vault ceiling warm</a>
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=habitacion+techo+ladrillo+visto+bóveda" target="_blank">habitacion techo ladrillo visto bóveda</a>
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=exposed+brick+ceiling+bedroom+dark+loft" target="_blank">exposed brick ceiling bedroom dark loft</a>
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=dormitorio+cielorraso+ladrillo+industrial" target="_blank">dormitorio cielorraso ladrillo industrial</a>
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=brick+vaulted+ceiling+bedroom+white+walls" target="_blank">brick vaulted ceiling bedroom white walls</a>
-          <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=bodega+convertida+dormitorio+ladrillo" target="_blank">bodega convertida dormitorio ladrillo</a>
-        </div>
-      </div>
     </div>
 
-    <!-- ─── PATIO INTERNO ─── -->
-      <!-- Links pegados -->
-      <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
-        <div class="mb-link-input-row">
-          <input type="url" class="mb-link-input" id="mbLinkInput-boveda" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('boveda')" />
-          <button class="mb-link-add-btn" onclick="addMbLink('boveda')">+ Guardar</button>
-        </div>
-        <div class="mb-links-grid" id="mbLinks-boveda"></div>
-      </div>
-    
+
     <div class="mb-section" id="mb-patio">
       <div class="mb-header" id="mbHero-patio">
       <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('patio',this)"/></label></div>
@@ -1579,10 +1456,7 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=small+courtyard+string+lights+lush+plants" target="_blank">small courtyard string lights lush plants</a>
         </div>
       </div>
-    </div>
-
-    <!-- ─── COCINA ─── -->
-      <!-- Links pegados -->
+      <!-- Links guardados -->
       <div class="mb-links-section">
         <div class="mb-sec-label">Links guardados</div>
         <div class="mb-link-input-row">
@@ -1591,7 +1465,8 @@
         </div>
         <div class="mb-links-grid" id="mbLinks-patio"></div>
       </div>
-    
+    </div>
+
     <div class="mb-section" id="mb-cocina">
       <div class="mb-header" id="mbHero-cocina">
       <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('cocina',this)"/></label></div>
@@ -1644,10 +1519,7 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=open+kitchen+renovation+brick+natural+light" target="_blank">open kitchen renovation brick natural light</a>
         </div>
       </div>
-    </div>
-
-    <!-- ─── BAÑO ─── -->
-      <!-- Links pegados -->
+      <!-- Links guardados -->
       <div class="mb-links-section">
         <div class="mb-sec-label">Links guardados</div>
         <div class="mb-link-input-row">
@@ -1656,7 +1528,8 @@
         </div>
         <div class="mb-links-grid" id="mbLinks-cocina"></div>
       </div>
-    
+    </div>
+
     <div class="mb-section" id="mb-bano">
       <div class="mb-header" id="mbHero-bano">
       <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('bano',this)"/></label></div>
@@ -1829,10 +1702,7 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=bathroom+oval+mirror+oak+vanity+white+tiles" target="_blank">bathroom oval mirror oak vanity white tiles</a>
         </div>
       </div>
-    </div>
-
-    <!-- ─── LIVING / COMEDOR ─── -->
-      <!-- Links pegados -->
+      <!-- Links guardados -->
       <div class="mb-links-section">
         <div class="mb-sec-label">Links guardados</div>
         <div class="mb-link-input-row">
@@ -1841,7 +1711,8 @@
         </div>
         <div class="mb-links-grid" id="mbLinks-bano"></div>
       </div>
-    
+    </div>
+
     <div class="mb-section" id="mb-living">
       <div class="mb-header" id="mbHero-living">
       <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('living',this)"/></label></div>
@@ -2268,6 +2139,7 @@ function setSyncStatus(s, msg) {
     el.className = 'sync-status ' + s;
     el.textContent = msg;
     if (s === 'synced') setTimeout(() => { if (el.textContent === msg) { el.textContent = ''; el.className = 'sync-status'; } }, 3000);
+    if (s === 'error') setTimeout(() => { if (el.textContent === msg) { el.textContent = ''; el.className = 'sync-status'; } }, 8000);
   });
 }
 
@@ -3541,7 +3413,7 @@ function renderMoodboard() {
 // MOODBOARD — LINKS & HERO IMAGES
 // ══════════════════════════════════════════════
 function renderMbLinksAll() {
-  const sections = ['dormitorio','boveda','patio','cocina','bano','living'];
+  const sections = ['dormitorio','patio','cocina','bano','living'];
   sections.forEach(s => renderMbLinks(s));
 }
 
@@ -3562,7 +3434,7 @@ function renderMbLinks(section) {
 }
 
 function renderMbHeros() {
-  const sections = ['dormitorio','boveda','patio','cocina','bano','living'];
+  const sections = ['dormitorio','patio','cocina','bano','living'];
   sections.forEach(s => {
     const hero = document.getElementById('mbHero-' + s);
     if (!hero) return;
@@ -4368,15 +4240,15 @@ loadData();
       <div class="f-row">
         <label class="f-label">Categoría</label>
         <select class="f-input" id="docAddCat">
-          <option value="planos">📐 Planos</option>
-          <option value="fotos">🖼️ Fotos</option>
-          <option value="avances">🔨 Avances</option>
-          <option value="referencias" selected>📌 Referencias</option>
-          <option value="renders">✨ Renders</option>
-          <option value="planillas">📊 Planillas</option>
-          <option value="documentos">📄 Documentos</option>
-          <option value="videos">🎬 Videos</option>
-          <option value="otro">📁 Otro</option>
+          <option value="planos">Planos</option>
+          <option value="fotos">Fotos</option>
+          <option value="avances">Avances</option>
+          <option value="referencias" selected>Referencias</option>
+          <option value="renders">Renders</option>
+          <option value="planillas">Planillas</option>
+          <option value="documentos">Documentos</option>
+          <option value="videos">Videos</option>
+          <option value="otro">Otro</option>
         </select>
       </div>
     </div>
