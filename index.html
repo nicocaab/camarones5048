@@ -2147,9 +2147,13 @@ async function loadData() {
   await githubLoad(token);
 }
 
-// Datos que van a GitHub (sin src de docs — las fotos quedan en localStorage)
+// Datos que van a GitHub (strip src base64 — las URLs de GitHub se guardan, los blobs no)
 function stateForCloud() {
-  const docsLight = (state.docs || []).map(({ src, ...meta }) => meta); // strip src
+  const docsLight = (state.docs || []).map(d => {
+    // Conservar src si es URL (http/github), strip si es base64 local
+    const keepSrc = d.src && (d.src.startsWith('http') || d.src.startsWith('blob'));
+    return keepSrc ? d : { ...d, src: '' };
+  });
   return { ...state, docs: docsLight };
 }
 
@@ -3267,23 +3271,72 @@ function renderDocumentos() {
 }
 
 // Subir archivos desde dispositivo
+// Subir archivo a GitHub y devolver URL pública
+async function uploadFileToGitHub(file, dataUrl, token) {
+  const safeN = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = `docs/${Date.now()}_${safeN}`;
+  const base64 = dataUrl.split(',')[1];
+  const r = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `doc: ${file.name}`, content: base64 })
+  });
+  if (!r.ok) throw new Error('gh upload ' + r.status);
+  const d = await r.json();
+  return { url: d.content.download_url, path };
+}
+
+// Eliminar archivo de GitHub
+async function deleteFileFromGitHub(path, token) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${path}`, {
+      headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!r.ok) return;
+    const d = await r.json();
+    await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${path}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `delete doc`, sha: d.sha })
+    });
+  } catch(e) { console.warn('gh delete error', e); }
+}
+
 async function onDocFilesSelected(input) {
   const files = [...input.files];
+  const token = ghToken();
+  const total = files.length;
+  let uploaded = 0;
+  showToast(`⏳ Subiendo ${total} archivo${total!==1?'s':''}...`);
   for (const file of files) {
     const ext = (file.name.split('.').pop() || '').toLowerCase();
     const isImg = IMG_EXTS.includes(ext);
-    let src;
-    if (isImg) {
-      src = await compressImage(file);
-    } else {
-      src = await readFileAsDataURL(file);
-    }
+    const isVid = VIDEO_EXTS.includes(ext);
     const autocat = guessDocCategory(file.name);
-    state.docs.push({ id: state.docNextId++, name: file.name, category: autocat, src, srcType: 'file', notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+    let src, srcType, ghPath;
+    if ((isImg || !isVid) && token) {
+      // Intentar subir a GitHub
+      try {
+        const dataUrl = isImg ? await compressImage(file) : await readFileAsDataURL(file);
+        const { url, path } = await uploadFileToGitHub(file, dataUrl, token);
+        src = url; srcType = 'github'; ghPath = path;
+      } catch(e) {
+        // Fallback local
+        console.warn('GitHub upload failed, storing locally', e);
+        src = isImg ? await compressImage(file) : await readFileAsDataURL(file);
+        srcType = 'file';
+      }
+    } else {
+      src = isImg ? await compressImage(file) : await readFileAsDataURL(file);
+      srcType = 'file';
+    }
+    uploaded++;
+    state.docs.push({ id: state.docNextId++, name: file.name, category: autocat, src, srcType, ghPath: ghPath||null, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+    showToast(`⏳ ${uploaded}/${total} subido${uploaded!==1?'s':''}...`);
   }
   autoSave();
   renderDocumentos();
-  showToast(`✅ ${files.length} archivo${files.length!==1?'s':''} agregado${files.length!==1?'s':''}`);
+  showToast(`✅ ${total} archivo${total!==1?'s':''} agregado${total!==1?'s':''}`);
   if (input.value !== undefined) input.value = '';
 }
 
@@ -3389,9 +3442,27 @@ async function saveDocAdd() {
   } else {
     const prev = document.getElementById('docAddPreview').querySelector('img');
     if (!prev) { showToast('⚠️ Pegá una imagen primero'); return; }
-    src = prev.src; srcType = 'clip'; name = nameVal || 'imagen-pegada.jpg';
+    name = nameVal || 'imagen-pegada.jpg';
+    const token = ghToken();
+    if (token) {
+      try {
+        showToast('⏳ Subiendo imagen...');
+        const fakeFile = new File([], name, { type: 'image/jpeg' });
+        const { url, path } = await uploadFileToGitHub(fakeFile, prev.src, token);
+        src = url; srcType = 'github';
+        state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, ghPath: path, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+      } catch(e) {
+        src = prev.src; srcType = 'clip';
+        state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, ghPath: null, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+      }
+    } else {
+      src = prev.src; srcType = 'clip';
+      state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, ghPath: null, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+    }
+    autoSave(); renderDocumentos(); closeDocAdd(); showToast('✅ Guardado');
+    return;
   }
-  state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+  state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, ghPath: null, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
   autoSave();
   renderDocumentos();
   closeDocAdd();
@@ -3591,9 +3662,12 @@ function initDocDrop() {
 
 function deleteDoc(id) {
   if (!confirm('¿Eliminar este archivo?')) return;
+  const doc = state.docs.find(d => d.id === id);
   state.docs = state.docs.filter(d => d.id !== id);
   autoSave(); renderDocumentos();
   showToast('🗑️ Eliminado');
+  // Limpiar de GitHub en background
+  if (doc && doc.ghPath && ghToken()) deleteFileFromGitHub(doc.ghPath, ghToken());
 }
 
 
