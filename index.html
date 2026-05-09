@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" onerror="console.warn('Chart.js no pudo cargarse. Los gráficos no estarán disponibles.');"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2039,9 +2039,11 @@ const AMB_ICONS = {
   'Cochera': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/><circle cx="9.5" cy="17.5" r="1.5"/><circle cx="14.5" cy="17.5" r="1.5"/></svg>'
 };
 
-// Dark chart defaults
-Chart.defaults.color = '#475569';
-Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+// Dark chart defaults (guard in case CDN fails to load on mobile)
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.color = '#475569';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+}
 
 // ══════════════════════════════════════════════
 // STATE
@@ -2090,6 +2092,7 @@ function setSyncStatus(s, msg) {
 
 function applyLoaded(loaded) {
   state = { ...state, ...loaded };
+  if (!Array.isArray(state.gastos)) state.gastos = [];
   state.gastos = state.gastos.map(g => ({ ...g, vinculadoA: g.vinculadoA !== undefined ? g.vinculadoA : null }));
   if (!state.resumenOrder) state.resumenOrder = [];
   if (!state.docs) state.docs = [];
@@ -2428,10 +2431,12 @@ function renderResumen() {
 
 const CHART_COLORS = ['#22d3ee','#818cf8','#34d399','#fbbf24','#f87171','#fb923c','#a78bfa','#2dd4bf','#60a5fa','#e879f9'];
 
-function destroyChart(key) { if (charts[key]) { charts[key].destroy(); delete charts[key]; } }
+function destroyChart(key) { if (charts[key]) { try { charts[key].destroy(); } catch(e) {} delete charts[key]; } }
+function chartReady() { return typeof Chart !== 'undefined'; }
 
 function renderChartCat() {
   destroyChart('cat');
+  if (!chartReady()) return;
   const bycat = {};
   // Solo ítems con estado 'pagado'
   state.gastos.forEach(g => {
@@ -2458,6 +2463,7 @@ function renderChartCat() {
 
 function renderChartAmb() {
   destroyChart('amb');
+  if (!chartReady()) return;
   const byamb = {};
   state.gastos.forEach(g => { if (g.monto) byamb[g.ambiente] = (byamb[g.ambiente]||0) + Number(g.monto); });
   const labels = Object.keys(byamb).filter(k => byamb[k] > 0);
@@ -2561,6 +2567,7 @@ function updatePresupProgress() {
 
 function renderChartInvDist() {
   destroyChart('inv');
+  if (!chartReady()) return;
   const pagado = getPagadoReal();
   const cotizado = getCotizadoRestante();
   const presup = state.presupuesto;
@@ -3343,7 +3350,7 @@ function _renderDocView2(doc) {
   const docs = _getDocViewList();
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
   const isPdf = ext === 'pdf' || (doc.src && doc.src.startsWith('data:application/pdf'));
-  const isImg = !isPdf && (IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http'));
+  const isImg = !isPdf && (IMG_EXTS.includes(ext) || (doc.src && (doc.src.startsWith('data:image') || doc.src.startsWith('http'))));
   document.getElementById('dv2Name').textContent = doc.name;
   document.getElementById('dv2Cat').textContent = (DOC_CATS[doc.category] || doc.category).replace(/^[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F300}-\u{1F9FF}\u2700-\u27BF\s]+/u, '');
   const body = document.getElementById('dv2Body');
@@ -3424,7 +3431,7 @@ function openDocNotes(id) {
   document.getElementById('dnName').textContent = doc.name;
   document.getElementById('dnNotes').value = doc.notes || '';
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
-  const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image');
+  const isImg = IMG_EXTS.includes(ext) || (doc.src && doc.src.startsWith('data:image'));
   const prev = document.getElementById('dnPreview');
   prev.innerHTML = isImg ? `<img class="doc-notes-img" src="${doc.src}" />` : '';
   modal.classList.add('open');
