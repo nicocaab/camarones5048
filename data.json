@@ -70,11 +70,23 @@
       "proveedor": "",
       "fecha": "2026-05-09",
       "notas": "50% del total",
+      "vinculadoA": 1
+    },
+    {
+      "id": 7,
+      "desc": "Inmobiliaria cuota 1",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 2000,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
       "vinculadoA": null
     }
   ],
   "presupuesto": 190000,
-  "nextId": 7,
+  "nextId": 8,
   "docs": [
     {
       "id": 1,
