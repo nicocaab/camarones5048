@@ -298,6 +298,8 @@
     .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
     #kpiGrid .kpi-card:first-child { grid-column: span 2; }
     #kpiGrid .kpi-card:nth-child(2) { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(3) { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(4) { grid-column: span 2; }
     #kpiGrid .kpi-card:nth-child(5) { grid-column: span 2; }
     #kpiGrid .kpi-card:nth-child(6) { grid-column: span 2; }
     @media (max-width: 900px) {
@@ -3334,16 +3336,21 @@ async function onDocFilesSelected(input) {
     const isVid = VIDEO_EXTS.includes(ext);
     const autocat = guessDocCategory(file.name);
     let src, srcType, ghPath;
-    if ((isImg || !isVid) && token) {
-      // Intentar subir a GitHub
+    if (token) {
+      // Intentar subir a GitHub (imágenes, videos y otros)
       try {
         const dataUrl = isImg ? await compressImage(file) : await readFileAsDataURL(file);
         const { url, path } = await uploadFileToGitHub(file, dataUrl, token);
         src = url; srcType = 'github'; ghPath = path;
       } catch(e) {
-        // Fallback local
+        // Fallback local (ej: archivo demasiado grande para la API)
         console.warn('GitHub upload failed, storing locally', e);
-        src = isImg ? await compressImage(file) : await readFileAsDataURL(file);
+        if (isVid) {
+          showToast('⚠️ Video muy grande para sincronizar, solo disponible en este dispositivo');
+          src = await readFileAsDataURL(file);
+        } else {
+          src = isImg ? await compressImage(file) : await readFileAsDataURL(file);
+        }
         srcType = 'file';
       }
     } else {
