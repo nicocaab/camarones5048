@@ -144,5 +144,11 @@
     "x": 51,
     "y": 64
   },
-  "resumenOrder": []
+  "resumenOrder": [
+    "desglose",
+    "registros",
+    "vinculados",
+    "ambientes",
+    "graficos"
+  ]
 }
