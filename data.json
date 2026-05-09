@@ -27,9 +27,9 @@
     {
       "id": 3,
       "desc": "Honorarios escribanía",
-      "categoria": "Honorarios",
       "ambiente": "General",
-      "monto": 0,
+      "categoria": "Honorarios",
+      "monto": 3500,
       "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-04-18",
