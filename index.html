@@ -345,6 +345,7 @@
     @media (max-width: 1000px) { .charts-grid-3 { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 760px) { .charts-grid, .charts-grid-3 { grid-template-columns: 1fr; } }
     .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+    #resumenSections .chart-card { width: 100%; }
     .chart-wrap { position: relative; height: 210px; }
 
     /* ── TABLE ── */
@@ -1396,20 +1397,18 @@
       <div class="ambientes-grid" id="ambientesGrid" style="margin-top:16px;"></div>
     </div>
 
-    <!-- Gráficos — 3 en una fila -->
-    <div class="charts-grid charts-grid-3 res-sortable" data-sec="graficos">
-      <div class="chart-card">
-        <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Distribución</span></div>
-        <div class="chart-wrap"><canvas id="chartInvDist"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Por Categoría</span></div>
-        <div class="chart-wrap"><canvas id="chartCat"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Por Ambiente</span></div>
-        <div class="chart-wrap"><canvas id="chartAmb"></canvas></div>
-      </div>
+    <!-- Gráficos -->
+    <div class="chart-card res-sortable" data-sec="graficos-dist">
+      <div class="sec-hdr"><span style="display:flex;align-items:center;gap:8px;"><span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span><span class="sec-title"><span class="sec-dot"></span>Distribución</span></span></div>
+      <div class="chart-wrap"><canvas id="chartInvDist"></canvas></div>
+    </div>
+    <div class="chart-card res-sortable" data-sec="graficos-cat">
+      <div class="sec-hdr"><span style="display:flex;align-items:center;gap:8px;"><span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span><span class="sec-title"><span class="sec-dot"></span>Por Categoría</span></span></div>
+      <div class="chart-wrap"><canvas id="chartCat"></canvas></div>
+    </div>
+    <div class="chart-card res-sortable" data-sec="graficos-amb">
+      <div class="sec-hdr"><span style="display:flex;align-items:center;gap:8px;"><span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span><span class="sec-title"><span class="sec-dot"></span>Por Ambiente</span></span></div>
+      <div class="chart-wrap"><canvas id="chartAmb"></canvas></div>
     </div>
 
     </div><!-- /resumenSections -->
@@ -1751,111 +1750,7 @@
         <div class="mb-quote"><div class="mb-quote-text">"Un baño luminoso no necesita saturarse de materiales. Uno o dos bien elegidos, mucha luz natural y plantas hacen el resto."</div></div>
       </div>
       <div class="mb-sec">
-        <div class="mb-sec-label">Referencias visuales de materiales</div>
-        <div class="mb-concept-grid">
-          <!-- Terrazzo -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <rect width="200" height="150" fill="#f2ede6"/>
-              <circle cx="18" cy="22" r="4" fill="#c0896a" opacity=".7"/><circle cx="55" cy="10" r="3" fill="#7a9e7a" opacity=".65"/><circle cx="90" cy="33" r="5" fill="#c8a87c" opacity=".6"/><circle cx="140" cy="18" r="3" fill="#b07a60" opacity=".7"/><circle cx="170" cy="42" r="4" fill="#8bb08b" opacity=".6"/><circle cx="30" cy="60" r="5" fill="#d4a870" opacity=".65"/><circle cx="75" cy="55" r="3" fill="#c08070" opacity=".7"/><circle cx="120" cy="70" r="4" fill="#7a9e7a" opacity=".6"/><circle cx="160" cy="65" r="5" fill="#c8a87c" opacity=".55"/><circle cx="10" cy="90" r="3" fill="#b07a60" opacity=".7"/><circle cx="48" cy="100" r="4" fill="#8bb08b" opacity=".6"/><circle cx="95" cy="88" r="5" fill="#c0896a" opacity=".65"/><circle cx="145" cy="95" r="3" fill="#d4a870" opacity=".7"/><circle cx="185" cy="78" r="4" fill="#c08070" opacity=".6"/><circle cx="25" cy="128" r="4" fill="#7a9e7a" opacity=".65"/><circle cx="68" cy="135" r="5" fill="#c8a87c" opacity=".6"/><circle cx="110" cy="120" r="3" fill="#b07a60" opacity=".7"/><circle cx="155" cy="140" r="4" fill="#8bb08b" opacity=".65"/><circle cx="190" cy="125" r="3" fill="#c0896a" opacity=".6"/>
-              <rect x="0" y="0" width="200" height="1" fill="rgba(180,160,140,0.3)"/>
-              <rect x="0" y="50" width="200" height="1" fill="rgba(180,160,140,0.3)"/>
-              <rect x="0" y="100" width="200" height="1" fill="rgba(180,160,140,0.3)"/>
-              <rect x="0" y="150" width="200" height="1" fill="rgba(180,160,140,0.3)"/>
-            </svg>
-            <div class="mb-concept-lbl">Piso terrazzo · chips terracota + verde</div>
-          </div>
-          <!-- Revestimiento blanco gran formato -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fafaf8"/><stop offset="100%" stop-color="#f0ece6"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#wg)"/>
-              <line x1="0" y1="50" x2="200" y2="50" stroke="#ddd8d0" stroke-width="1.2"/>
-              <line x1="0" y1="100" x2="200" y2="100" stroke="#ddd8d0" stroke-width="1.2"/>
-              <line x1="66" y1="0" x2="66" y2="150" stroke="#ddd8d0" stroke-width="1.2"/>
-              <line x1="133" y1="0" x2="133" y2="150" stroke="#ddd8d0" stroke-width="1.2"/>
-              <rect x="2" y="2" width="62" height="46" fill="rgba(255,255,255,0.4)" rx="1"/>
-            </svg>
-            <div class="mb-concept-lbl">Revestimiento blanco · gran formato 60×60</div>
-          </div>
-          <!-- Vanitory roble flotante -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="wbg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8e0d4"/><stop offset="100%" stop-color="#d8d0c4"/></linearGradient>
-              <linearGradient id="wg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a870"/><stop offset="30%" stop-color="#c49060"/><stop offset="60%" stop-color="#b88050"/><stop offset="100%" stop-color="#a87040"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#wbg2)"/>
-              <!-- Vanitory box -->
-              <rect x="20" y="60" width="160" height="58" rx="4" fill="url(#wg2)"/>
-              <!-- Wood grain lines -->
-              <line x1="20" y1="72" x2="180" y2="72" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-              <line x1="20" y1="84" x2="180" y2="84" stroke="rgba(0,0,0,0.06)" stroke-width="0.8"/>
-              <line x1="20" y1="96" x2="180" y2="96" stroke="rgba(0,0,0,0.05)" stroke-width="0.7"/>
-              <line x1="20" y1="108" x2="180" y2="108" stroke="rgba(0,0,0,0.04)" stroke-width="0.6"/>
-              <!-- Handle -->
-              <rect x="93" y="108" width="14" height="3" rx="1.5" fill="rgba(200,170,80,0.9)"/>
-              <!-- Sink top -->
-              <rect x="20" y="56" width="160" height="8" rx="2" fill="#e0d4c0"/>
-              <!-- Faucet gold -->
-              <rect x="92" y="38" width="4" height="20" rx="2" fill="#c8a840"/>
-              <rect x="85" y="36" width="18" height="4" rx="2" fill="#c8a840"/>
-            </svg>
-            <div class="mb-concept-lbl">Vanitory flotante · roble claro + grifería dorada</div>
-          </div>
-          <!-- Espejo oval luz -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><radialGradient id="lgg" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#fffef9"/><stop offset="100%" stop-color="#e8e0d0"/></radialGradient></defs>
-              <rect width="200" height="150" fill="url(#lgg)"/>
-              <!-- Mirror oval -->
-              <ellipse cx="100" cy="72" rx="55" ry="65" fill="none" stroke="#c8a840" stroke-width="3"/>
-              <ellipse cx="100" cy="72" rx="52" ry="62" fill="rgba(245,245,255,0.6)"/>
-              <!-- Light rays from top -->
-              <line x1="100" y1="0" x2="85" y2="10" stroke="rgba(255,220,120,0.3)" stroke-width="8"/>
-              <line x1="100" y1="0" x2="100" y2="10" stroke="rgba(255,220,120,0.4)" stroke-width="12"/>
-              <line x1="100" y1="0" x2="115" y2="10" stroke="rgba(255,220,120,0.3)" stroke-width="8"/>
-            </svg>
-            <div class="mb-concept-lbl">Espejo oval · marco dorado + luz natural patio</div>
-          </div>
-          <!-- Ducha vidrio -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="tg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f0f8ff"/><stop offset="100%" stop-color="#e0eef8"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#tg)"/>
-              <!-- Glass panel -->
-              <rect x="50" y="5" width="4" height="140" fill="rgba(80,80,80,0.8)"/>
-              <rect x="54" y="5" width="100" height="140" fill="rgba(200,220,240,0.25)" stroke="none"/>
-              <!-- Water drops -->
-              <circle cx="80" cy="40" r="3" fill="rgba(120,170,220,0.5)"/>
-              <circle cx="100" cy="65" r="2.5" fill="rgba(120,170,220,0.4)"/>
-              <circle cx="120" cy="35" r="2" fill="rgba(120,170,220,0.5)"/>
-              <circle cx="90" cy="90" r="2.5" fill="rgba(120,170,220,0.4)"/>
-              <circle cx="115" cy="110" r="3" fill="rgba(120,170,220,0.45)"/>
-              <!-- Floor drain -->
-              <circle cx="120" cy="140" r="6" fill="none" stroke="rgba(150,150,150,0.6)" stroke-width="1.5"/>
-            </svg>
-            <div class="mb-concept-lbl">Ducha vidrio piso a techo · perfil negro fino</div>
-          </div>
-          <!-- Planta verde -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="gg2" x1="0" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#d8edd8"/><stop offset="100%" stop-color="#c0d8c0"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#gg2)"/>
-              <!-- Pot -->
-              <ellipse cx="100" cy="130" rx="28" ry="8" fill="#b07855"/>
-              <rect x="75" y="110" width="50" height="22" rx="4" fill="#c08860"/>
-              <!-- Stem -->
-              <line x1="100" y1="110" x2="100" y2="70" stroke="#5a8a3a" stroke-width="2.5"/>
-              <!-- Leaves -->
-              <ellipse cx="85" cy="80" rx="20" ry="10" fill="#4a8a3a" transform="rotate(-30 85 80)"/>
-              <ellipse cx="115" cy="75" rx="22" ry="9" fill="#5a9a4a" transform="rotate(25 115 75)"/>
-              <ellipse cx="90" cy="60" rx="18" ry="8" fill="#3a7a2a" transform="rotate(-20 90 60)"/>
-              <ellipse cx="112" cy="58" rx="20" ry="8" fill="#4a8a3a" transform="rotate(35 112 58)"/>
-              <ellipse cx="100" cy="50" rx="14" ry="7" fill="#5a9a4a" transform="rotate(5 100 50)"/>
-            </svg>
-            <div class="mb-concept-lbl">Planta colgante · vida y color natural</div>
-          </div>
-        </div>
-        <div class="mb-sec-label" style="margin-top:20px;">Fotos guardadas de Pinterest</div>
+        <div class="mb-sec-label">Referencias visuales</div>
         <div class="mb-masonry" id="mb-gallery-bano"></div>
       </div>
       <div class="mb-sec">
@@ -1934,155 +1829,7 @@
         <div class="mb-quote"><div class="mb-quote-text">"La cocina integrada no es solo práctica — es la mejor excusa para que quien cocina no se pierda la conversación."</div></div>
       </div>
       <div class="mb-sec">
-        <div class="mb-sec-label">Referencias visuales de materiales y ambiente</div>
-        <div class="mb-concept-grid">
-          <!-- Piso madera -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="flr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a870"/><stop offset="100%" stop-color="#c09060"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#flr)"/>
-              <!-- Floorboard rows -->
-              <rect x="0" y="0" width="200" height="29" fill="#c8986a"/><rect x="0" y="30" width="200" height="29" fill="#d4a870"/><rect x="0" y="60" width="200" height="29" fill="#c09060"/><rect x="0" y="90" width="200" height="29" fill="#d0a468"/><rect x="0" y="120" width="200" height="30" fill="#c89868"/>
-              <!-- Board separators (horizontal) -->
-              <line x1="0" y1="29" x2="200" y2="29" stroke="rgba(80,50,20,0.2)" stroke-width="1"/>
-              <line x1="0" y1="59" x2="200" y2="59" stroke="rgba(80,50,20,0.2)" stroke-width="1"/>
-              <line x1="0" y1="89" x2="200" y2="89" stroke="rgba(80,50,20,0.2)" stroke-width="1"/>
-              <line x1="0" y1="119" x2="200" y2="119" stroke="rgba(80,50,20,0.2)" stroke-width="1"/>
-              <!-- Board separators (vertical - staggered) -->
-              <line x1="90" y1="0" x2="90" y2="29" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="40" y1="30" x2="40" y2="59" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="130" y1="30" x2="130" y2="59" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="70" y1="60" x2="70" y2="89" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="155" y1="60" x2="155" y2="89" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="50" y1="90" x2="50" y2="119" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <line x1="140" y1="90" x2="140" y2="119" stroke="rgba(80,50,20,0.15)" stroke-width="0.8"/>
-              <!-- Grain lines -->
-              <line x1="10" y1="10" x2="80" y2="22" stroke="rgba(100,65,30,0.1)" stroke-width="0.7"/>
-              <line x1="110" y1="5" x2="190" y2="18" stroke="rgba(100,65,30,0.08)" stroke-width="0.6"/>
-            </svg>
-            <div class="mb-concept-lbl">Piso madera dura · caramel · unificador del espacio</div>
-          </div>
-          <!-- Mesa maciza + colgante -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="rmg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a2018"/><stop offset="100%" stop-color="#1a1208"/></linearGradient>
-              <linearGradient id="tbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a4828"/><stop offset="100%" stop-color="#5a3820"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#rmg)"/>
-              <!-- Pendant light wire -->
-              <line x1="70" y1="0" x2="70" y2="35" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-              <line x1="130" y1="0" x2="130" y2="35" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-              <!-- Pendants -->
-              <ellipse cx="70" cy="38" rx="12" ry="8" fill="#e8a820"/>
-              <ellipse cx="130" cy="38" rx="12" ry="8" fill="#e8a820"/>
-              <!-- Light glow -->
-              <ellipse cx="70" cy="55" rx="30" ry="25" fill="rgba(255,200,80,0.15)"/>
-              <ellipse cx="130" cy="55" rx="30" ry="25" fill="rgba(255,200,80,0.15)"/>
-              <!-- Table top -->
-              <rect x="15" y="75" width="170" height="14" rx="3" fill="url(#tbl)"/>
-              <!-- Wood grain on table -->
-              <line x1="15" y1="80" x2="185" y2="80" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-              <line x1="15" y1="84" x2="185" y2="84" stroke="rgba(0,0,0,0.1)" stroke-width="0.8"/>
-              <!-- Chairs silhouettes -->
-              <rect x="25" y="60" width="22" height="16" rx="2" fill="rgba(255,255,255,0.08)"/>
-              <rect x="80" y="60" width="22" height="16" rx="2" fill="rgba(255,255,255,0.08)"/>
-              <rect x="135" y="60" width="22" height="16" rx="2" fill="rgba(255,255,255,0.08)"/>
-            </svg>
-            <div class="mb-concept-lbl">Mesa maciza nogal · colgantes industriales dorados</div>
-          </div>
-          <!-- Sillon verde bosque -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="sfbg" x1="0" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#1c2e1c"/><stop offset="100%" stop-color="#0e1a0e"/></linearGradient>
-              <linearGradient id="sfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3d5a30"/><stop offset="100%" stop-color="#2d4a20"/></linearGradient></defs>
-              <rect width="200" height="150" fill="url(#sfbg)"/>
-              <!-- Sofa base -->
-              <rect x="10" y="80" width="180" height="50" rx="8" fill="url(#sfg)"/>
-              <!-- Sofa back -->
-              <rect x="10" y="50" width="180" height="36" rx="6" fill="#3a5528"/>
-              <!-- Cushions -->
-              <rect x="18" y="55" width="52" height="26" rx="5" fill="#4a6538"/>
-              <rect x="78" y="55" width="52" height="26" rx="5" fill="#3d5a30"/>
-              <rect x="138" y="55" width="44" height="26" rx="5" fill="#4a6538"/>
-              <!-- Armrest left -->
-              <rect x="10" y="58" width="16" height="44" rx="5" fill="#2d4a20"/>
-              <!-- Armrest right -->
-              <rect x="174" y="58" width="16" height="44" rx="5" fill="#2d4a20"/>
-              <!-- Seat cushions -->
-              <rect x="26" y="82" width="50" height="36" rx="4" fill="#3a5528"/>
-              <rect x="84" y="82" width="50" height="36" rx="4" fill="#4a6538"/>
-              <rect x="142" y="82" width="38" height="36" rx="4" fill="#3a5528"/>
-              <!-- Pillow accents -->
-              <rect x="24" y="62" width="16" height="20" rx="3" fill="#e8c880" opacity="0.6"/>
-              <rect x="160" y="62" width="16" height="20" rx="3" fill="#c08060" opacity="0.6"/>
-            </svg>
-            <div class="mb-concept-lbl">Sillón en L · verde bosque · bouclé o lino</div>
-          </div>
-          <!-- Ladrillo pared acento -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <rect width="200" height="150" fill="#9a6040"/>
-              <!-- Mortar background -->
-              <rect width="200" height="150" fill="#8a7060"/>
-              <!-- Brick rows -->
-              <!-- Row 0 -->
-              <rect x="1" y="1" width="58" height="22" rx="1" fill="#b56840"/><rect x="61" y="1" width="58" height="22" rx="1" fill="#a86038"/><rect x="121" y="1" width="78" height="22" rx="1" fill="#b87048"/>
-              <!-- Row 1 (offset) -->
-              <rect x="1" y="25" width="28" height="22" rx="1" fill="#a86038"/><rect x="31" y="25" width="58" height="22" rx="1" fill="#b56840"/><rect x="91" y="25" width="58" height="22" rx="1" fill="#a05830"/><rect x="151" y="25" width="48" height="22" rx="1" fill="#b87048"/>
-              <!-- Row 2 -->
-              <rect x="1" y="49" width="58" height="22" rx="1" fill="#b87048"/><rect x="61" y="49" width="58" height="22" rx="1" fill="#b56840"/><rect x="121" y="49" width="78" height="22" rx="1" fill="#a86038"/>
-              <!-- Row 3 (offset) -->
-              <rect x="1" y="73" width="28" height="22" rx="1" fill="#b56840"/><rect x="31" y="73" width="58" height="22" rx="1" fill="#a05830"/><rect x="91" y="73" width="58" height="22" rx="1" fill="#b87048"/><rect x="151" y="73" width="48" height="22" rx="1" fill="#b56840"/>
-              <!-- Row 4 -->
-              <rect x="1" y="97" width="58" height="22" rx="1" fill="#a86038"/><rect x="61" y="97" width="58" height="22" rx="1" fill="#b87048"/><rect x="121" y="97" width="78" height="22" rx="1" fill="#b56840"/>
-              <!-- Row 5 (offset) -->
-              <rect x="1" y="121" width="28" height="22" rx="1" fill="#b87048"/><rect x="31" y="121" width="58" height="22" rx="1" fill="#b56840"/><rect x="91" y="121" width="58" height="22" rx="1" fill="#a05830"/><rect x="151" y="121" width="48" height="22" rx="1" fill="#b87048"/>
-              <!-- Subtle overlay for depth -->
-              <rect width="200" height="150" fill="rgba(0,0,0,0.08)"/>
-            </svg>
-            <div class="mb-concept-lbl">Ladrillo visto · pared de acento integrada</div>
-          </div>
-          <!-- Luz calida nocturna -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><radialGradient id="wm" cx="50%" cy="60%" r="70%"><stop offset="0%" stop-color="#f0a830"/><stop offset="40%" stop-color="#c07818"/><stop offset="100%" stop-color="#1a1008"/></radialGradient></defs>
-              <rect width="200" height="150" fill="#0e0a04"/>
-              <ellipse cx="100" cy="90" rx="120" ry="100" fill="url(#wm)" opacity="0.9"/>
-              <!-- Lamp silhouette -->
-              <ellipse cx="100" cy="30" rx="18" ry="10" fill="#e8a820"/>
-              <line x1="100" y1="0" x2="100" y2="22" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-              <!-- Warm glow -->
-              <ellipse cx="100" cy="50" rx="50" ry="40" fill="rgba(255,180,60,0.2)"/>
-              <!-- Table surface hint -->
-              <rect x="30" y="115" width="140" height="6" rx="2" fill="rgba(150,100,40,0.4)"/>
-            </svg>
-            <div class="mb-concept-lbl">Luz cálida nocturna · ambiente LED 2700K</div>
-          </div>
-          <!-- Crittall al patio -->
-          <div class="mb-concept-card">
-            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="crtbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7aaa7a"/><stop offset="100%" stop-color="#4a8050"/></linearGradient></defs>
-              <!-- Exterior view (green nature) -->
-              <rect width="200" height="150" fill="url(#crtbg)"/>
-              <!-- Foliage hints -->
-              <ellipse cx="40" cy="60" rx="40" ry="50" fill="#5aaa5a" opacity="0.5"/>
-              <ellipse cx="160" cy="80" rx="50" ry="60" fill="#4a9a4a" opacity="0.4"/>
-              <!-- Window frame (Crittall style - black steel) -->
-              <rect x="0" y="0" width="200" height="150" fill="rgba(200,220,200,0.3)"/>
-              <!-- Frame outer -->
-              <rect x="0" y="0" width="5" height="150" fill="#1a1a1a"/>
-              <rect x="195" y="0" width="5" height="150" fill="#1a1a1a"/>
-              <rect x="0" y="0" width="200" height="5" fill="#1a1a1a"/>
-              <rect x="0" y="145" width="200" height="5" fill="#1a1a1a"/>
-              <!-- Mullions -->
-              <rect x="97" y="0" width="6" height="150" fill="#1a1a1a"/>
-              <rect x="0" y="72" width="200" height="5" fill="#1a1a1a"/>
-              <!-- Handle -->
-              <rect x="88" y="75" width="3" height="18" rx="1.5" fill="#1a1a1a"/>
-            </svg>
-            <div class="mb-concept-lbl">Abertura Crittall al patio · acero negro + verde</div>
-          </div>
-        </div>
-        <div class="mb-sec-label" style="margin-top:20px;">Fotos guardadas de Pinterest</div>
+        <div class="mb-sec-label">Referencias visuales</div>
         <div class="mb-masonry" id="mb-gallery-living"></div>
       </div>
       <div class="mb-sec">
@@ -2546,6 +2293,9 @@ function renderTab(name) {
     if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
     // No swipear si el menú está abierto
     if (document.getElementById('sideMenu').classList.contains('open')) return;
+    // No swipear si hay un modal abierto (doc viewer, etc.)
+    if (document.querySelector('.modal-bg.open')) return;
+    if (document.getElementById('modalDocView2')?.classList.contains('open')) return;
     const idx = TAB_ORDER.indexOf(currentTab);
     if (dx < 0 && idx < TAB_ORDER.length - 1) showTab(TAB_ORDER[idx + 1]); // swipe left → siguiente
     if (dx > 0 && idx > 0) showTab(TAB_ORDER[idx - 1]);                     // swipe right → anterior
@@ -3714,24 +3464,32 @@ const MB_IMAGES = {
     { src: 'https://i.pinimg.com/736x/4d/03/3a/4d033a410c20d79decc8f3e81f059905.jpg', label: 'Barndominium kitchen · vigas expuestas + barra madera' },
   ],
   bano: [
-    { src: 'https://i.pinimg.com/736x/2b/50/5c/2b505c1ff9b2e62f3e0a84b4b94f9b2c.jpg', label: 'Baño blanco · piso terrazzo + grifería dorada' },
-    { src: 'https://i.pinimg.com/736x/f4/5c/2b/f45c2b8de53b5f7ad9e4c0b3a7e6d123.jpg', label: 'Vanitory flotante roble · espejo oval' },
-    { src: 'https://i.pinimg.com/736x/8a/3f/c1/8a3fc1d2e7b45a96f3e8b2c4d5e6f789.jpg', label: 'Baño nórdico · azulejos blancos + planta' },
-    { src: 'https://i.pinimg.com/736x/c3/7d/4e/c37d4ef2a85b61c3d94e5f7a8b9c0d12.jpg', label: 'Japandi bathroom · madera + mármol blanco' },
-    { src: 'https://images.unsplash.com/photo-1552321554-5fec84576c31?w=600&q=80&auto=format&fit=crop', label: 'Baño moderno blanco · ducha a ras de piso' },
-    { src: 'https://images.unsplash.com/photo-1620626011761-47eda3e0f2d5?w=600&q=80&auto=format&fit=crop', label: 'Terrazzo floor · ventana grande + luz natural' },
-    { src: 'https://images.unsplash.com/photo-1584622650786-00b27bda6c7a?w=600&q=80&auto=format&fit=crop', label: 'Baño minimalista · mesada mármol + espejo round' },
-    { src: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80&auto=format&fit=crop', label: 'Baño spa · bañera freestanding + plantas' },
+    { src: 'https://images.unsplash.com/photo-1552321554-5fec84576c31?w=700&q=85&auto=format&fit=crop', label: 'Baño moderno blanco · ducha a ras de piso' },
+    { src: 'https://images.unsplash.com/photo-1620626011761-47eda3e0f2d5?w=700&q=85&auto=format&fit=crop', label: 'Piso terrazzo · ventana grande + luz natural' },
+    { src: 'https://images.unsplash.com/photo-1584622650786-00b27bda6c7a?w=700&q=85&auto=format&fit=crop', label: 'Baño minimalista · mesada mármol + espejo round' },
+    { src: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=700&q=85&auto=format&fit=crop', label: 'Baño spa · bañera freestanding + plantas' },
+    { src: 'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=700&q=85&auto=format&fit=crop', label: 'Vanitory flotante · madera clara + espejo oval' },
+    { src: 'https://images.unsplash.com/photo-1645427936894-a8ea5cf19d62?w=700&q=85&auto=format&fit=crop', label: 'Baño nórdico · azulejos grandes + planta interior' },
+    { src: 'https://images.unsplash.com/photo-1552242718-c5360894aecd?w=700&q=85&auto=format&fit=crop', label: 'Baño japandi · negro mate + madera + blanco' },
+    { src: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=700&q=85&auto=format&fit=crop', label: 'Ducha vidrio · perfil negro fino + azulejo grande' },
+    { src: 'https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=700&q=85&auto=format&fit=crop', label: 'Grifería dorada · mesada blanca + espejo oval retroiluminado' },
+    { src: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=700&q=85&auto=format&fit=crop', label: 'Baño luminoso · ventana al patio + terrazzo piso' },
+    { src: 'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=700&q=85&auto=format&fit=crop', label: 'Baño minimalista · todo blanco + detalle madera' },
+    { src: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=85&auto=format&fit=crop', label: 'Baño con planta · luz indirecta + grifería dorada' },
   ],
   living: [
-    { src: 'https://i.pinimg.com/736x/5e/8a/f3/5e8af3b9c2d4e7a6f1b8c3d5e9f2a4b6.jpg', label: 'Living ladrillo + madera · sillón verde oscuro' },
-    { src: 'https://i.pinimg.com/736x/a2/c4/e6/a2c4e6f8b0d2f4a6c8e0b2d4f6a8c0e2.jpg', label: 'Open plan · cocina integrada + ladrillo visto' },
-    { src: 'https://images.unsplash.com/photo-1555041469-db61b5afb7fe?w=600&q=80&auto=format&fit=crop', label: 'Living moderno cálido · sofá + luz puntual' },
-    { src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd3?w=600&q=80&auto=format&fit=crop', label: 'Living industrial · ladrillo + madera + neutros' },
-    { src: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&q=80&auto=format&fit=crop', label: 'Sillón verde bosque · manta + planta interior' },
-    { src: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80&auto=format&fit=crop', label: 'Sala de estar · vigas madera + luz cálida' },
-    { src: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80&auto=format&fit=crop', label: 'Open plan living-comedor · integrado cocina' },
-    { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80&auto=format&fit=crop', label: 'Living cálido · madera oscura + colgantes dorados' },
+    { src: 'https://images.unsplash.com/photo-1555041469-db61b5afb7fe?w=700&q=85&auto=format&fit=crop', label: 'Living moderno cálido · sofá + luz puntual' },
+    { src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd3?w=700&q=85&auto=format&fit=crop', label: 'Living industrial · ladrillo + madera + neutros' },
+    { src: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=700&q=85&auto=format&fit=crop', label: 'Sillón verde bosque · manta + planta interior' },
+    { src: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=85&auto=format&fit=crop', label: 'Sala de estar · vigas madera + luz cálida' },
+    { src: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=85&auto=format&fit=crop', label: 'Open plan living-comedor · integrado cocina' },
+    { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=700&q=85&auto=format&fit=crop', label: 'Living cálido · madera oscura + colgantes dorados' },
+    { src: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=85&auto=format&fit=crop', label: 'Cocina + living abierto · isla central + sillas industriales' },
+    { src: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=85&auto=format&fit=crop', label: 'Living ladrillo visto · sofá oscuro + maderas' },
+    { src: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=700&q=85&auto=format&fit=crop', label: 'Living con detalle ladrillo · planta + negro mate' },
+    { src: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=700&q=85&auto=format&fit=crop', label: 'Mesa comedor madera · sillas rattan + colgante dorado' },
+    { src: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop', label: 'Estanterías flotantes + sofá verde + planta' },
+    { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700&q=85&auto=format&fit=crop', label: 'Living abierto · doble altura + ladrillo + vigas' },
   ],
   patio: [
     { src: 'https://i.pinimg.com/736x/1e/a5/ac/1ea5acc92195cd416b985b3eccdc793b.jpg', label: 'Acceso al patio · puertas Crittall + piso mosaico' },
@@ -4914,6 +4672,7 @@ loadData();
           <option value="fotos">Fotos</option>
           <option value="avances">Avances</option>
           <option value="referencias" selected>Referencias</option>
+          <option value="materiales">Materiales</option>
           <option value="renders">Renders</option>
           <option value="planillas">Planillas</option>
           <option value="documentos">Documentos</option>
