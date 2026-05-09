@@ -38,10 +38,10 @@
     },
     {
       "id": 4,
-      "desc": "Cotización arquitecto",
-      "categoria": "Profesionales",
+      "desc": "Obra",
       "ambiente": "General",
-      "monto": 0,
+      "categoria": "Construcción",
+      "monto": 42000,
       "estado": "cotizado",
       "proveedor": "",
       "fecha": "2026-04-18",
