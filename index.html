@@ -297,13 +297,15 @@
     /* ── KPI GRID ── */
     .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
     #kpiGrid .kpi-card:first-child { grid-column: span 2; }
-    #kpiGrid .kpi-card:nth-child(4) { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(2) { grid-column: span 2; }
     #kpiGrid .kpi-card:nth-child(5) { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(6) { grid-column: span 2; }
     @media (max-width: 900px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       #kpiGrid .kpi-card:first-child { grid-column: span 2; }
-      #kpiGrid .kpi-card:nth-child(4) { grid-column: span 1; }
+      #kpiGrid .kpi-card:nth-child(2) { grid-column: span 2; }
       #kpiGrid .kpi-card:nth-child(5) { grid-column: span 1; }
+      #kpiGrid .kpi-card:nth-child(6) { grid-column: span 1; }
     }
     .kpi-card {
       background: var(--surface);
@@ -1472,11 +1474,12 @@
       <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="#22d3ee" stroke-width="1.3" opacity=".7"><path d="M8 11V3M5 6l3-3 3 3M2 12v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1"/></svg>
       <span style="font-size:15px;font-weight:600;color:var(--cyan);">Soltá los archivos aquí</span>
     </div>
-    <!-- Multi-select action bar -->
-    <div id="docSelectBar" style="display:none;position:sticky;bottom:0;left:0;right:0;z-index:20;background:var(--bg2);border-top:1px solid var(--border-s);padding:12px 16px;display:none;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span id="docSelectCount" style="font-size:13px;color:var(--text2);flex:1;">0 seleccionados</span>
-      <select id="docBatchCat" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 10px;font-size:12px;color:var(--text2);">
-        <option value="">Cambiar categoría...</option>
+    <!-- Multi-select action bar (fixed bottom) -->
+    <div id="docSelectBar" style="display:none;position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:200;background:var(--bg2);border:1px solid var(--border-s);border-radius:14px;padding:10px 16px;box-shadow:0 8px 32px rgba(0,0,0,.5);align-items:center;gap:10px;flex-wrap:nowrap;max-width:calc(100vw - 32px);">
+      <span id="docSelectCount" style="font-size:13px;color:var(--text2);white-space:nowrap;">0 sel.</span>
+      <button class="btn btn-danger btn-sm" onclick="deleteBatchSelected()" style="white-space:nowrap;">🗑 Eliminar</button>
+      <select id="docBatchCat" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 8px;font-size:12px;color:var(--text2);">
+        <option value="">Mover a...</option>
         <option value="planos">Planos</option>
         <option value="fotos">Fotos</option>
         <option value="avances">Avances</option>
@@ -1487,9 +1490,8 @@
         <option value="videos">Videos</option>
         <option value="otro">Otro</option>
       </select>
-      <button class="btn btn-cyan btn-sm" onclick="applyBatchCat()">Aplicar</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteBatchSelected()">Eliminar</button>
-      <button class="btn btn-ghost btn-sm" onclick="toggleDocSelect()">Cancelar</button>
+      <button class="btn btn-cyan btn-sm" onclick="applyBatchCat()">OK</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleDocSelect()" style="padding:6px 10px;">✕</button>
     </div>
     <div class="docs-grid-new" id="docsGrid"></div>
   </div>
@@ -2433,6 +2435,9 @@ function renderResumen() {
   const pendCount = state.gastos.filter(g => g.estado === 'cotizado').length;
   const balance = presup > 0 ? presup - pagadoReal - cotizadoRest : null;
 
+  const proyectada = pagadoReal + cotizadoRest;
+  const proyDiff = presup > 0 ? proyectada - presup : null;
+  const proyColor = proyDiff === null ? 'var(--text)' : proyDiff > 0 ? '#f87171' : '#34d399';
   document.getElementById('kpiGrid').innerHTML = `
     <div class="kpi-card c-indigo">
       <div class="kpi-label">Inversión Estimada</div>
@@ -2445,6 +2450,12 @@ function renderResumen() {
       </div>
       <div class="kpi-sub" style="margin-top:4px;">${presup > 0 ? pct + '% ejecutado · editá el valor' : 'Editá para definir el objetivo'}</div>
       <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><circle cx="8" cy="8" r="7"/><circle cx="8" cy="8" r="4"/><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+    </div>
+    <div class="kpi-card" style="border-color:${proyDiff !== null && proyDiff > 0 ? 'rgba(248,113,113,.3)' : 'rgba(167,139,250,.3)'};">
+      <div class="kpi-label">Inversión Proyectada</div>
+      <div class="kpi-value num" style="color:${proyColor};">${fmt(proyectada)}</div>
+      <div class="kpi-sub">${proyDiff === null ? 'Pagado + Cotizado pendiente' : proyDiff > 0 ? '⚠ ' + fmt(proyDiff) + ' sobre estimado' : '✓ ' + fmt(-proyDiff) + ' bajo estimado'}</div>
+      <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><path d="M2 12L6 8l3 3 5-6"/><path d="M11 5h3v3"/></svg></div>
     </div>
     <div class="kpi-card c-cyan">
       <div class="kpi-label">Total Pagado</div>
