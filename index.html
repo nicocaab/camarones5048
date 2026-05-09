@@ -117,7 +117,8 @@
       box-shadow: 0 0 14px var(--cyan-glow);
       flex-shrink: 0;
     }
-    .header-title { font-size: 15px; font-weight: 700; letter-spacing: .1px; color: var(--text); font-family: 'Playfair Display', serif; }
+    .header-title { font-size: 15px; font-weight: 700; letter-spacing: -.1px; color: var(--text); font-family: 'Inter', sans-serif; cursor: pointer; }
+    .header-title:hover { color: var(--cyan); }
     .header-right { display: flex; align-items: center; gap: 6px; }
     .save-status { font-size: 11px; color: var(--text3); font-family: var(--font-mono); }
 
@@ -291,7 +292,16 @@
     .card-pad { padding: 22px; }
 
     /* ── KPI GRID ── */
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    #kpiGrid .kpi-card:first-child { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(4) { grid-column: span 2; }
+    #kpiGrid .kpi-card:nth-child(5) { grid-column: span 2; }
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      #kpiGrid .kpi-card:first-child { grid-column: span 2; }
+      #kpiGrid .kpi-card:nth-child(4) { grid-column: span 1; }
+      #kpiGrid .kpi-card:nth-child(5) { grid-column: span 1; }
+    }
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -744,6 +754,64 @@
     .mb-placeholder-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text2); margin-bottom: 8px; }
     .mb-placeholder-text { font-size: 13px; color: var(--text3); line-height: 1.6; }
 
+    /* ── MB HERO UPLOAD ── */
+    .mb-header { position: relative; }
+    .mb-hero-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,.5); opacity: 0; transition: opacity .2s;
+      display: flex; align-items: center; justify-content: center; border-radius: var(--radius);
+    }
+    .mb-header:hover .mb-hero-overlay { opacity: 1; }
+    .mb-hero-btn {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      color: #fff; border-radius: 8px; padding: 8px 16px; font-size: 12.5px;
+      cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500;
+    }
+
+    /* ── MB LINKS ── */
+    .mb-links-section { margin-bottom: 40px; }
+    .mb-link-input-row {
+      display: flex; gap: 8px; margin-bottom: 16px;
+    }
+    .mb-link-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 9px 13px;
+      font-size: 13px; color: var(--text); font-family: 'Inter', sans-serif;
+    }
+    .mb-link-input:focus { outline: none; border-color: rgba(193,122,90,.5); }
+    .mb-link-input::placeholder { color: var(--text3); }
+    .mb-link-add-btn {
+      background: rgba(193,122,90,.15); border: 1px solid rgba(193,122,90,.3);
+      color: #e8956d; border-radius: var(--radius-sm); padding: 9px 16px;
+      font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+      white-space: nowrap; transition: all .15s;
+    }
+    .mb-link-add-btn:hover { background: rgba(193,122,90,.25); }
+    .mb-links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .mb-link-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      cursor: pointer; transition: all .15s; position: relative;
+    }
+    .mb-link-card:hover { border-color: rgba(193,122,90,.3); transform: translateY(-2px); }
+    .mb-link-img {
+      width: 100%; height: 120px; background-size: cover; background-position: center;
+      background-color: rgba(193,122,90,.08);
+    }
+    .mb-link-img-placeholder { display: flex; align-items: center; justify-content: center; font-size: 32px; }
+    .mb-link-body { padding: 10px 12px; padding-right: 28px; }
+    .mb-link-title { font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mb-link-url { font-size: 10.5px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mb-link-del {
+      position: absolute; top: 6px; right: 6px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(13,17,23,.8); border: 1px solid var(--border);
+      color: var(--text3); font-size: 11px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .15s;
+    }
+    .mb-link-card:hover .mb-link-del { opacity: 1; }
+
     .mb-global-quote {
       border: 1px solid rgba(193,122,90,0.2); border-radius: var(--radius);
       background: rgba(193,122,90,0.05); padding: 18px 24px; margin-bottom: 20px;
@@ -773,6 +841,131 @@
     .setup-input:focus { border-color:var(--cyan); }
     .setup-link { font-size:12px; color:var(--text3); margin-top:16px; }
     .setup-link a { color:var(--cyan); text-decoration:none; }
+
+    /* ── ACTIVITY TOOLBAR ── */
+    .act-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 14px; flex-wrap: nowrap;
+    }
+    .act-toolbar .filters { flex: 1; display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; }
+    .act-toolbar .filters select {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 7px 10px;
+      font-size: 12px; color: var(--text2); font-family: 'Inter', sans-serif;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    }
+    .act-toolbar .filters select:focus { outline: none; border-color: rgba(34,211,238,.4); }
+    .act-search-wrap { position: relative; flex-shrink: 0; }
+    .act-search-icon {
+      width: 34px; height: 34px; border-radius: var(--radius-sm);
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text2); transition: all .15s; font-size: 15px;
+    }
+    .act-search-icon:hover, .act-search-icon.open { color: var(--cyan); border-color: rgba(34,211,238,.3); }
+    .act-search-input {
+      position: absolute; right: 0; top: 0;
+      width: 0; opacity: 0; pointer-events: none;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 7px 12px;
+      font-size: 13px; color: var(--text); font-family: 'Inter', sans-serif;
+      transition: width .2s ease, opacity .2s ease;
+      height: 34px;
+    }
+    .act-search-input.open {
+      width: 190px; opacity: 1; pointer-events: all;
+      border-color: rgba(34,211,238,.35);
+      right: 38px;
+    }
+    .act-search-input:focus { outline: none; }
+    .act-add-btn {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(129,140,248,.18));
+      border: 1px solid rgba(34,211,238,.3); border-radius: var(--radius-sm);
+      color: var(--cyan); font-size: 22px; font-weight: 300;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .15s; line-height: 1;
+    }
+    .act-add-btn:hover { background: rgba(34,211,238,.25); box-shadow: 0 0 12px var(--cyan-glow); }
+
+    /* ── ACTIVITY CARDS ── */
+    .activity-cards { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+    .ac-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      transition: border-color .15s, background .15s;
+    }
+    .ac-card:hover { border-color: var(--border-s); background: var(--surface-h); }
+    .ac-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .ac-info { flex: 1; min-width: 0; }
+    .ac-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ac-meta { font-size: 11.5px; color: var(--text3); line-height: 1.5; }
+    .ac-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+    .ac-amount { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--cyan); }
+    .ac-amount.paid { color: var(--green); }
+    .ac-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.04);
+    }
+    .ac-extra { font-size: 11px; color: var(--text3); font-family: var(--font-mono); }
+    .ac-actions { display: flex; gap: 5px; }
+    .ac-link-badge { font-size: 10.5px; color: var(--cyan); background: var(--cyan-dim); padding: 2px 8px; border-radius: 10px; }
+
+    /* ── DOCS REDESIGN ── */
+    .docs-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .docs-cats { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .docs-add-group { display: flex; gap: 6px; flex-shrink: 0; }
+    .doc-cat-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 13px;
+      font-size: 12px; color: var(--text2); cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all .13s; white-space: nowrap;
+    }
+    .doc-cat-btn:hover { border-color: var(--border-s); color: var(--text); }
+    .doc-cat-btn.active { background: var(--cyan-dim); border-color: rgba(34,211,238,.3); color: var(--cyan); font-weight: 600; }
+    .docs-grid-new { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .doc-card-new {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: border-color .2s, transform .15s;
+      position: relative;
+    }
+    .doc-card-new:hover { border-color: var(--border-s); transform: translateY(-2px); }
+    .doc-thumb-new {
+      width: 100%; aspect-ratio: 16/9;
+      object-fit: cover; display: block;
+      background: rgba(255,255,255,.03);
+    }
+    .doc-thumb-icon-new {
+      width: 100%; aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; background: rgba(255,255,255,.03);
+    }
+    .doc-card-body { padding: 11px 13px; }
+    .doc-card-name { font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .doc-card-cat { font-size: 10.5px; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; }
+    .doc-card-actions {
+      position: absolute; top: 6px; right: 6px;
+      display: flex; gap: 4px; opacity: 0;
+      transition: opacity .15s;
+    }
+    .doc-card-new:hover .doc-card-actions { opacity: 1; }
+    .doc-act-btn {
+      width: 26px; height: 26px;
+      background: rgba(13,17,23,.85); border: 1px solid var(--border-s);
+      border-radius: 6px; color: var(--text2); font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .12s; backdrop-filter: blur(8px);
+    }
+    .doc-act-btn:hover { color: var(--text); background: rgba(13,17,23,.95); }
+    .doc-has-notes { position: absolute; top: 6px; left: 6px; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 6px var(--cyan); }
+
+    /* Doc notes editor modal */
+    #docNotesModal { padding: 24px; }
+    .doc-notes-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 14px; }
 
     /* ══ MOBILE RESPONSIVE ══ */
     @media (max-width: 600px) {
@@ -919,9 +1112,6 @@
     <button class="menu-nav-btn" data-tab="moodboard" onclick="showTab('moodboard')">
       <span class="m-icon">🎨</span> Moodboard
     </button>
-    <button class="menu-nav-btn" data-tab="3d" onclick="showTab('3d')">
-      <span class="m-icon">🏗️</span> Prototipo 3D
-    </button>
   </div>
 
   <!-- Sync status -->
@@ -955,7 +1145,7 @@
 
 <!-- HEADER -->
 <header>
-  <div class="header-left">
+  <div class="header-left" onclick="showTab('resumen')" style="cursor:pointer;">
     <div class="header-icon-fallback">🏠</div>
     <span class="header-title">Buga House</span>
   </div>
@@ -1037,7 +1227,7 @@
 
   <!-- ══════ COTIZACIONES ══════ -->
   <div id="tab-cotizaciones" class="tab-content">
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <div class="act-toolbar">
       <div class="filters">
         <select id="fAmbiente" onchange="renderCotizaciones()"><option value="">Todos los ambientes</option></select>
         <select id="fCategoria" onchange="renderCotizaciones()"><option value="">Todas las categorías</option></select>
@@ -1048,14 +1238,15 @@
           <option value="pendiente">Pendiente</option>
           <option value="cancelado">Cancelado</option>
         </select>
-        <input type="text" id="fBuscar" placeholder="🔍 Buscar…" oninput="renderCotizaciones()" style="min-width:140px;" />
       </div>
-      <button class="btn btn-cyan" onclick="openModal()">+ Nueva entrada</button>
+      <div class="act-search-wrap">
+        <input type="text" id="fBuscar" class="act-search-input" placeholder="Buscar…" oninput="renderCotizaciones()" />
+        <div class="act-search-icon" id="actSearchIcon" onclick="toggleActSearch()">🔍</div>
+      </div>
+      <button class="act-add-btn" onclick="openModal()" title="Nueva entrada">+</button>
     </div>
-    <div class="card" style="overflow:hidden;">
-      <div class="table-wrap" id="cotizTable"></div>
-    </div>
-    <div id="cotizTotals" style="margin-top:10px;text-align:right;font-size:12px;color:var(--text3);font-family:var(--font-mono);"></div>
+    <div id="cotizTable"></div>
+    <div id="cotizTotals" style="margin-top:10px;text-align:right;font-size:12px;color:var(--text3);font-family:var(--font-mono);padding:0 4px;"></div>
   </div>
 
   <!-- ══════ AMBIENTES ══════ -->
@@ -1065,27 +1256,29 @@
 
   <!-- ══════ DOCUMENTOS ══════ -->
   <div id="tab-documentos" class="tab-content">
-    <div class="doc-toolbar">
-      <div>
-        <span class="sec-title"><span class="sec-dot"></span>Planos &amp; Referencias</span>
-        <span id="docCountLabel" style="font-size:11.5px;color:var(--text3);margin-left:10px;">Seleccioná la carpeta del proyecto</span>
+    <div class="docs-top">
+      <div class="docs-cats">
+        <button class="doc-cat-btn active" data-cat="todos" onclick="setDocCat('todos',this)">Todos</button>
+        <button class="doc-cat-btn" data-cat="planos" onclick="setDocCat('planos',this)">📐 Planos</button>
+        <button class="doc-cat-btn" data-cat="fotos" onclick="setDocCat('fotos',this)">🖼️ Fotos</button>
+        <button class="doc-cat-btn" data-cat="avances" onclick="setDocCat('avances',this)">🔨 Avances</button>
+        <button class="doc-cat-btn" data-cat="referencias" onclick="setDocCat('referencias',this)">📌 Referencias</button>
+        <button class="doc-cat-btn" data-cat="renders" onclick="setDocCat('renders',this)">✨ Renders</button>
+        <button class="doc-cat-btn" data-cat="planillas" onclick="setDocCat('planillas',this)">📊 Planillas</button>
+        <button class="doc-cat-btn" data-cat="documentos" onclick="setDocCat('documentos',this)">📄 Documentos</button>
+        <button class="doc-cat-btn" data-cat="videos" onclick="setDocCat('videos',this)">🎬 Videos</button>
+        <button class="doc-cat-btn" data-cat="otro" onclick="setDocCat('otro',this)">📁 Otro</button>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('folderInput').click()">📂 Seleccionar carpeta</button>
-        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('folderInput').click()" title="Volver a escanear la carpeta">🔄 Actualizar</button>
-        <input type="file" id="folderInput" webkitdirectory multiple style="display:none" onchange="onFolderSelected(this)" />
+      <div class="docs-add-group">
+        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('url')" title="Agregar desde URL">🔗</button>
+        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('clip')" title="Pegar desde portapapeles">📋</button>
+        <label class="btn btn-cyan btn-sm" style="cursor:pointer;">
+          + Subir
+          <input type="file" id="docFileInput" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.mp4,.mov,.avi" style="display:none" onchange="onDocFilesSelected(this)" />
+        </label>
       </div>
     </div>
-    <div class="doc-filters" id="docFilters">
-      <button class="doc-filter-btn active" onclick="setDocFilter('todos',this)">Todos</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('plano',this)">📐 Planos</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('foto',this)">🖼️ Fotos</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('documento',this)">📄 Documentos</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('planilla',this)">📊 Planillas</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('video',this)">🎬 Videos</button>
-      <button class="doc-filter-btn" onclick="setDocFilter('otro',this)">📁 Otro</button>
-    </div>
-    <div class="docs-grid" id="docsGrid"></div>
+    <div class="docs-grid-new" id="docsGrid"></div>
   </div>
 
   <!-- ══════ MOODBOARD ══════ -->
@@ -1109,7 +1302,8 @@
 
     <!-- ─── DORMITORIO ─── -->
     <div class="mb-section active" id="mb-dormitorio">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-dormitorio">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('dormitorio',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Dormitorio Principal</div>
         <h2>Industrial <em>suave</em><br>con alma de casa antigua</h2>
         <p class="mb-header-sub">Ventanas de hierro negro que guardan el carácter histórico. Ladrillo visto, madera cálida y textiles naturales que equilibran lo crudo con lo acogedor.</p>
@@ -1186,8 +1380,19 @@
     </div>
 
     <!-- ─── BÓVEDA LADRILLO ─── -->
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-dormitorio" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('dormitorio')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('dormitorio')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-dormitorio"></div>
+      </div>
+    
     <div class="mb-section" id="mb-boveda">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-boveda">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('boveda',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Habitación · Techo de ladrillo a la vista</div>
         <h2>La <em>bóveda</em><br>que define el espacio</h2>
         <p class="mb-header-sub">El techo de ladrillo a la vista es el elemento arquitectónico más potente de la habitación. No compite — todo lo demás se organiza en función de él, dejándolo respirar.</p>
@@ -1288,8 +1493,19 @@
     </div>
 
     <!-- ─── PATIO INTERNO ─── -->
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-boveda" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('boveda')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('boveda')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-boveda"></div>
+      </div>
+    
     <div class="mb-section" id="mb-patio">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-patio">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('patio',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Patio Interno</div>
         <h2>El <em>corazón</em><br>verde de la casa</h2>
         <p class="mb-header-sub">El patio es el eje lumínico del proyecto. Todos los ambientes abren sus aberturas hacia aquí — la fuente de luz natural que conecta y da vida a cada rincón.</p>
@@ -1366,8 +1582,19 @@
     </div>
 
     <!-- ─── COCINA ─── -->
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-patio" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('patio')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('patio')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-patio"></div>
+      </div>
+    
     <div class="mb-section" id="mb-cocina">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-cocina">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('cocina',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Cocina</div>
         <h2>Funcional y <em>cálida</em><br>con vista al patio</h2>
         <p class="mb-header-sub">La cocina abrirá al patio interior, integrando el espacio con luz natural y creando una conexión entre lo doméstico y el verde.</p>
@@ -1420,8 +1647,19 @@
     </div>
 
     <!-- ─── BAÑO ─── -->
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-cocina" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('cocina')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('cocina')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-cocina"></div>
+      </div>
+    
     <div class="mb-section" id="mb-bano">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-bano">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('bano',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Baño</div>
         <h2>Limpio, <em>luminoso</em><br>y con personalidad</h2>
         <p class="mb-header-sub">Un baño moderno y minimalista que no pesa. Blanco, materiales naturales, mucha luz. Un espacio donde da gusto estar.</p>
@@ -1594,8 +1832,19 @@
     </div>
 
     <!-- ─── LIVING / COMEDOR ─── -->
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-bano" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('bano')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('bano')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-bano"></div>
+      </div>
+    
     <div class="mb-section" id="mb-living">
-      <div class="mb-header">
+      <div class="mb-header" id="mbHero-living">
+      <div class="mb-hero-overlay"><label class="mb-hero-btn" style="cursor:pointer;">🖼️ Cambiar imagen<input type="file" accept="image/*" style="display:none" onchange="uploadMbHero('living',this)"/></label></div>
         <div class="mb-room-tag">Casa Nueva · Living + Comedor</div>
         <h2><em>Un espacio</em>,<br>mil usos</h2>
         <p class="mb-header-sub">Living integrado con comedor: se come, se ve tele, se trabaja y se recibe. Sin divisiones rígidas — el espacio fluye desde la cocina hasta el patio.</p>
@@ -1808,103 +2057,19 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=living+comedor+casa+reciclada+argentina+moderno" target="_blank">living comedor casa reciclada argentina moderno</a>
         </div>
       </div>
+      <!-- Links pegados -->
+      <div class="mb-links-section">
+        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-link-input-row">
+          <input type="url" class="mb-link-input" id="mbLinkInput-living" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('living')" />
+          <button class="mb-link-add-btn" onclick="addMbLink('living')">+ Guardar</button>
+        </div>
+        <div class="mb-links-grid" id="mbLinks-living"></div>
+      </div>
     </div>
 
   </div>
 
-  <!-- ══════ 3D PROTOTIPO ══════ -->
-  <div id="tab-3d" class="tab-content">
-    <!-- UPLOAD ZONE -->
-    <div id="fp3dUpload" onclick="document.getElementById('fp3dFile').click()"
-         style="border:2px dashed var(--border);border-radius:var(--radius);padding:60px 24px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--surface);"
-         ondragover="event.preventDefault();this.style.borderColor='var(--cyan)'"
-         ondragleave="this.style.borderColor='var(--border)'"
-         ondrop="fp3dHandleDrop(event)">
-      <div style="font-size:48px;margin-bottom:16px;">📐</div>
-      <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px;">Subí tu plano</div>
-      <div style="font-size:13px;color:var(--text3);">Arrastrá acá o hacé click · JPG · PNG</div>
-      <input type="file" id="fp3dFile" accept="image/*" hidden onchange="fp3dLoadFile(this.files[0])">
-    </div>
-
-    <!-- EDITOR (oculto hasta que se suba imagen) -->
-    <div id="fp3dMain" style="display:none">
-      <!-- Toolbar -->
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;">
-        <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
-          <button id="fpBtn2d" class="btn3d-opt active" onclick="fp3dSetView('2d')" style="border-radius:0;border:none;">✏️ Editor 2D</button>
-          <button id="fpBtn3d" class="btn3d-opt" onclick="fp3dSetView('3d')" style="border-radius:0;border:none;">🏗️ Vista 3D</button>
-        </div>
-        <div id="fp3dToolbar" style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button id="fpTool-select" class="btn3d-opt active" onclick="fp3dSetTool('select')" title="Seleccionar / mover">↖ Seleccionar</button>
-          <button id="fpTool-wall" class="btn3d-opt" onclick="fp3dSetTool('wall')" title="Click para dibujar pared (doble-click para terminar)">▬ Pared</button>
-          <button id="fpTool-door" class="btn3d-opt" onclick="fp3dSetTool('door')" title="Click para colocar puerta">🚪 Puerta</button>
-          <button id="fpTool-window" class="btn3d-opt" onclick="fp3dSetTool('window')" title="Click para colocar ventana">🪟 Ventana</button>
-          <button id="fpTool-gap" class="btn3d-opt" onclick="fp3dSetTool('gap')" title="Click en una pared para crear apertura (puerta/ventana). Arrastrá para definir el ancho.">⬜ Apertura</button>
-          <button id="fpTool-erase" class="btn3d-opt" onclick="fp3dSetTool('erase')" title="Click para borrar elemento">✕ Borrar</button>
-        </div>
-        <div style="display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;">
-          <button class="btn btn-ghost btn-sm" onclick="fp3dUndo()" title="Deshacer (Ctrl+Z)" id="fp3dUndoBtn" style="opacity:0.4">↩ Deshacer</button>
-          <button class="btn btn-ghost btn-sm" onclick="fp3dDetectWalls()">🔍 Re-detectar</button>
-          <button class="btn btn-ghost btn-sm" onclick="fp3dClearAll()">🗑 Limpiar</button>
-          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('fp3dFile').click()">📂 Otro plano</button>
-        </div>
-      </div>
-
-      <!-- 2D Canvas -->
-      <div id="fp3d2dView" style="position:relative;border-radius:var(--radius);overflow:hidden;background:#0a0c12;">
-        <canvas id="fp3dCanvas" style="display:block;cursor:crosshair;max-width:100%;"></canvas>
-        <div id="fp3dHint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,.4);pointer-events:none;font-family:var(--font-mono);white-space:nowrap;"></div>
-      </div>
-
-      <!-- 3D Canvas + controls -->
-      <div id="fp3d3dView" style="display:none">
-        <div style="display:grid;grid-template-columns:1fr 240px;gap:12px;align-items:start;">
-          <div class="card" style="padding:0;overflow:hidden;position:relative;">
-            <canvas id="fp3d3dCanvas" style="width:100%;height:520px;display:block;cursor:grab;"></canvas>
-            <div style="position:absolute;bottom:10px;left:12px;font-size:10px;color:rgba(255,255,255,.3);pointer-events:none;font-family:var(--font-mono);">ARRASTRÁ · SCROLL ZOOM</div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="card card-pad">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:10px;">Alto de paredes</div>
-              <input type="range" min="2.2" max="5" value="2.8" step="0.1" oninput="fp3dSetHeight(this.value)" style="width:100%;accent-color:var(--cyan);">
-              <div style="font-size:11px;color:var(--cyan);font-family:var(--font-mono);margin-top:4px;" id="fp3dHLbl">2.8m</div>
-            </div>
-            <div class="card card-pad">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:10px;">Materiales</div>
-              <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Piso</div>
-              <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;" id="fp3dFloorBtns">
-                <button class="btn3d-opt active" onclick="fp3dMat('floor','wood',this)">🪵</button>
-                <button class="btn3d-opt" onclick="fp3dMat('floor','concrete',this)">🩶</button>
-                <button class="btn3d-opt" onclick="fp3dMat('floor','tile',this)">⬜</button>
-              </div>
-              <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Paredes</div>
-              <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;" id="fp3dWallBtns">
-                <button class="btn3d-opt active" onclick="fp3dMat('wall','brick',this)">🧱</button>
-                <button class="btn3d-opt" onclick="fp3dMat('wall','white',this)">🤍</button>
-                <button class="btn3d-opt" onclick="fp3dMat('wall','concrete',this)">🪨</button>
-              </div>
-              <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Techo</div>
-              <div style="display:flex;gap:4px;flex-wrap:wrap;" id="fp3dCeilBtns">
-                <button class="btn3d-opt active" onclick="fp3dMat('ceil','white',this)">🤍</button>
-                <button class="btn3d-opt" onclick="fp3dMat('ceil','wood',this)">🪵</button>
-                <button class="btn3d-opt" onclick="fp3dMat('ceil','brick',this)">🧱</button>
-              </div>
-            </div>
-            <div class="card card-pad">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:10px;">Luz</div>
-              <div style="display:flex;gap:4px;">
-                <button class="btn3d-opt active" id="fp3dLWarm" onclick="fp3dLight('warm',this)">🕯️ Cálida</button>
-                <button class="btn3d-opt" id="fp3dLCool" onclick="fp3dLight('cool',this)">💡 Blanca</button>
-              </div>
-            </div>
-            <button class="btn btn-ghost" onclick="fp3dResetCam()" style="width:100%;font-size:12px;">↺ Resetear cámara</button>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:8px;font-size:11px;color:var(--text3);font-family:var(--font-mono);" id="fp3dStatus"></div>
-    </div>
-  </div>
 
 </main>
 
@@ -2073,7 +2238,11 @@ let state = {
     { id:4, desc:'Cotización arquitecto',     categoria:'Profesionales',ambiente:'General', monto:0, estado:'cotizado', proveedor:'', fecha:'2026-04-18', notas:'Estimado inicial', vinculadoA:null },
   ],
   presupuesto: 0,
-  nextId: 5
+  nextId: 5,
+  docs: [],
+  docNextId: 1,
+  mbLinks: {},
+  mbHeros: {},
 };
 
 let editingId = null;
@@ -2105,6 +2274,10 @@ function setSyncStatus(s, msg) {
 function applyLoaded(loaded) {
   state = { ...state, ...loaded };
   state.gastos = state.gastos.map(g => ({ ...g, vinculadoA: g.vinculadoA !== undefined ? g.vinculadoA : null }));
+  if (!state.docs) state.docs = [];
+  if (!state.docNextId) state.docNextId = 1;
+  if (!state.mbLinks) state.mbLinks = {};
+  if (!state.mbHeros) state.mbHeros = {};
 }
 
 async function loadData() {
@@ -2270,7 +2443,7 @@ function showTab(name) {
   renderTab(name);
 }
 function renderTab(name) {
-  const map = { resumen: renderResumenCompleto, cotizaciones: renderCotizaciones, documentos: renderDocumentos, moodboard: renderMoodboard, '3d': init3D };
+  const map = { resumen: renderResumenCompleto, cotizaciones: renderCotizaciones, documentos: renderDocumentos, moodboard: renderMoodboard };
   if (map[name]) map[name]();
 }
 
@@ -2631,78 +2804,68 @@ function getFiltered() {
   );
 }
 
+let _actSearchOpen = false;
+function toggleActSearch() {
+  _actSearchOpen = !_actSearchOpen;
+  const inp = document.getElementById('fBuscar');
+  const icon = document.getElementById('actSearchIcon');
+  inp.classList.toggle('open', _actSearchOpen);
+  icon.classList.toggle('open', _actSearchOpen);
+  if (_actSearchOpen) { inp.focus(); } else { inp.value = ''; renderCotizaciones(); }
+}
+
 function renderCotizaciones() {
   populateFilters();
   const items = getFiltered();
-  // Footer pagado: sin doble conteo
-  // = pagados no vinculados (standalone)
-  // + pagadoLinked de cotizaciones en el filtro
-  // + pagados vinculados cuyo padre NO está en el filtro (ej: filtro "Pagado")
   const pagadosNoVinc = items.filter(g=>g.estado==='pagado'&&g.vinculadoA==null).reduce((s,g)=>s+(Number(g.monto)||0),0);
   const pagadoViaCotz = items.filter(g=>g.estado==='cotizado'||g.estado==='pendiente').reduce((s,g)=>s+getTotalPagadoDe(g.id),0);
   const pagadosHuerfanos = items.filter(g=>g.estado==='pagado'&&g.vinculadoA!=null&&!items.find(x=>x.id===g.vinculadoA)).reduce((s,g)=>s+(Number(g.monto)||0),0);
   const totalPagFilt = pagadosNoVinc + pagadoViaCotz + pagadosHuerfanos;
   const totalCotFilt = items.filter(g=>g.estado==='cotizado'||g.estado==='pendiente').reduce((s,g)=>s+getRestanteDe(g),0);
   if (!items.length) {
-    document.getElementById('cotizTable').innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><div class="empty-msg">No hay ítems que coincidan</div></div>';
+    document.getElementById('cotizTable').innerHTML = '<div class="empty" style="padding:48px 20px;"><div class="empty-icon">🔍</div><div class="empty-msg">No hay ítems que coincidan</div></div>';
     document.getElementById('cotizTotals').textContent = '';
     return;
   }
-  document.getElementById('cotizTable').innerHTML = `
-    <table>
-      <thead><tr>
-        <th style="width:24px;padding:0;"></th>
-        <th>Descripción</th><th>Ambiente</th><th>Categoría</th><th>Proveedor</th><th>Fecha</th><th>Estado</th>
-        <th style="text-align:right">Monto total</th>
-        <th style="text-align:right">Pagado</th>
-        <th style="text-align:right">Restante</th>
-        <th></th>
-      </tr></thead>
-      <tbody>${items.map(g => {
-        const monto = Number(g.monto)||0;
-        const esCotiz = g.estado === 'cotizado' || g.estado === 'pendiente';
-        const esPagado = g.estado === 'pagado';
-        const pagadoLinked = getTotalPagadoDe(g.id);
-        const restante = getRestanteDe(g);
-        const cotizLinked = esPagado && g.vinculadoA != null ? state.gastos.find(x=>x.id===g.vinculadoA) : null;
-        const fechaFmt = g.fecha ? new Date(g.fecha + 'T12:00:00').toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'}) : '—';
-        return `
-        <tr draggable="true" data-id="${g.id}" style="cursor:default;${cotizLinked ? 'opacity:.75;' : ''}">
-          <td class="drag-handle" title="Arrastrá para reordenar">⠿</td>
-          <td style="min-width:180px;">
-            <div style="font-size:13.5px;font-weight:500;">${esc(g.desc)}</div>
-            ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:2px;">↗ ${esc(cotizLinked.desc)}</div>` : ''}
-            ${esCotiz && pagadoLinked > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:2px;">${getPagosDe(g.id).length} pago${getPagosDe(g.id).length!==1?'s':''} vinculado${getPagosDe(g.id).length!==1?'s':''}</div>` : ''}
-          </td>
-          <td style="color:var(--text2);font-size:13px;">${g.ambiente}</td>
-          <td style="color:var(--text2);font-size:13px;">${g.categoria}</td>
-          <td style="color:var(--text3);font-size:13px;">${g.proveedor ? esc(g.proveedor) : '<span style="color:var(--text3)">—</span>'}</td>
-          <td style="color:var(--text2);font-size:13px;white-space:nowrap;">${fechaFmt}</td>
-          <td>${badgeHtml(g.estado)}</td>
-          <td class="td-num" style="color:var(--text2);">${monto ? fmt(monto) : '<span style="color:var(--text3)">—</span>'}</td>
-          <td class="td-num" style="color:var(--green);">
-            ${cotizLinked
-              ? `<span style="color:var(--text3)" title="Incluido en '${esc(cotizLinked.desc)}'">—</span>`
-              : esPagado ? fmt(monto) : (pagadoLinked > 0 ? fmt(pagadoLinked) : '<span style="color:var(--text3)">—</span>')}
-          </td>
-          <td class="td-num" style="color:${esCotiz&&restante>0?'var(--amber)':'var(--text3)'};">
-            ${esCotiz
-              ? (restante > 0 ? fmt(restante) : '<span style="color:var(--green)">✓</span>')
-              : '<span style="color:var(--text3)">—</span>'}
-          </td>
-          <td class="td-actions">
-            <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal(${g.id})" title="Editar">✏️</button>
-            ${esCotiz && restante > 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" title="Asignar pago" style="font-size:11px;">💰</button>` : ''}
-            ${esPagado && g.vinculadoA != null ? `<button class="btn btn-ghost btn-sm" onclick="desvincularPago(${g.id})" title="Desvincular" style="font-size:10px;padding:4px 6px;">🔓</button>` : ''}
-            <button class="btn btn-danger btn-sm btn-icon" onclick="deleteGasto(${g.id})" title="Eliminar">✕</button>
-          </td>
-        </tr>`;
-      }).join('')}
-      </tbody>
-    </table>`;
+  document.getElementById('cotizTable').innerHTML = `<div class="activity-cards">${items.map(g => {
+    const monto = Number(g.monto)||0;
+    const esCotiz = g.estado === 'cotizado' || g.estado === 'pendiente';
+    const esPagado = g.estado === 'pagado';
+    const pagadoLinked = getTotalPagadoDe(g.id);
+    const restante = getRestanteDe(g);
+    const cotizLinked = esPagado && g.vinculadoA != null ? state.gastos.find(x=>x.id===g.vinculadoA) : null;
+    const pagos = getPagosDe(g.id);
+    const fechaFmt = g.fecha ? new Date(g.fecha + 'T12:00:00').toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit'}) : '—';
+    const amountColor = esPagado ? 'var(--green)' : esCotiz ? 'var(--amber)' : 'var(--cyan)';
+    const displayAmount = esPagado ? fmt(monto) : esCotiz ? (monto ? fmt(monto) : '—') : '—';
+    return `
+    <div class="ac-card" data-id="${g.id}">
+      <div class="ac-main">
+        <div class="ac-info">
+          <div class="ac-title">${esc(g.desc)}</div>
+          <div class="ac-meta">${g.ambiente} · ${g.categoria}${g.fecha ? ' · ' + fechaFmt : ''}</div>
+          ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc)}</div>` : ''}
+          ${esCotiz && pagos.length > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ${pagos.length} pago${pagos.length!==1?'s':''} · ${fmt(pagadoLinked)} pagado</div>` : ''}
+        </div>
+        <div class="ac-right">
+          ${badgeHtml(g.estado)}
+          <div class="ac-amount" style="color:${amountColor};">${displayAmount}</div>
+          ${esCotiz && restante > 0 ? `<div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);">resta ${fmt(restante)}</div>` : ''}
+        </div>
+      </div>
+      <div class="ac-footer">
+        <div class="ac-extra">${g.notas ? '📝 ' + esc(g.notas).slice(0,40) + (g.notas.length>40?'…':'') : ''}</div>
+        <div class="ac-actions">
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal(${g.id})" title="Editar">✏️</button>
+          ${esCotiz && restante > 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" style="font-size:11px;padding:4px 10px;">💰 Pagar</button>` : ''}
+          ${esPagado && g.vinculadoA != null ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="desvincularPago(${g.id})" title="Desvincular">🔓</button>` : ''}
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteGasto(${g.id})" title="Eliminar">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
   document.getElementById('cotizTotals').innerHTML =
     `${items.length} ítem${items.length!==1?'s':''} · Pagado: <span style="color:var(--green)">${fmt(totalPagFilt)}</span> · En cotización: <span style="color:var(--amber)">${fmt(totalCotFilt)}</span>`;
-  initDragDrop();
 }
 
 // ══════════════════════════════════════════════
@@ -3036,9 +3199,25 @@ function updateDocCount() {
   if (lbl) lbl.textContent = total > 0 ? total + ' archivo' + (total!==1?'s':'') + ' encontrado' + (total!==1?'s':'') : 'Carpeta vacía';
 }
 
-function setDocFilter(filter, btn) {
-  docFilter = filter;
-  document.querySelectorAll('.doc-filter-btn').forEach(b => b.classList.remove('active'));
+// ══════════════════════════════════════════════
+// DOCUMENTOS (nuevo sistema persistente)
+// ══════════════════════════════════════════════
+let _docCat = 'todos';
+const DOC_CATS = {
+  todos:'Todos', planos:'📐 Planos', fotos:'🖼️ Fotos', avances:'🔨 Avances',
+  referencias:'📌 Referencias', renders:'✨ Renders', planillas:'📊 Planillas',
+  documentos:'📄 Documentos', videos:'🎬 Videos', otro:'📁 Otro'
+};
+const DOC_ICONS = {
+  jpg:'🖼️', jpeg:'🖼️', png:'🖼️', webp:'🖼️', gif:'🖼️', bmp:'🖼️',
+  pdf:'📄', doc:'📝', docx:'📝', xls:'📊', xlsx:'📊', ppt:'📋', pptx:'📋',
+  mp4:'🎬', mov:'🎬', avi:'🎬', txt:'📝', zip:'📦'
+};
+const IMG_EXTS = ['jpg','jpeg','png','webp','gif','bmp'];
+
+function setDocCat(cat, btn) {
+  _docCat = cat;
+  document.querySelectorAll('.doc-cat-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   renderDocumentos();
 }
@@ -3046,97 +3225,228 @@ function setDocFilter(filter, btn) {
 function renderDocumentos() {
   const grid = document.getElementById('docsGrid');
   if (!grid) return;
-  if (!docFiles.length) {
-    grid.innerHTML = `
-      <div class="doc-empty-state">
-        <div style="font-size:48px;opacity:.35;">📁</div>
-        <div style="font-size:14px;font-weight:600;color:var(--text2);">Ninguna carpeta seleccionada</div>
-        <div style="font-size:12.5px;color:var(--text3);text-align:center;max-width:320px;line-height:1.6;">Hacé clic en "Seleccionar carpeta" y elegí la carpeta del proyecto para ver todos los archivos acá.</div>
-        <button class="btn btn-cyan" style="margin-top:4px;" onclick="document.getElementById('folderInput').click()">📂 Seleccionar carpeta</button>
-      </div>`;
+  const docs = _docCat === 'todos' ? state.docs : state.docs.filter(d => d.category === _docCat);
+  if (!docs.length) {
+    grid.innerHTML = `<div class="doc-empty-state" style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 20px;gap:14px;">
+      <div style="font-size:48px;opacity:.3;">📁</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text2);">${_docCat === 'todos' ? 'Todavía no hay archivos' : 'No hay archivos en esta categoría'}</div>
+      <div style="font-size:12.5px;color:var(--text3);text-align:center;max-width:300px;line-height:1.65;">Usá los botones de arriba para subir un archivo, pegar una imagen o agregar una URL.</div>
+    </div>`;
     return;
   }
-  const filtered = docFilter === 'todos' ? docFiles : docFiles.filter(f => getDocType(f.name).key === docFilter);
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="doc-empty-state"><div style="font-size:36px;opacity:.4;">🔍</div><div style="font-size:13px;color:var(--text3);">No hay archivos de este tipo en la carpeta</div></div>`;
-    return;
-  }
-  const IMG_EXTS = ['jpg','jpeg','png','webp','gif','bmp'];
-  grid.innerHTML = filtered.map(f => {
-    const type = getDocType(f.name);
-    const ext = (f.name.split('.').pop()||'').toLowerCase();
-    const isImg = IMG_EXTS.includes(ext);
-    const short = f.name.length > 32 ? f.name.slice(0,29)+'…' : f.name;
-    const sizeKb = f.size > 0 ? (f.size >= 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB') : '';
-    const globalIdx = docFiles.indexOf(f);
+  grid.innerHTML = docs.map(d => {
+    const ext = (d.name.split('.').pop() || '').toLowerCase();
+    const isImg = IMG_EXTS.includes(ext) || (d.src && d.src.startsWith('data:image'));
+    const icon = DOC_ICONS[ext] || (d.srcType === 'url' ? '🔗' : '📁');
+    const shortName = d.name.length > 28 ? d.name.slice(0,26)+'…' : d.name;
     return `
-    <div class="doc-card" onclick="openDocViewer(${globalIdx})" style="cursor:pointer;">
+    <div class="doc-card-new" onclick="openDocView(${d.id})">
+      ${d.notes ? '<div class="doc-has-notes"></div>' : ''}
+      <div class="doc-card-actions" onclick="event.stopPropagation()">
+        <button class="doc-act-btn" onclick="openDocNotes(${d.id})" title="Notas">📝</button>
+        <button class="doc-act-btn" onclick="deleteDoc(${d.id})" title="Eliminar" style="color:var(--red);">✕</button>
+      </div>
       ${isImg
-        ? `<img class="doc-thumb" src="${f._url}" alt="${esc(f.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="doc-thumb-icon" style="display:none;color:${type.color};">${type.icon}</div>`
-        : `<div class="doc-thumb-icon" style="color:${type.color};">${type.icon}</div>`}
-      <div class="doc-info">
-        <div class="doc-name" title="${esc(f.name)}">${short}</div>
-        <div class="doc-type" style="color:${type.color};">${type.label}${sizeKb ? ' · '+sizeKb : ''}</div>
+        ? `<img class="doc-thumb-new" src="${d.src}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="doc-thumb-icon-new" style="display:none;">${icon}</div>`
+        : `<div class="doc-thumb-icon-new">${icon}</div>`}
+      <div class="doc-card-body">
+        <div class="doc-card-name" title="${esc(d.name)}">${shortName}</div>
+        <div class="doc-card-cat">${DOC_CATS[d.category] || d.category} · ${d.addedAt || ''}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════
-// VISOR DE DOCUMENTOS
-// ══════════════════════════════════════════════
-let docViewIndex = 0;
-let docViewFiles = [];
-
-function openDocViewer(globalIdx) {
-  docViewFiles = docFilter === 'todos' ? [...docFiles] : docFiles.filter(f => getDocType(f.name).key === docFilter);
-  const f = docFiles[globalIdx];
-  docViewIndex = f ? docViewFiles.indexOf(f) : 0;
-  if (docViewIndex < 0) docViewIndex = 0;
-  renderDocViewContent();
-  document.getElementById('modalDocView').classList.add('open');
+// Subir archivos desde dispositivo
+async function onDocFilesSelected(input) {
+  const files = [...input.files];
+  for (const file of files) {
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    const isImg = IMG_EXTS.includes(ext);
+    let src;
+    if (isImg) {
+      src = await compressImage(file);
+    } else {
+      src = await readFileAsDataURL(file);
+    }
+    const autocat = guessDocCategory(file.name);
+    state.docs.push({ id: state.docNextId++, name: file.name, category: autocat, src, srcType: 'file', notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+  }
+  autoSave();
+  renderDocumentos();
+  showToast(`✅ ${files.length} archivo${files.length!==1?'s':''} agregado${files.length!==1?'s':''}`);
+  input.value = '';
 }
 
-function renderDocViewContent() {
-  const f = docViewFiles[docViewIndex];
-  if (!f) return;
-  const type = getDocType(f.name);
-  const sizeStr = f.size >= 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB';
-  const IMG_EXTS = ['jpg','jpeg','png','webp','gif','bmp'];
-  const ext = (f.name.split('.').pop()||'').toLowerCase();
-  const isImg = IMG_EXTS.includes(ext);
-  document.getElementById('docViewName').textContent = f.name;
-  document.getElementById('docViewMeta').textContent = type.label + (f.size > 0 ? ' · ' + sizeStr : '');
-  const dlBtn = document.getElementById('docViewDownload');
-  dlBtn.href = f._url; dlBtn.download = f.name;
-  document.getElementById('docViewNav').textContent = (docViewIndex+1) + ' de ' + docViewFiles.length;
-  const prev = document.getElementById('docViewPrev');
-  const next = document.getElementById('docViewNext');
-  prev.style.opacity = docViewIndex > 0 ? '1' : '.3';
-  prev.style.pointerEvents = docViewIndex > 0 ? '' : 'none';
-  next.style.opacity = docViewIndex < docViewFiles.length-1 ? '1' : '.3';
-  next.style.pointerEvents = docViewIndex < docViewFiles.length-1 ? '' : 'none';
-  const content = document.getElementById('docViewContent');
+function readFileAsDataURL(file) {
+  return new Promise(res => { const r = new FileReader(); r.onload = e => res(e.target.result); r.readAsDataURL(file); });
+}
+
+function compressImage(file, maxPx=1400, quality=0.78) {
+  return new Promise(res => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+      const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg', quality));
+    };
+    img.src = url;
+  });
+}
+
+function guessDocCategory(name) {
+  const n = name.toLowerCase();
+  if (/plano|dwg|cad|layout/.test(n)) return 'planos';
+  if (/render|3d|sketchup/.test(n)) return 'renders';
+  if (/foto|photo|img|image|jpg|jpeg|png|webp/.test(n)) return 'fotos';
+  if (/xls|xlsx|planilla|presupuesto/.test(n)) return 'planillas';
+  if (/mp4|mov|avi|video/.test(n)) return 'videos';
+  if (/doc|docx|pdf|txt/.test(n)) return 'documentos';
+  return 'otro';
+}
+
+// Agregar desde URL o portapapeles
+let _docAddType = 'url';
+let _docAddCat = 'referencias';
+function openDocAdd(type) {
+  _docAddType = type;
+  const modal = document.getElementById('modalDocAdd');
+  const title = document.getElementById('docAddTitle');
+  const urlRow = document.getElementById('docAddUrlRow');
+  const clipRow = document.getElementById('docAddClipRow');
+  title.textContent = type === 'url' ? 'Agregar desde URL' : 'Pegar imagen';
+  urlRow.style.display = type === 'url' ? '' : 'none';
+  clipRow.style.display = type === 'clip' ? '' : 'none';
+  document.getElementById('docAddUrl').value = '';
+  document.getElementById('docAddName').value = '';
+  document.getElementById('docAddCat').value = 'referencias';
+  document.getElementById('docAddPreview').innerHTML = '';
+  modal.classList.add('open');
+  if (type === 'url') setTimeout(() => document.getElementById('docAddUrl').focus(), 100);
+}
+
+function closeDocAdd() { document.getElementById('modalDocAdd').classList.remove('open'); }
+
+function previewDocUrl() {
+  const url = document.getElementById('docAddUrl').value.trim();
+  const prev = document.getElementById('docAddPreview');
+  if (!url) { prev.innerHTML = ''; return; }
+  const ext = (url.split('?')[0].split('.').pop() || '').toLowerCase();
+  const isImg = IMG_EXTS.includes(ext) || url.includes('pinimg') || url.includes('unsplash') || url.includes('imgur');
   if (isImg) {
-    content.innerHTML = `<img src="${f._url}" alt="${esc(f.name)}" style="max-width:100%;max-height:72vh;object-fit:contain;border-radius:6px;" />`;
+    prev.innerHTML = `<img src="${url}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:8px;margin-top:10px;" onerror="this.parentNode.innerHTML='<div style=color:var(--red);font-size:12px;margin-top:8px;>No se pudo cargar la imagen</div>'" />`;
   } else {
-    content.innerHTML = `<div style="text-align:center;padding:48px 20px;">
-      <div style="font-size:72px;">${type.icon}</div>
-      <div style="font-size:16px;color:var(--text2);margin-top:16px;font-weight:600;">${esc(f.name)}</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:6px;">${sizeStr}</div>
-      <div style="font-size:12.5px;color:var(--text3);margin-top:20px;line-height:1.7;">Este tipo de archivo no se puede previsualizar.<br>Usá el botón Descargar para abrirlo.</div>
-    </div>`;
+    prev.innerHTML = `<div style="font-size:12px;color:var(--text2);margin-top:8px;">🔗 ${url.length > 60 ? url.slice(0,57)+'…' : url}</div>`;
+  }
+  if (!document.getElementById('docAddName').value) {
+    const parts = url.split('/').filter(Boolean);
+    document.getElementById('docAddName').value = parts[parts.length-1]?.split('?')[0] || 'enlace';
   }
 }
 
-function navDoc(dir) {
-  docViewIndex = Math.max(0, Math.min(docViewFiles.length-1, docViewIndex + dir));
-  renderDocViewContent();
+async function pasteFromClipboard() {
+  try {
+    const items = await navigator.clipboard.read();
+    for (const item of items) {
+      for (const type of item.types) {
+        if (type.startsWith('image/')) {
+          const blob = await item.getType(type);
+          const file = new File([blob], 'pegado.png', { type });
+          const src = await compressImage(file);
+          document.getElementById('docAddPreview').innerHTML = `<img src="${src}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:8px;margin-top:10px;" />`;
+          document.getElementById('docAddName').value = 'imagen-pegada-' + Date.now() + '.jpg';
+          document.getElementById('docAddCat').value = 'fotos';
+          return;
+        }
+      }
+    }
+    showToast('⚠️ No hay imagen en el portapapeles');
+  } catch(e) { showToast('⚠️ Permiso denegado al portapapeles. Probá subiendo el archivo directo.'); }
 }
 
-function closeDocModal() {
-  document.getElementById('modalDocView').classList.remove('open');
+async function saveDocAdd() {
+  const urlVal = document.getElementById('docAddUrl').value.trim();
+  const nameVal = document.getElementById('docAddName').value.trim();
+  const catVal = document.getElementById('docAddCat').value;
+  let src, srcType, name;
+
+  if (_docAddType === 'url') {
+    if (!urlVal) { showToast('⚠️ Ingresá una URL'); return; }
+    src = urlVal; srcType = 'url'; name = nameVal || urlVal.split('/').pop()?.split('?')[0] || 'enlace';
+  } else {
+    const prev = document.getElementById('docAddPreview').querySelector('img');
+    if (!prev) { showToast('⚠️ Pegá una imagen primero'); return; }
+    src = prev.src; srcType = 'clip'; name = nameVal || 'imagen-pegada.jpg';
+  }
+  state.docs.push({ id: state.docNextId++, name, category: catVal, src, srcType, notes: '', addedAt: new Date().toLocaleDateString('es-AR') });
+  autoSave();
+  renderDocumentos();
+  closeDocAdd();
+  showToast('✅ Guardado');
 }
+
+// Visor y notas
+function openDocView(id) {
+  const doc = state.docs.find(d => d.id === id);
+  if (!doc) return;
+  const ext = (doc.name.split('.').pop() || '').toLowerCase();
+  const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http');
+  const modal = document.getElementById('modalDocView2');
+  document.getElementById('dv2Name').textContent = doc.name;
+  document.getElementById('dv2Cat').textContent = DOC_CATS[doc.category] || doc.category;
+  const body = document.getElementById('dv2Body');
+  if (isImg) {
+    body.innerHTML = `<img src="${doc.src}" style="max-width:100%;max-height:70vh;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" />`;
+  } else {
+    const icon = DOC_ICONS[ext] || '📁';
+    body.innerHTML = `<div style="text-align:center;padding:48px;"><div style="font-size:64px;">${icon}</div><div style="margin-top:14px;color:var(--text2);font-size:14px;">${esc(doc.name)}</div><div style="margin-top:8px;color:var(--text3);font-size:12px;">Archivo ${ext.toUpperCase()}</div></div>`;
+  }
+  document.getElementById('dv2Notes').textContent = doc.notes || '';
+  document.getElementById('dv2EditBtn').onclick = () => openDocNotes(id);
+  if (doc.srcType !== 'url') {
+    const a = document.getElementById('dv2Download');
+    a.href = doc.src; a.download = doc.name; a.style.display = '';
+  } else {
+    document.getElementById('dv2Download').style.display = 'none';
+  }
+  modal.classList.add('open');
+}
+function closeDocView2() { document.getElementById('modalDocView2').classList.remove('open'); }
+
+let _docNotesId = null;
+function openDocNotes(id) {
+  const doc = state.docs.find(d => d.id === id);
+  if (!doc) return;
+  _docNotesId = id;
+  closeDocView2();
+  const modal = document.getElementById('modalDocNotes');
+  document.getElementById('dnName').textContent = doc.name;
+  document.getElementById('dnNotes').value = doc.notes || '';
+  const ext = (doc.name.split('.').pop() || '').toLowerCase();
+  const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image');
+  const prev = document.getElementById('dnPreview');
+  prev.innerHTML = isImg ? `<img class="doc-notes-img" src="${doc.src}" />` : '';
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('dnNotes').focus(), 100);
+}
+function closeDocNotes() { document.getElementById('modalDocNotes').classList.remove('open'); }
+function saveDocNotes() {
+  const doc = state.docs.find(d => d.id === _docNotesId);
+  if (doc) { doc.notes = document.getElementById('dnNotes').value; autoSave(); renderDocumentos(); }
+  closeDocNotes();
+  showToast('📝 Notas guardadas');
+}
+function deleteDoc(id) {
+  if (!confirm('¿Eliminar este archivo?')) return;
+  state.docs = state.docs.filter(d => d.id !== id);
+  autoSave(); renderDocumentos();
+  showToast('🗑️ Eliminado');
+}
+
 
 // ══════════════════════════════════════════════
 // MOODBOARD
@@ -3218,12 +3528,95 @@ function renderMbGallery(sectionName) {
 
 function renderMoodboard() {
   if (!mbSectionInit['dormitorio']) { mbSectionInit['dormitorio'] = true; renderMbGallery('dormitorio'); }
-  // Trigger gallery for the currently visible section
   const active = document.querySelector('.mb-section.active');
   if (active) {
     const nm = active.id.replace('mb-','');
     if (!mbSectionInit[nm]) { mbSectionInit[nm]=true; renderMbGallery(nm); }
   }
+  renderMbLinksAll();
+  renderMbHeros();
+}
+
+// ══════════════════════════════════════════════
+// MOODBOARD — LINKS & HERO IMAGES
+// ══════════════════════════════════════════════
+function renderMbLinksAll() {
+  const sections = ['dormitorio','boveda','patio','cocina','bano','living'];
+  sections.forEach(s => renderMbLinks(s));
+}
+
+function renderMbLinks(section) {
+  const container = document.getElementById('mbLinks-' + section);
+  if (!container) return;
+  const links = (state.mbLinks[section] || []);
+  if (!links.length) { container.innerHTML = ''; return; }
+  container.innerHTML = links.map(l => `
+    <div class="mb-link-card" onclick="openMbLink('${esc(l.url)}')">
+      ${l.image ? `<div class="mb-link-img" style="background-image:url('${l.image}')"></div>` : `<div class="mb-link-img mb-link-img-placeholder">🔗</div>`}
+      <div class="mb-link-body">
+        <div class="mb-link-title">${esc(l.title || l.url)}</div>
+        <div class="mb-link-url">${l.url.length > 55 ? l.url.slice(0,52)+'…' : l.url}</div>
+      </div>
+      <button class="mb-link-del" onclick="event.stopPropagation();deleteMbLink('${section}',${l.id})" title="Eliminar">✕</button>
+    </div>`).join('');
+}
+
+function renderMbHeros() {
+  const sections = ['dormitorio','boveda','patio','cocina','bano','living'];
+  sections.forEach(s => {
+    const hero = document.getElementById('mbHero-' + s);
+    if (!hero) return;
+    const src = state.mbHeros[s];
+    if (src) { hero.style.backgroundImage = `url('${src}')`; hero.style.backgroundSize = 'cover'; hero.style.backgroundPosition = 'center'; }
+  });
+}
+
+function openMbLink(url) { window.open(url, '_blank'); }
+
+async function addMbLink(section) {
+  const input = document.getElementById('mbLinkInput-' + section);
+  if (!input) return;
+  const url = input.value.trim();
+  if (!url) { showToast('⚠️ Ingresá una URL'); return; }
+  input.value = '';
+  input.disabled = true;
+  showToast('⏳ Obteniendo preview…');
+  let title = '', description = '', image = '';
+  try {
+    const r = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+    const d = await r.json();
+    if (d.status === 'success') {
+      title = d.data.title || '';
+      description = d.data.description || '';
+      image = d.data.image?.url || d.data.logo?.url || '';
+    }
+  } catch(e) { /* sin preview, igual lo guarda */ }
+  if (!title) { try { title = new URL(url).hostname; } catch(e) { title = url; } }
+  if (!state.mbLinks[section]) state.mbLinks[section] = [];
+  const id = Date.now();
+  state.mbLinks[section].push({ id, url, title, description, image, addedAt: new Date().toLocaleDateString('es-AR') });
+  autoSave();
+  renderMbLinks(section);
+  input.disabled = false;
+  showToast('✅ Link guardado');
+}
+
+function deleteMbLink(section, id) {
+  if (!state.mbLinks[section]) return;
+  state.mbLinks[section] = state.mbLinks[section].filter(l => l.id !== id);
+  autoSave();
+  renderMbLinks(section);
+}
+
+async function uploadMbHero(section, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const src = await compressImage(file, 1800, 0.82);
+  state.mbHeros[section] = src;
+  autoSave();
+  renderMbHeros();
+  showToast('🖼️ Imagen hero guardada');
+  input.value = '';
 }
 
 // ══════════════════════════════════════════════
@@ -3952,5 +4345,83 @@ if ('serviceWorker' in navigator) {
 // Cargar datos (localStorage + GitHub sync)
 loadData();
 </script>
+
+<!-- MODAL: Agregar documento -->
+<div class="modal-bg" id="modalDocAdd" onclick="if(event.target===this)closeDocAdd()">
+  <div class="modal" style="width:460px;">
+    <h3 id="docAddTitle">Agregar desde URL</h3>
+    <div id="docAddUrlRow">
+      <div class="f-row">
+        <label class="f-label">URL de la imagen o archivo</label>
+        <input class="f-input" id="docAddUrl" type="url" placeholder="https://..." oninput="previewDocUrl()" />
+      </div>
+    </div>
+    <div id="docAddClipRow" style="display:none;">
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:12px;" onclick="pasteFromClipboard()">📋 Pegar imagen del portapapeles</button>
+    </div>
+    <div id="docAddPreview"></div>
+    <div class="f-grid2" style="margin-top:12px;">
+      <div class="f-row">
+        <label class="f-label">Nombre</label>
+        <input class="f-input" id="docAddName" type="text" placeholder="Nombre del archivo" />
+      </div>
+      <div class="f-row">
+        <label class="f-label">Categoría</label>
+        <select class="f-input" id="docAddCat">
+          <option value="planos">📐 Planos</option>
+          <option value="fotos">🖼️ Fotos</option>
+          <option value="avances">🔨 Avances</option>
+          <option value="referencias" selected>📌 Referencias</option>
+          <option value="renders">✨ Renders</option>
+          <option value="planillas">📊 Planillas</option>
+          <option value="documentos">📄 Documentos</option>
+          <option value="videos">🎬 Videos</option>
+          <option value="otro">📁 Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDocAdd()">Cancelar</button>
+      <button class="btn btn-cyan" onclick="saveDocAdd()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Visor de documento -->
+<div class="modal-bg" id="modalDocView2" onclick="if(event.target===this)closeDocView2()">
+  <div class="modal" style="width:680px;max-height:92vh;overflow-y:auto;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px;">
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);" id="dv2Name"></div>
+        <div style="font-size:11.5px;color:var(--text3);margin-top:2px;" id="dv2Cat"></div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <a id="dv2Download" class="btn btn-ghost btn-sm" download>⬇ Descargar</a>
+        <button class="btn btn-ghost btn-sm" id="dv2EditBtn">📝 Notas</button>
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="closeDocView2()">✕</button>
+      </div>
+    </div>
+    <div id="dv2Body"></div>
+    <div id="dv2Notes" style="margin-top:14px;font-size:13px;color:var(--text2);background:var(--surface);border-radius:8px;padding:12px;white-space:pre-wrap;display:none;"></div>
+  </div>
+</div>
+
+<!-- MODAL: Notas del documento -->
+<div class="modal-bg" id="modalDocNotes" onclick="if(event.target===this)closeDocNotes()">
+  <div class="modal" style="width:480px;">
+    <h3>Notas</h3>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px;" id="dnName"></div>
+    <div id="dnPreview"></div>
+    <div class="f-row">
+      <label class="f-label">Notas / Descripción</label>
+      <textarea class="f-input" id="dnNotes" rows="5" placeholder="Agregá tus notas acá…" style="resize:vertical;font-family:'Inter',sans-serif;line-height:1.6;"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDocNotes()">Cancelar</button>
+      <button class="btn btn-cyan" onclick="saveDocNotes()">Guardar notas</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
