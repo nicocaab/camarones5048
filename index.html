@@ -973,6 +973,9 @@
 
       /* Header compacto */
       header { padding: 0 14px; height: 50px; }
+      nav#tabNav { top: 50px; padding: 0 12px; }
+      nav#tabNav .tab-btn { padding: 9px 12px; font-size: 12px; }
+      #coverBanner { height: 130px; }
       .header-title { font-size: 14px; }
       #syncStatus { font-size: 10px; padding: 3px 7px; }
 
@@ -1060,6 +1063,95 @@
       .kpi-grid { grid-template-columns: 1fr; }
       .ambientes-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── TAB NAV BAR ── */
+    nav#tabNav {
+      display: flex;
+      background: rgba(7,9,15,0.92);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      gap: 2px;
+      position: sticky;
+      top: 56px;
+      z-index: 90;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .tab-btn {
+      padding: 11px 16px;
+      background: transparent;
+      border: none;
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-family: 'Inter', sans-serif;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--cyan); border-bottom-color: var(--cyan); font-weight: 600; }
+
+    /* ── COVER BANNER ── */
+    #coverBanner {
+      position: relative;
+      height: 170px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    #coverBanner img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; }
+    .cover-empty {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      flex-direction:column; gap:8px;
+    }
+    .cover-add-btn {
+      display: inline-flex; align-items:center; gap:6px;
+      padding: 7px 14px;
+      background: var(--surface);
+      border: 1px dashed var(--border-s);
+      border-radius: var(--radius-sm);
+      color: var(--text3); font-size:12px; font-family:'Inter',sans-serif;
+      cursor:pointer; transition:all .15s;
+    }
+    .cover-add-btn:hover { color:var(--text2); border-color:rgba(34,211,238,.3); }
+    .cover-change-btn {
+      position:absolute; bottom:10px; right:10px;
+      padding:5px 12px;
+      background:rgba(7,9,15,.75); border:1px solid var(--border-s);
+      border-radius:var(--radius-sm); color:var(--text2); font-size:11.5px;
+      font-family:'Inter',sans-serif; cursor:pointer; backdrop-filter:blur(8px);
+      transition:all .15s;
+    }
+    .cover-change-btn:hover { color:var(--text); }
+
+    /* ── DOCS CATEGORY SELECT ── */
+    .docs-cat-select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 12px;
+      font-size: 12.5px;
+      color: var(--text2);
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      min-width: 140px;
+    }
+    .docs-cat-select:focus { outline: none; border-color: rgba(34,211,238,.4); color: var(--text); }
+
+    /* ── RECENT LIST (reemplaza tabla) ── */
+    .recent-list { display:flex; flex-direction:column; gap:2px; }
+    .recent-row {
+      display:flex; align-items:center; gap:10px;
+      padding:9px 6px;
+      border-bottom:1px solid var(--border);
+    }
+    .recent-row:last-child { border-bottom:none; }
+    .recent-desc { flex:1; font-size:13px; color:var(--text); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .recent-amt { font-size:13px; font-family:var(--font-mono); color:var(--text2); white-space:nowrap; flex-shrink:0; }
   </style>
 </head>
 <body>
@@ -1098,23 +1190,6 @@
       <span class="menu-brand-name">Buga House</span>
     </div>
     <button class="menu-close" onclick="closeMenu()">✕</button>
-  </div>
-
-  <!-- Navegación -->
-  <div class="menu-section">
-    <div class="menu-section-lbl">Secciones</div>
-    <button class="menu-nav-btn active" data-tab="resumen" onclick="showTab('resumen')">
-      <span class="m-icon">📊</span> Resumen
-    </button>
-    <button class="menu-nav-btn" data-tab="cotizaciones" onclick="showTab('cotizaciones')">
-      <span class="m-icon">📋</span> Tu Actividad
-    </button>
-    <button class="menu-nav-btn" data-tab="documentos" onclick="showTab('documentos')">
-      <span class="m-icon">📁</span> Documentos
-    </button>
-    <button class="menu-nav-btn" data-tab="moodboard" onclick="showTab('moodboard')">
-      <span class="m-icon">🎨</span> Moodboard
-    </button>
   </div>
 
   <!-- Sync status -->
@@ -1160,8 +1235,27 @@
   </div>
 </header>
 
-<!-- NAV (hidden — navigation is in the hamburger menu) -->
-<nav></nav>
+<nav id="tabNav">
+  <button class="tab-btn active" data-tab="resumen" onclick="showTab('resumen')">Resumen</button>
+  <button class="tab-btn" data-tab="cotizaciones" onclick="showTab('cotizaciones')">Tu Actividad</button>
+  <button class="tab-btn" data-tab="documentos" onclick="showTab('documentos')">Documentos</button>
+  <button class="tab-btn" data-tab="moodboard" onclick="showTab('moodboard')">Moodboard</button>
+</nav>
+
+<!-- COVER BANNER -->
+<div id="coverBanner" style="display:none;">
+  <img id="coverImg" alt="Frente de la casa" />
+  <label class="cover-change-btn">
+    🖼️ Cambiar foto
+    <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
+  </label>
+</div>
+<div id="coverEmpty" style="display:none;">
+  <label class="cover-add-btn">
+    📷 Agregar foto de portada
+    <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
+  </label>
+</div>
 
 <main>
 
@@ -1221,7 +1315,6 @@
   <div id="tab-cotizaciones" class="tab-content">
     <div class="act-toolbar">
       <div class="filters">
-        <select id="fAmbiente" onchange="renderCotizaciones()"><option value="">Todos los ambientes</option></select>
         <select id="fCategoria" onchange="renderCotizaciones()"><option value="">Todas las categorías</option></select>
         <select id="fEstado" onchange="renderCotizaciones()">
           <option value="">Todos los estados</option>
@@ -1249,18 +1342,18 @@
   <!-- ══════ DOCUMENTOS ══════ -->
   <div id="tab-documentos" class="tab-content">
     <div class="docs-top">
-      <div class="docs-cats">
-        <button class="doc-cat-btn active" data-cat="todos" onclick="setDocCat('todos',this)">Todos</button>
-        <button class="doc-cat-btn" data-cat="planos" onclick="setDocCat('planos',this)">Planos</button>
-        <button class="doc-cat-btn" data-cat="fotos" onclick="setDocCat('fotos',this)">Fotos</button>
-        <button class="doc-cat-btn" data-cat="avances" onclick="setDocCat('avances',this)">Avances</button>
-        <button class="doc-cat-btn" data-cat="referencias" onclick="setDocCat('referencias',this)">Referencias</button>
-        <button class="doc-cat-btn" data-cat="renders" onclick="setDocCat('renders',this)">Renders</button>
-        <button class="doc-cat-btn" data-cat="planillas" onclick="setDocCat('planillas',this)">Planillas</button>
-        <button class="doc-cat-btn" data-cat="documentos" onclick="setDocCat('documentos',this)">Documentos</button>
-        <button class="doc-cat-btn" data-cat="videos" onclick="setDocCat('videos',this)">Videos</button>
-        <button class="doc-cat-btn" data-cat="otro" onclick="setDocCat('otro',this)">Otro</button>
-      </div>
+      <select class="docs-cat-select" id="docCatSelect" onchange="setDocCat(this.value)">
+        <option value="todos">Todos</option>
+        <option value="planos">Planos</option>
+        <option value="fotos">Fotos</option>
+        <option value="avances">Avances</option>
+        <option value="referencias">Referencias</option>
+        <option value="renders">Renders</option>
+        <option value="planillas">Planillas</option>
+        <option value="documentos">Documentos</option>
+        <option value="videos">Videos</option>
+        <option value="otro">Otro</option>
+      </select>
       <div class="docs-add-group">
         <button class="btn btn-ghost btn-sm" onclick="openDocAdd('url')" title="Agregar desde URL">🔗</button>
         <button class="btn btn-ghost btn-sm" onclick="openDocAdd('clip')" title="Pegar desde portapapeles">📋</button>
@@ -2150,13 +2243,14 @@ function applyLoaded(loaded) {
   if (!state.docNextId) state.docNextId = 1;
   if (!state.mbLinks) state.mbLinks = {};
   if (!state.mbHeros) state.mbHeros = {};
+  if (state.coverPhoto === undefined) state.coverPhoto = null;
 }
 
 async function loadData() {
   // Cargar desde localStorage como fallback inmediato
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) applyLoaded(JSON.parse(raw));
+    if (raw) { applyLoaded(JSON.parse(raw)); renderCoverPhoto(); renderTab(currentTab); }
   } catch(e) {}
   // Si hay token, sincronizar desde GitHub (fuente de verdad)
   const token = ghToken();
@@ -2171,17 +2265,19 @@ async function githubLoad(token) {
       headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
     });
     if (r.status === 401 || r.status === 403) { showSetup('Token inválido o sin permisos'); setSyncStatus('error', '✗ Token inválido'); return; }
-    if (r.status === 404) { setSyncStatus('synced', '✓ Listo'); return; }
+    if (r.status === 404) { setSyncStatus('synced', '✓ Listo'); renderTab(currentTab); return; }
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
     _ghSHA = d.sha;
     applyLoaded(JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, ''))))));
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     setSyncStatus('synced', '✓ Sincronizado');
+    renderCoverPhoto();
     renderTab(currentTab);
   } catch(e) {
     console.error('GitHub load error:', e);
     setSyncStatus('error', '✗ Error al cargar');
+    renderTab(currentTab);
   }
 }
 
@@ -2309,6 +2405,9 @@ function showTab(name) {
   document.querySelectorAll('.menu-nav-btn').forEach(el => el.classList.remove('active'));
   const menuBtn = document.querySelector(`.menu-nav-btn[data-tab="${name}"]`);
   if (menuBtn) menuBtn.classList.add('active');
+  document.querySelectorAll('#tabNav .tab-btn').forEach(el => el.classList.remove('active'));
+  const navBtn = document.querySelector(`#tabNav .tab-btn[data-tab="${name}"]`);
+  if (navBtn) navBtn.classList.add('active');
   currentTab = name;
   try { localStorage.setItem('casaNuevaDash_tab', name); } catch(e) {}
   closeMenu();
@@ -2428,17 +2527,13 @@ function renderResumen() {
     return;
   }
   document.getElementById('resumenTable').innerHTML = `
-    <table>
-      <thead><tr><th>Descripción</th><th>Ambiente</th><th>Categoría</th><th>Estado</th><th style="text-align:right">Monto</th></tr></thead>
-      <tbody>${last5.map(g => `
-        <tr>
-          <td>${g.desc}</td><td style="color:var(--text2)">${g.ambiente}</td>
-          <td style="color:var(--text2)">${g.categoria}</td>
-          <td>${badgeHtml(g.estado)}</td>
-          <td class="td-num">${fmt(g.monto)}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>`;
+    <div class="recent-list">${last5.map(g => `
+      <div class="recent-row">
+        <div class="recent-desc">${g.desc}</div>
+        ${badgeHtml(g.estado)}
+        <div class="recent-amt">${fmt(g.monto)}</div>
+      </div>`).join('')}
+    </div>`;
 }
 
 const CHART_COLORS = ['#22d3ee','#818cf8','#34d399','#fbbf24','#f87171','#fb923c','#a78bfa','#2dd4bf','#60a5fa','#e879f9'];
@@ -3028,7 +3123,38 @@ function renderAmbientes() {
 
 function filterByAmbiente(amb) {
   showTab('cotizaciones');
-  setTimeout(() => { document.getElementById('fAmbiente').value = amb; renderCotizaciones(); }, 60);
+  setTimeout(() => { const el = document.getElementById('fAmbiente'); if (el) el.value = amb; renderCotizaciones(); }, 60);
+}
+
+
+// ══ COVER PHOTO ══
+function uploadCoverPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  compressImage(file, 1800, 0.85).then(b64 => {
+    state.coverPhoto = b64;
+    autoSave();
+    renderCoverPhoto();
+  });
+}
+
+function renderCoverPhoto() {
+  const banner = document.getElementById('coverBanner');
+  const img = document.getElementById('coverImg');
+  const empty = document.getElementById('coverEmpty');
+  if (!banner || !img || !empty) return;
+  if (state.coverPhoto) {
+    img.src = state.coverPhoto;
+    banner.style.display = 'block';
+    empty.style.display = 'none';
+  } else {
+    banner.style.display = 'none';
+    empty.style.display = 'flex';
+    empty.style.height = '48px';
+    empty.style.alignItems = 'center';
+    empty.style.justifyContent = 'center';
+    empty.style.padding = '8px 20px';
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -3088,6 +3214,7 @@ const DOC_ICONS = {
 const IMG_EXTS = ['jpg','jpeg','png','webp','gif','bmp'];
 
 function setDocCat(cat, btn) {
+  const sel = document.getElementById('docCatSelect'); if (sel && sel.value !== cat) sel.value = cat;
   _docCat = cat;
   document.querySelectorAll('.doc-cat-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -4206,10 +4333,13 @@ if ('serviceWorker' in navigator) {
     if (tabEl) {
       currentTab = savedTab;
       tabEl.classList.add('active');
-      // Update menu active state
+      // Update menu and nav active states
       document.querySelectorAll('.menu-nav-btn').forEach(el => el.classList.remove('active'));
       const menuBtn = document.querySelector(`.menu-nav-btn[data-tab="${savedTab}"]`);
       if (menuBtn) menuBtn.classList.add('active');
+      document.querySelectorAll('#tabNav .tab-btn').forEach(el => el.classList.remove('active'));
+      const navBtn = document.querySelector(`#tabNav .tab-btn[data-tab="${savedTab}"]`);
+      if (navBtn) navBtn.classList.add('active');
     }
   } catch(e) {}
 })();
