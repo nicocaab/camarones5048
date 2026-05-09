@@ -59,10 +59,22 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": null
+    },
+    {
+      "id": 6,
+      "desc": "Prueba",
+      "ambiente": "General",
+      "categoria": "Adquisición",
+      "monto": 19,
+      "estado": "cotizado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": null
     }
   ],
   "presupuesto": 190000,
-  "nextId": 6,
+  "nextId": 7,
   "docs": [
     {
       "id": 1,
