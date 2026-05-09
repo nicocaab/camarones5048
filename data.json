@@ -146,8 +146,8 @@
   },
   "resumenOrder": [
     "desglose",
-    "registros",
     "vinculados",
+    "registros",
     "ambientes",
     "graficos"
   ]
