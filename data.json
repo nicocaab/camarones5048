@@ -38,14 +38,14 @@
     },
     {
       "id": 4,
-      "desc": "Cotización arquitecto",
-      "categoria": "Profesionales",
+      "desc": "Cotización arquitecto Javier Soler",
       "ambiente": "General",
-      "monto": 0,
+      "categoria": "Honorarios",
+      "monto": 8169,
       "estado": "cotizado",
       "proveedor": "",
       "fecha": "2026-04-18",
-      "notas": "Estimado inicial",
+      "notas": "Ingresado como ARS $11.600.000 · TC oficial venta $1.420 · 9/5/2026",
       "vinculadoA": null
     }
   ],
