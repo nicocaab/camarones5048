@@ -3,10 +3,10 @@
     {
       "id": 1,
       "desc": "Compra de la casa",
-      "categoria": "Adquisición",
       "ambiente": "General",
-      "monto": 0,
-      "estado": "pagado",
+      "categoria": "Adquisición",
+      "monto": 113000,
+      "estado": "cotizado",
       "proveedor": "",
       "fecha": "2026-04-18",
       "notas": "",
