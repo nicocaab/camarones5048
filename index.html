@@ -3514,7 +3514,19 @@ function _renderDocView2(doc) {
   document.getElementById('dv2Cat').textContent = (DOC_CATS[doc.category] || doc.category).replace(/^[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F300}-\u{1F9FF}\u2700-\u27BF\s]+/u, '');
   const body = document.getElementById('dv2Body');
   if (isVid) {
-    body.innerHTML = `<video src="${doc.src}" controls style="width:100%;max-height:70vh;border-radius:8px;background:#000;display:block;" controlslist="nodownload"></video>`;
+    body.innerHTML = `
+      <video src="${doc.src}" controls playsinline preload="metadata"
+        style="width:100%;max-height:60vh;border-radius:8px;background:#000;display:block;"
+        onerror="this.style.display='none';document.getElementById('vid-fallback-${doc.id}').style.display='flex';">
+      </video>
+      <div id="vid-fallback-${doc.id}" style="display:none;flex-direction:column;align-items:center;gap:12px;padding:32px;text-align:center;">
+        <div style="font-size:48px;">🎬</div>
+        <div style="color:var(--text2);font-size:14px;">No se puede reproducir aquí</div>
+        <a href="${doc.src}" target="_blank" rel="noopener" style="background:var(--accent);color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">Abrir video ↗</a>
+      </div>
+      <div style="margin-top:8px;text-align:center;">
+        <a href="${doc.src}" target="_blank" rel="noopener" style="font-size:12px;color:var(--text3);text-decoration:none;">↗ Abrir en nueva pestaña</a>
+      </div>`;
   } else if (isPdf) {
     body.innerHTML = `<iframe src="${doc.src}" style="width:100%;height:70vh;border:none;border-radius:8px;background:#fff;" title="${esc(doc.name)}"></iframe>`;
   } else if (isImg) {
