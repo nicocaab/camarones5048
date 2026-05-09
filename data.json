@@ -82,11 +82,23 @@
       "proveedor": "",
       "fecha": "2026-05-09",
       "notas": "",
-      "vinculadoA": null
+      "vinculadoA": 2
+    },
+    {
+      "id": 8,
+      "desc": "Obra",
+      "ambiente": "General",
+      "categoria": "Construcción",
+      "monto": 10,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": 4
     }
   ],
   "presupuesto": 190000,
-  "nextId": 8,
+  "nextId": 9,
   "docs": [
     {
       "id": 1,
