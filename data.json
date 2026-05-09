@@ -62,14 +62,14 @@
     },
     {
       "id": 6,
-      "desc": "Prueba",
+      "desc": "Boleto compra venta",
       "ambiente": "General",
       "categoria": "Adquisición",
-      "monto": 19,
-      "estado": "cotizado",
+      "monto": 56500,
+      "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-05-09",
-      "notas": "",
+      "notas": "50% del total",
       "vinculadoA": null
     }
   ],
