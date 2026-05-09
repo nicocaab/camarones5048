@@ -3342,11 +3342,14 @@ function openDocView(id) {
 function _renderDocView2(doc) {
   const docs = _getDocViewList();
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
-  const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http');
+  const isPdf = ext === 'pdf' || (doc.src && doc.src.startsWith('data:application/pdf'));
+  const isImg = !isPdf && (IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http'));
   document.getElementById('dv2Name').textContent = doc.name;
   document.getElementById('dv2Cat').textContent = (DOC_CATS[doc.category] || doc.category).replace(/^[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F300}-\u{1F9FF}\u2700-\u27BF\s]+/u, '');
   const body = document.getElementById('dv2Body');
-  if (isImg) {
+  if (isPdf) {
+    body.innerHTML = `<iframe src="${doc.src}" style="width:100%;height:70vh;border:none;border-radius:8px;background:#fff;" title="${esc(doc.name)}"></iframe>`;
+  } else if (isImg) {
     body.innerHTML = `<img src="${doc.src}" style="max-width:100%;max-height:65vh;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" />`;
   } else {
     const icon = DOC_ICONS[ext] || '📁';
