@@ -2188,8 +2188,8 @@ async function githubLoad(token) {
       const local = localDocs.find(d => d.id === meta.id);
       return local ? { ...meta, src: local.src } : meta;
     });
-    // Guardar completo en localStorage (con src)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    // Guardar en localStorage sin base64 para no exceder quota
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stateForLocal())); } catch(e) { console.warn('localStorage full:', e); }
     setSyncStatus('synced', '✓ Sincronizado');
     renderCoverPhoto();
     renderTab(currentTab);
@@ -2226,15 +2226,24 @@ async function githubSave() {
   } finally { _syncing = false; }
 }
 
+function stateForLocal() {
+  // Solo guarda src si es URL de GitHub (no base64), para no llenar localStorage
+  const docsLight = (state.docs || []).map(d => {
+    const keepSrc = d.src && d.src.startsWith('http');
+    return keepSrc ? d : { ...d, src: '' };
+  });
+  return { ...state, docs: docsLight };
+}
+
 function autoSave() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stateForLocal())); } catch(e) { console.warn('localStorage full:', e); }
   clearTimeout(_syncTimer);
   _syncTimer = setTimeout(githubSave, 3000);
 }
 
 function saveData() {
   clearTimeout(_syncTimer);
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stateForLocal())); } catch(e) { console.warn('localStorage full:', e); }
   githubSave();
 }
 
