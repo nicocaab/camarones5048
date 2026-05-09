@@ -1060,6 +1060,8 @@
         overflow-y: auto;
       }
       .modal-bg { align-items: flex-end !important; }
+      #modalDocView2 { align-items: center !important; }
+      #modalDocView2 > .modal { width: calc(100vw - 16px) !important; max-width: calc(100vw - 16px) !important; border-radius: 14px !important; position: relative !important; bottom: auto !important; left: auto !important; right: auto !important; max-height: 92vh !important; }
       @keyframes scaleIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
       .f-grid2 { grid-template-columns: 1fr; }
 
@@ -2721,13 +2723,14 @@ function renderVinculaciones() {
   if (!card || !el) return;
   if (!linked.length) { card.style.display = 'none'; return; }
   card.style.display = '';
-  el.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px;">
+  el.innerHTML = `<div class="vinc-list" id="vincList" style="display:flex;flex-direction:column;gap:8px;">
     ${linked.map(g => {
       const cotiz = state.gastos.find(x => x.id === g.vinculadoA);
       if (!cotiz) return '';
       const restante = getRestanteDe(cotiz);
-      return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+      return `<div class="vinc-row" data-id="${g.id}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;display:flex;align-items:flex-start;gap:8px;cursor:default;">
+        <div class="vinc-handle" title="Arrastrar" style="padding:4px 2px;cursor:grab;color:var(--text3);opacity:.4;flex-shrink:0;margin-top:2px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex:1;min-width:0;">
           <div style="min-width:0;flex:1;">
             <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(g.desc)}</div>
             <div style="font-size:11px;color:var(--text3);margin-top:2px;">${g.categoria} · ${g.fecha||'—'}</div>
@@ -2736,12 +2739,13 @@ function renderVinculaciones() {
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
             <span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--green);">${fmt(Number(g.monto)||0)}</span>
             <span style="font-size:11px;color:${restante>0?'var(--amber)':'var(--green)'};">${restante>0?'resta '+fmt(restante):'✓ Saldado'}</span>
-            <button onclick="desvincularPago(${g.id})" style="font-size:10px;padding:3px 8px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text3);cursor:pointer;margin-top:2px;">Desvincular</button>
+            <button onclick="confirmDesvincular(${g.id})" style="font-size:10px;padding:3px 8px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text3);cursor:pointer;margin-top:2px;">Desvincular</button>
           </div>
         </div>
       </div>`;
     }).join('')}
   </div>`;
+  initVincDrag();
 }
 
 function onPresupChange() {
@@ -3170,9 +3174,26 @@ async function saveModal() {
   } else {
     state.gastos.push(item);
   }
+  // Si editamos un pago vinculado, recalcular la cotización correspondiente
+  if (editingId && item.vinculadoA) {
+    // Re-check: podría haber cambiado el monto
+    const cotiz = state.gastos.find(g => g.id === item.vinculadoA);
+    if (cotiz) {
+      // Recalculate estado based on real total now
+      const totalPagado = getTotalPagadoDe(cotiz.id);
+      if (totalPagado >= (Number(cotiz.monto)||0)) {
+        if (totalPagado > (Number(cotiz.monto)||0)) cotiz.monto = totalPagado;
+        cotiz.estado = 'pagado';
+      } else if (cotiz.estado === 'pagado') {
+        // Was paid but now payment is lower → revert to cotizado
+        cotiz.estado = 'cotizado';
+      }
+    }
+  }
   autoSave();
   closeModal();
   renderCotizaciones();
+  if (currentTab === 'resumen') renderResumenCompleto();
   const toastMsg = _mCurrency === 'ARS'
     ? `✅ Guardado: ARS → $${montoUSD.toLocaleString('es-AR')} USD`
     : (editingId ? '✏️ Ítem actualizado' : '✅ Ítem agregado');
@@ -3551,7 +3572,7 @@ function _renderDocView2(doc) {
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
   const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http');
   document.getElementById('dv2Name').textContent = doc.name;
-  document.getElementById('dv2Cat').textContent = DOC_CATS[doc.category] || doc.category;
+  document.getElementById('dv2Cat').textContent = (DOC_CATS[doc.category] || doc.category).replace(/^[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F300}-\u{1F9FF}\u2700-\u27BF\s]+/u, '');
   const body = document.getElementById('dv2Body');
   if (isImg) {
     body.innerHTML = `<img src="${doc.src}" style="max-width:100%;max-height:65vh;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" />`;
@@ -3573,8 +3594,24 @@ function _renderDocView2(doc) {
   if (counter) counter.textContent = docs.length > 1 ? `${_docViewIdx + 1} / ${docs.length}` : '';
   const prev = document.getElementById('dv2Prev');
   const next = document.getElementById('dv2Next');
-  if (prev) prev.style.opacity = _docViewIdx > 0 ? '1' : '0.3';
-  if (next) next.style.opacity = _docViewIdx < docs.length - 1 ? '1' : '0.3';
+  if (prev) { prev.style.opacity = _docViewIdx > 0 ? '1' : '0.25'; prev.style.display = docs.length > 1 ? 'flex' : 'none'; }
+  if (next) { next.style.opacity = _docViewIdx < docs.length - 1 ? '1' : '0.25'; next.style.display = docs.length > 1 ? 'flex' : 'none'; }
+  // Swipe support
+  initDocSwipe();
+}
+
+function initDocSwipe() {
+  const body = document.getElementById('dv2Body');
+  if (!body) return;
+  let _sx = 0, _sy = 0;
+  body.ontouchstart = e => { _sx = e.touches[0].clientX; _sy = e.touches[0].clientY; };
+  body.ontouchend = e => {
+    const dx = e.changedTouches[0].clientX - _sx;
+    const dy = e.changedTouches[0].clientY - _sy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) navDoc2(1); else navDoc2(-1);
+    }
+  };
 }
 
 function navDoc2(dir) {
@@ -3988,9 +4025,10 @@ function showCotizPagos(cotizId) {
         <div style="font-size:13px;color:var(--text);font-weight:500;">${esc(p.desc||'Pago')}</div>
         <div style="font-size:11px;color:var(--text3);">${p.fecha||''}</div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
         <span style="font-family:var(--font-mono);font-size:13px;color:var(--green);">${fmt(p.monto)}</span>
-        <button onclick="document.getElementById('cotizPagosPopup').remove();desvincularPago(${p.id})" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text2);cursor:pointer;font-size:11px;">Desvincular</button>
+        <button onclick="document.getElementById('cotizPagosPopup').remove();openModal(${p.id})" title="Editar" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 7px;color:var(--text2);cursor:pointer;display:flex;align-items:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l.686.686a1.75 1.75 0 0 1 0 2.474l-9.75 9.75a.75.75 0 0 1-.304.19l-4 1a.75.75 0 0 1-.9-.9l1-4a.75.75 0 0 1 .19-.303l9.75-9.75z"/></svg></button>
+        <button onclick="document.getElementById('cotizPagosPopup').remove();confirmDesvincular(${p.id})" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text2);cursor:pointer;font-size:11px;">Desvincular</button>
       </div>
     </div>`).join('')}
     <div style="margin-top:14px;text-align:right;">
@@ -3999,6 +4037,89 @@ function showCotizPagos(cotizId) {
   </div>`;
   pop.onclick = e => { if (e.target === pop) pop.remove(); };
   document.body.appendChild(pop);
+}
+
+function confirmDesvincular(pagoId) {
+  const existing = document.getElementById('desvincPopup');
+  if (existing) existing.remove();
+  const pop = document.createElement('div');
+  pop.id = 'desvincPopup';
+  pop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:210;display:flex;align-items:center;justify-content:center;padding:20px;';
+  pop.innerHTML = `<div style="background:var(--bg2);border:1px solid var(--border-s);border-radius:var(--radius);padding:24px;width:100%;max-width:340px;text-align:center;">
+    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;">¿Desvincular este pago?</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5;">El pago quedará como ítem independiente y el estado de la cotización volverá a "Cotizado".</div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button onclick="document.getElementById('desvincPopup').remove()" style="padding:8px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);cursor:pointer;font-size:13px;">Cancelar</button>
+      <button onclick="document.getElementById('desvincPopup').remove();desvincularPago(${pagoId})" style="padding:8px 20px;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.3);border-radius:var(--radius-sm);color:#f87171;cursor:pointer;font-size:13px;font-weight:600;">Desvincular</button>
+    </div>
+  </div>`;
+  pop.onclick = e => { if (e.target === pop) pop.remove(); };
+  document.body.appendChild(pop);
+}
+
+function initVincDrag() {
+  const list = document.getElementById('vincList');
+  if (!list) return;
+  let dragging = null, dragOver = null;
+  list.querySelectorAll('.vinc-handle').forEach(handle => {
+    const row = handle.closest('.vinc-row');
+    handle.addEventListener('mousedown', e => { e.preventDefault(); startVincDrag(row, e.clientY); });
+    handle.addEventListener('touchstart', e => { e.preventDefault(); startVincDrag(row, e.touches[0].clientY); }, {passive:false});
+  });
+  function startVincDrag(row, startY) {
+    dragging = row;
+    row.style.opacity = '.5';
+    row.style.transform = 'scale(.98)';
+    const rows = [...list.querySelectorAll('.vinc-row')];
+    function onMove(clientY) {
+      rows.forEach(r => {
+        if (r === dragging) return;
+        const rect = r.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        if (clientY < mid) { r.style.borderTop = '2px solid var(--cyan)'; r.style.borderBottom = ''; dragOver = r; }
+        else { r.style.borderBottom = '2px solid var(--cyan)'; r.style.borderTop = ''; dragOver = r; }
+      });
+    }
+    function onEnd() {
+      row.style.opacity = ''; row.style.transform = '';
+      rows.forEach(r => { r.style.borderTop = ''; r.style.borderBottom = ''; });
+      if (dragOver && dragOver !== dragging) {
+        const allRows = [...list.querySelectorAll('.vinc-row')];
+        const fromIdx = allRows.indexOf(dragging);
+        let toIdx = allRows.indexOf(dragOver);
+        if (fromIdx !== toIdx) {
+          // Reorder state.gastos
+          const linked = state.gastos.filter(g => g.estado === 'pagado' && g.vinculadoA != null);
+          const ids = linked.map(g => g.id);
+          const dragId = Number(dragging.dataset.id);
+          const overId = Number(dragOver.dataset.id);
+          const fi = ids.indexOf(dragId), ti = ids.indexOf(overId);
+          if (fi !== -1 && ti !== -1) {
+            ids.splice(fi, 1); ids.splice(ti, 0, dragId);
+            // Rebuild state.gastos with new order for these items
+            const others = state.gastos.filter(g => !(g.estado === 'pagado' && g.vinculadoA != null));
+            const reordered = ids.map(id => state.gastos.find(g => g.id === id)).filter(Boolean);
+            state.gastos = [...others, ...reordered];
+            autoSave();
+            renderVinculaciones();
+          }
+        }
+      }
+      dragging = null; dragOver = null;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+    }
+    function onMouseMove(e) { onMove(e.clientY); }
+    function onMouseUp() { onEnd(); }
+    function onTouchMove(e) { onMove(e.touches[0].clientY); }
+    function onTouchEnd() { onEnd(); }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchmove', onTouchMove, {passive:false});
+    document.addEventListener('touchend', onTouchEnd);
+  }
 }
 
 function checkAutoCompleteCotz(cotizId) {
@@ -4699,14 +4820,17 @@ loadData();
         <div style="font-size:11.5px;color:var(--text3);margin-top:2px;" id="dv2Cat"></div>
       </div>
       <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
-        <button class="btn btn-ghost btn-sm btn-icon" id="dv2Prev" onclick="navDoc2(-1)" title="Anterior">&#8592;</button>
-        <button class="btn btn-ghost btn-sm btn-icon" id="dv2Next" onclick="navDoc2(1)" title="Siguiente">&#8594;</button>
+
         <a id="dv2Download" class="btn btn-ghost btn-sm" download>&#11015; Descargar</a>
         <button class="btn btn-ghost btn-sm" id="dv2EditBtn" style="display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/><path d="M4 8h8M4 11h5"/></svg> Notas</button>
         <button class="btn btn-ghost btn-sm btn-icon" onclick="closeDocView2()">✕</button>
       </div>
     </div>
-    <div id="dv2Body"></div>
+    <div style="position:relative;">
+      <button id="dv2Prev" onclick="navDoc2(-1)" title="Anterior" style="position:absolute;left:-8px;top:50%;transform:translateY(-50%);z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(13,17,23,.85);border:1px solid var(--border-s);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .15s;backdrop-filter:blur(4px);">&#8592;</button>
+      <button id="dv2Next" onclick="navDoc2(1)" title="Siguiente" style="position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(13,17,23,.85);border:1px solid var(--border-s);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .15s;backdrop-filter:blur(4px);">&#8594;</button>
+      <div id="dv2Body"></div>
+    </div>
     <div id="dv2Notes" style="margin-top:14px;font-size:13px;color:var(--text2);background:var(--surface);border-radius:8px;padding:12px;white-space:pre-wrap;display:none;"></div>
     <div id="dv2Counter" style="text-align:center;font-size:11px;color:var(--text3);margin-top:10px;font-family:var(--font-mono);"></div>
   </div>
