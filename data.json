@@ -15,10 +15,10 @@
     {
       "id": 2,
       "desc": "Honorarios inmobiliaria",
-      "categoria": "Honorarios",
       "ambiente": "General",
-      "monto": 0,
-      "estado": "pagado",
+      "categoria": "Honorarios",
+      "monto": 5520,
+      "estado": "cotizado",
       "proveedor": "",
       "fecha": "2026-04-18",
       "notas": "",
