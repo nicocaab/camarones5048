@@ -1,9 +1,9 @@
-const CACHE = 'casa-nueva-v5';
+const CACHE = 'casa-nueva-v6';
 const ASSETS = [
   '/camarones5048/',
   '/camarones5048/index.html',
   'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap'
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap'
 ];
 
 self.addEventListener('install', e => {

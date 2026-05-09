@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -196,7 +196,7 @@
       background: linear-gradient(135deg, var(--cyan), var(--indigo));
       border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px;
     }
-    .menu-brand-name { font-size: 13px; font-weight: 700; color: var(--text); font-family: 'Playfair Display', serif; }
+    .menu-brand-name { font-size: 13px; font-weight: 700; color: var(--text); font-family: var(--font-sans, 'Inter', sans-serif); }
     .menu-close {
       width: 28px; height: 28px;
       background: transparent; border: none;
@@ -670,7 +670,7 @@
       pointer-events: none;
     }
     .mb-room-tag { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #e8956d; margin-bottom: 12px; }
-    .mb-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px,3.5vw,40px); font-weight: 400; line-height: 1.2; color: var(--text); }
+    .mb-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(24px,3.5vw,40px); font-weight: 300; line-height: 1.2; color: var(--text); }
     .mb-header h2 em { font-style: italic; color: #e8956d; }
     .mb-header-sub { font-size: 13px; color: var(--text2); margin-top: 12px; font-weight: 300; line-height: 1.65; max-width: 560px; }
     .mb-meta { display: flex; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
@@ -698,13 +698,13 @@
       color: #e8956d; border-radius: 7px; font-size: 12px; font-weight: 700;
       display: flex; align-items: center; justify-content: center; margin-bottom: 10px;
     }
-    .mb-style-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+    .mb-style-name { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
     .mb-style-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
     .mb-style-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
     .mb-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 10.5px; color: var(--text2); font-weight: 500; }
 
     .mb-quote { border-left: 3px solid #e8956d; border-radius: 0 10px 10px 0; background: rgba(193,122,90,0.06); padding: 16px 20px; margin-bottom: 24px; }
-    .mb-quote-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: var(--text2); line-height: 1.65; }
+    .mb-quote-text { font-family: 'Inter', sans-serif; font-size: 15px; font-style: italic; color: var(--text2); line-height: 1.65; }
 
     .mb-masonry { columns: 3; column-gap: 12px; }
     @media (max-width: 900px) { .mb-masonry { columns: 2; } }
@@ -758,7 +758,7 @@
       border: 1px dashed rgba(255,255,255,.07); border-radius: var(--radius);
     }
     .mb-placeholder-icon { font-size: 38px; margin-bottom: 14px; opacity: .35; }
-    .mb-placeholder-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text2); margin-bottom: 8px; }
+    .mb-placeholder-title { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 300; color: var(--text2); margin-bottom: 8px; }
     .mb-placeholder-text { font-size: 13px; color: var(--text3); line-height: 1.6; }
 
     /* ── MB HERO UPLOAD ── */
@@ -825,7 +825,7 @@
       display: flex; align-items: center; gap: 14px;
     }
     .mb-global-quote-icon { font-size: 20px; opacity: .6; flex-shrink: 0; }
-    .mb-global-quote-text { font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; color: var(--text2); line-height: 1.6; }
+    .mb-global-quote-text { font-family: 'Inter', sans-serif; font-size: 14px; font-style: italic; color: var(--text2); line-height: 1.6; }
     /* ── SYNC STATUS ── */
     .sync-status { font-size:11.5px; font-family:var(--font-mono); padding:4px 10px; border-radius:20px; transition:all .3s; }
     .sync-status.syncing { color:var(--amber); background:var(--amber-dim); }
@@ -1310,8 +1310,8 @@
     Tu Actividad
   </button>
   <button class="tab-btn" data-tab="documentos" onclick="showTab('documentos')">
-    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/></svg>
-    Docs
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="14" height="12" rx="2"/><circle cx="5.5" cy="6.5" r="1.5"/><path d="M1 11l3.5-3.5a1.5 1.5 0 0 1 2 0L10 11"/><path d="M10 10l1.5-1.5a1.5 1.5 0 0 1 2 0L15 11"/></svg>
+    Fotos
   </button>
   <button class="tab-btn" data-tab="moodboard" onclick="showTab('moodboard')">
     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
@@ -1394,7 +1394,7 @@
 
   <!-- ══════ COTIZACIONES ══════ -->
   <div id="tab-cotizaciones" class="tab-content">
-    <div class="act-toolbar" style="gap:10px;align-items:center;">
+    <div class="act-toolbar" style="display:flex;flex-wrap:nowrap;flex-direction:row;gap:10px;align-items:center;">
       <select id="fEstado" onchange="renderCotizaciones()" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;color:var(--text2);font-family:'Inter',sans-serif;cursor:pointer;">
         <option value="">Todos los estados</option>
         <option value="cotizado">Cotizado</option>
@@ -1402,7 +1402,7 @@
         <option value="pendiente">Pendiente</option>
         <option value="cancelado">Cancelado</option>
       </select>
-      <button class="btn btn-cyan btn-sm" onclick="openModal()" style="flex-shrink:0;white-space:nowrap;">+ Añadir gasto</button>
+      <button class="btn btn-cyan btn-sm" onclick="openModal()" style="flex-shrink:0;white-space:nowrap;width:auto;">+ Añadir gasto</button>
     </div>
     <div id="cotizTable"></div>
     <div id="cotizTotals" style="margin-top:10px;text-align:right;font-size:12px;color:var(--text3);font-family:var(--font-mono);padding:0 4px;"></div>
@@ -1535,9 +1535,9 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=barndominium+bedroom+wood+beams+black+windows" target="_blank">barndominium bedroom wood beams black windows</a>
         </div>
       </div>
-            <!-- Links guardados -->
+            <!-- Referencias -->
       <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-sec-label">Referencias</div>
         <div class="mb-link-input-row">
           <input type="url" class="mb-link-input" id="mbLinkInput-dormitorio" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('dormitorio')" />
           <button class="mb-link-add-btn" onclick="addMbLink('dormitorio')">+ Guardar</button>
@@ -1623,9 +1623,9 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=small+courtyard+string+lights+lush+plants" target="_blank">small courtyard string lights lush plants</a>
         </div>
       </div>
-      <!-- Links guardados -->
+      <!-- Referencias -->
       <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-sec-label">Referencias</div>
         <div class="mb-link-input-row">
           <input type="url" class="mb-link-input" id="mbLinkInput-patio" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('patio')" />
           <button class="mb-link-add-btn" onclick="addMbLink('patio')">+ Guardar</button>
@@ -1686,9 +1686,9 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=open+kitchen+renovation+brick+natural+light" target="_blank">open kitchen renovation brick natural light</a>
         </div>
       </div>
-      <!-- Links guardados -->
+      <!-- Referencias -->
       <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-sec-label">Referencias</div>
         <div class="mb-link-input-row">
           <input type="url" class="mb-link-input" id="mbLinkInput-cocina" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('cocina')" />
           <button class="mb-link-add-btn" onclick="addMbLink('cocina')">+ Guardar</button>
@@ -1869,9 +1869,9 @@
           <a class="mb-search-pill" href="https://ar.pinterest.com/search/pins/?q=bathroom+oval+mirror+oak+vanity+white+tiles" target="_blank">bathroom oval mirror oak vanity white tiles</a>
         </div>
       </div>
-      <!-- Links guardados -->
+      <!-- Referencias -->
       <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-sec-label">Referencias</div>
         <div class="mb-link-input-row">
           <input type="url" class="mb-link-input" id="mbLinkInput-bano" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('bano')" />
           <button class="mb-link-add-btn" onclick="addMbLink('bano')">+ Guardar</button>
@@ -2097,7 +2097,7 @@
       </div>
       <!-- Links pegados -->
       <div class="mb-links-section">
-        <div class="mb-sec-label">Links guardados</div>
+        <div class="mb-sec-label">Referencias</div>
         <div class="mb-link-input-row">
           <input type="url" class="mb-link-input" id="mbLinkInput-living" placeholder="Pegá una URL de Pinterest, Instagram, etc." onkeydown="if(event.key==='Enter')addMbLink('living')" />
           <button class="mb-link-add-btn" onclick="addMbLink('living')">+ Guardar</button>
@@ -2209,8 +2209,15 @@
     <div class="pago-panel active" id="pagoPanelNuevo">
       <div class="f-grid2" style="margin-bottom:14px;">
         <div>
-          <label class="f-label">Monto ($) *</label>
-          <input class="f-input" id="pagoMonto" type="number" placeholder="0" min="0" style="font-family:var(--font-mono);" />
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <label class="f-label" style="margin:0;" id="pagoMontoLabel">Monto (USD) *</label>
+            <div style="display:flex;gap:2px;">
+              <button id="pagoCurrUSD" class="curr-btn active" onclick="setPagoCurrency('USD')">USD</button>
+              <button id="pagoCurrARS" class="curr-btn" onclick="setPagoCurrency('ARS')">🇦🇷 ARS</button>
+            </div>
+          </div>
+          <input class="f-input" id="pagoMonto" type="number" placeholder="0" min="0" style="font-family:var(--font-mono);" oninput="onPagoMontoInput()" />
+          <div id="pagoConvPreview" style="font-size:11px;color:var(--text3);margin-top:4px;display:none;"></div>
         </div>
         <div>
           <label class="f-label">Fecha</label>
@@ -2714,25 +2721,27 @@ function renderVinculaciones() {
   if (!card || !el) return;
   if (!linked.length) { card.style.display = 'none'; return; }
   card.style.display = '';
-  el.innerHTML = `<table>
-    <thead><tr>
-      <th>Pago</th><th>Categoría</th><th style="text-align:right">Monto</th>
-      <th>↗ Cotización vinculada</th><th style="text-align:right">Saldo restante</th><th></th>
-    </tr></thead>
-    <tbody>${linked.map(g => {
+  el.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px;">
+    ${linked.map(g => {
       const cotiz = state.gastos.find(x => x.id === g.vinculadoA);
       if (!cotiz) return '';
       const restante = getRestanteDe(cotiz);
-      return `<tr>
-        <td style="font-size:13px;font-weight:500;">${esc(g.desc)}</td>
-        <td style="font-size:12px;color:var(--text2);">${g.categoria}</td>
-        <td class="td-num" style="color:var(--green);">${fmt(Number(g.monto)||0)}</td>
-        <td style="font-size:12.5px;"><span style="color:var(--cyan);">↗</span> ${esc(cotiz.desc)}</td>
-        <td class="td-num" style="color:${restante>0?'var(--amber)':'var(--green)'};">${restante>0?fmt(restante):'✓ Saldado'}</td>
-        <td><button class="btn btn-ghost btn-sm" onclick="desvincularPago(${g.id})" title="Desvincular pago" style="font-size:10px;padding:4px 8px;">🔓</button></td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table>`;
+      return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(g.desc)}</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">${g.categoria} · ${g.fecha||'—'}</div>
+            <div style="font-size:11.5px;color:var(--cyan);margin-top:4px;">↗ ${esc(cotiz.desc)}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+            <span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--green);">${fmt(Number(g.monto)||0)}</span>
+            <span style="font-size:11px;color:${restante>0?'var(--amber)':'var(--green)'};">${restante>0?'resta '+fmt(restante):'✓ Saldado'}</span>
+            <button onclick="desvincularPago(${g.id})" style="font-size:10px;padding:3px 8px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text3);cursor:pointer;margin-top:2px;">Desvincular</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
 function onPresupChange() {
@@ -2912,7 +2921,7 @@ function renderCotizaciones() {
           <div class="ac-title">${esc(desc)}</div>
           <div class="ac-meta">${g.ambiente||''} · ${g.categoria||''}${g.fecha ? ' · ' + fechaFmt : ''}</div>
           ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc||'')}</div>` : ''}
-          ${esCotiz && pagos.length > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ${pagos.length} pago${pagos.length!==1?'s':''} · ${fmt(pagadoLinked)} pagado</div>` : ''}
+          \${esCotiz && pagos.length > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ \${pagos.length} pago\${pagos.length!==1?'s':''} · \${fmt(pagadoLinked)} pagado · <span onclick="event.stopPropagation();showCotizPagos(\${g.id})" style="color:var(--cyan);cursor:pointer;text-decoration:underline;">ver pagos</span></div>` : ''}
         </div>
         <div class="ac-right">
           ${badgeHtml(estado)}
@@ -2924,7 +2933,7 @@ function renderCotizaciones() {
         <div class="ac-extra">${g.notas ? esc(g.notas).slice(0,40) + (g.notas.length>40?'…':'') : ''}</div>
         <div class="ac-actions">
           <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal(${g.id})" title="Editar"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l.686.686a1.75 1.75 0 0 1 0 2.474l-9.75 9.75a.75.75 0 0 1-.304.19l-4 1a.75.75 0 0 1-.9-.9l1-4a.75.75 0 0 1 .19-.303l9.75-9.75z"/></svg></button>
-          ${esCotiz && restante > 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" style="font-size:11px;padding:4px 10px;display:flex;align-items:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="14" height="9" rx="2"/><path d="M1 7h14"/><circle cx="4.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/></svg> Pagar</button>` : ''}
+          ${esCotiz && restante >= 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" style="font-size:11px;padding:4px 10px;display:flex;align-items:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5H5a3 3 0 0 0 0 6h2M8.5 12.5H11a3 3 0 0 0 0-6H9M5.5 8h5"/></svg> Asociar pago</button>` : ''}
           ${esPagado && g.vinculadoA != null ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="desvincularPago(${g.id})" title="Desvincular"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.586 5.586L2.05 2.05M10.414 10.414l3.536 3.536M6.5 9.5l-.707.707a3 3 0 0 1-4.243-4.243l.707-.707M9.5 6.5l.707-.707a3 3 0 0 1 4.243 4.243l-.707.707"/></svg></button>` : ''}
           <button class="btn btn-danger btn-sm btn-icon" onclick="deleteGasto(${g.id})" title="Eliminar"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5 4V2.5A.5.5 0 0 1 5.5 2h5a.5.5 0 0 1 .5.5V4M6 7v5M10 7v5M3.5 4l.5 9.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5L12.5 4"/></svg></button>
         </div>
@@ -3336,7 +3345,7 @@ let _docCat = 'todos';
 const DOC_CATS = {
   todos:'Todos', planos:'📐 Planos', fotos:'🖼️ Fotos', avances:'🔨 Avances',
   referencias:'📌 Referencias', renders:'✨ Renders', planillas:'📊 Planillas',
-  documentos:'📄 Documentos', videos:'🎬 Videos', otro:'📁 Otro'
+  documentos:'📄 Documentos', materiales:'Materiales', videos:'🎬 Videos', otro:'📁 Otro'
 };
 const DOC_ICONS = {
   jpg:'🖼️', jpeg:'🖼️', png:'🖼️', webp:'🖼️', gif:'🖼️', bmp:'🖼️',
@@ -3384,9 +3393,8 @@ function renderDocumentos() {
         <div class="doc-card-name" title="${esc(d.name)}">${shortName}</div>
         <div class="doc-card-footer">
           <select class="doc-cat-inline" onclick="event.stopPropagation()" onchange="changeDocCat(${d.id},this.value)">
-            ${['planos','fotos','avances','referencias','renders','planillas','documentos','videos','otro'].map(c=>`<option value="${c}"${d.category===c?' selected':''}>${{planos:'Planos',fotos:'Fotos',avances:'Avances',referencias:'Referencias',renders:'Renders',planillas:'Planillas',documentos:'Documentos',videos:'Videos',otro:'Otro'}[c]}</option>`).join('')}
+            ${['planos','fotos','avances','referencias','materiales','renders','planillas','documentos','videos','otro'].map(c=>`<option value="${c}"${d.category===c?' selected':''}>${{planos:'Planos',fotos:'Fotos',avances:'Avances',referencias:'Referencias',materiales:'Materiales',renders:'Renders',planillas:'Planillas',documentos:'Documentos',videos:'Videos',otro:'Otro'}[c]}</option>`).join('')}
           </select>
-          <button class="doc-del-btn" onclick="event.stopPropagation();deleteDoc(${d.id})" title="Eliminar">✕</button>
         </div>
       </div>
     </div>`;
@@ -3526,31 +3534,57 @@ async function saveDocAdd() {
 }
 
 // Visor y notas
+let _docViewIdx = 0;
+function _getDocViewList() { return state.docs; }
+
 function openDocView(id) {
-  const doc = state.docs.find(d => d.id === id);
-  if (!doc) return;
+  const docs = _getDocViewList();
+  const idx = docs.findIndex(d => d.id === id);
+  if (idx === -1) return;
+  _docViewIdx = idx;
+  _renderDocView2(docs[idx]);
+  document.getElementById('modalDocView2').classList.add('open');
+}
+
+function _renderDocView2(doc) {
+  const docs = _getDocViewList();
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
   const isImg = IMG_EXTS.includes(ext) || doc.src.startsWith('data:image') || doc.src.startsWith('http');
-  const modal = document.getElementById('modalDocView2');
   document.getElementById('dv2Name').textContent = doc.name;
   document.getElementById('dv2Cat').textContent = DOC_CATS[doc.category] || doc.category;
   const body = document.getElementById('dv2Body');
   if (isImg) {
-    body.innerHTML = `<img src="${doc.src}" style="max-width:100%;max-height:70vh;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" />`;
+    body.innerHTML = `<img src="${doc.src}" style="max-width:100%;max-height:65vh;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" />`;
   } else {
     const icon = DOC_ICONS[ext] || '📁';
     body.innerHTML = `<div style="text-align:center;padding:48px;"><div style="font-size:64px;">${icon}</div><div style="margin-top:14px;color:var(--text2);font-size:14px;">${esc(doc.name)}</div><div style="margin-top:8px;color:var(--text3);font-size:12px;">Archivo ${ext.toUpperCase()}</div></div>`;
   }
-  document.getElementById('dv2Notes').textContent = doc.notes || '';
-  document.getElementById('dv2EditBtn').onclick = () => openDocNotes(id);
+  const notesEl = document.getElementById('dv2Notes');
+  if (doc.notes) { notesEl.textContent = doc.notes; notesEl.style.display = ''; }
+  else { notesEl.textContent = ''; notesEl.style.display = 'none'; }
+  document.getElementById('dv2EditBtn').onclick = () => openDocNotes(doc.id);
   if (doc.srcType !== 'url') {
     const a = document.getElementById('dv2Download');
     a.href = doc.src; a.download = doc.name; a.style.display = '';
   } else {
     document.getElementById('dv2Download').style.display = 'none';
   }
-  modal.classList.add('open');
+  const counter = document.getElementById('dv2Counter');
+  if (counter) counter.textContent = docs.length > 1 ? `${_docViewIdx + 1} / ${docs.length}` : '';
+  const prev = document.getElementById('dv2Prev');
+  const next = document.getElementById('dv2Next');
+  if (prev) prev.style.opacity = _docViewIdx > 0 ? '1' : '0.3';
+  if (next) next.style.opacity = _docViewIdx < docs.length - 1 ? '1' : '0.3';
 }
+
+function navDoc2(dir) {
+  const docs = _getDocViewList();
+  const newIdx = _docViewIdx + dir;
+  if (newIdx < 0 || newIdx >= docs.length) return;
+  _docViewIdx = newIdx;
+  _renderDocView2(docs[newIdx]);
+}
+
 function closeDocView2() { document.getElementById('modalDocView2').classList.remove('open'); }
 
 let _docNotesId = null;
@@ -3726,14 +3760,20 @@ async function addMbLink(section) {
   showToast('⏳ Obteniendo preview…');
   let title = '', description = '', image = '';
   try {
-    const r = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+    const r = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}&palette=true&audio=false&video=false&iframe=false`, { signal: AbortSignal.timeout(8000) });
     const d = await r.json();
     if (d.status === 'success') {
       title = d.data.title || '';
       description = d.data.description || '';
-      image = d.data.image?.url || d.data.logo?.url || '';
+      image = d.data.image?.url || d.data.screenshot?.url || d.data.logo?.url || '';
     }
-  } catch(e) { /* sin preview, igual lo guarda */ }
+  } catch(e) {
+    // Fallback: try to extract title from URL
+    try {
+      const hostname = new URL(url).hostname.replace('www.','').replace('ar.','');
+      title = hostname;
+    } catch(e2) { title = url; }
+  }
   if (!title) { try { title = new URL(url).hostname; } catch(e) { title = url; } }
   if (!state.mbLinks[section]) state.mbLinks[section] = [];
   const id = Date.now();
@@ -3766,10 +3806,13 @@ async function uploadMbHero(section, input) {
 // MODAL PAGO
 // ══════════════════════════════════════════════
 let pagoGastoId = null;
+let _pagoCurrency = 'USD';
+let pagoTabActivo = 'nuevo';
 let pagoTabActivo = 'nuevo';
 
 function openPagoModal(id) {
   pagoGastoId = id;
+  _pagoCurrency = 'USD';
   const g = state.gastos.find(x => x.id === id);
   if (!g) return;
   const yaPagado = getTotalPagadoDe(id);
@@ -3782,9 +3825,43 @@ function openPagoModal(id) {
   document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
   document.getElementById('pagoNuevoDesc').value = g.desc;
   document.getElementById('pagoNotas').value = '';
+  document.getElementById('pagoConvPreview').style.display = 'none';
+  document.getElementById('pagoMontoLabel').textContent = 'Monto (USD) *';
+  document.getElementById('pagoCurrUSD').classList.add('active');
+  document.getElementById('pagoCurrARS').classList.remove('active');
   switchPagoTab('nuevo');
   document.getElementById('modalPago').classList.add('open');
   setTimeout(() => document.getElementById('pagoMonto').focus(), 120);
+}
+
+function setPagoCurrency(c) {
+  _pagoCurrency = c;
+  document.getElementById('pagoCurrUSD').classList.toggle('active', c === 'USD');
+  document.getElementById('pagoCurrARS').classList.toggle('active', c === 'ARS');
+  document.getElementById('pagoMontoLabel').textContent = c === 'ARS' ? 'Monto (ARS) *' : 'Monto (USD) *';
+  if (c === 'ARS') {
+    document.getElementById('pagoConvPreview').style.display = 'block';
+    if (_tcOficial) {
+      onPagoMontoInput();
+    } else {
+      document.getElementById('pagoConvPreview').innerHTML = '<span style="color:var(--text3)">⏳ Obteniendo tipo de cambio...</span>';
+      fetchTC().then(() => onPagoMontoInput());
+    }
+  } else {
+    document.getElementById('pagoConvPreview').style.display = 'none';
+  }
+}
+
+function onPagoMontoInput() {
+  if (_pagoCurrency !== 'ARS' || !_tcOficial) return;
+  const ars = Number(document.getElementById('pagoMonto').value) || 0;
+  const usd = ars > 0 ? Math.round(ars / _tcOficial) : 0;
+  const prev = document.getElementById('pagoConvPreview');
+  if (!prev) return;
+  prev.style.display = 'block';
+  prev.innerHTML = ars > 0
+    ? `<span style="color:var(--cyan)">≈ ${fmt(usd)} USD</span> <span style="color:var(--text3)">· TC oficial $${_tcOficial.toLocaleString('es-AR',{maximumFractionDigits:0})}</span>`
+    : '<span style="color:var(--text3)">Ingresá el monto en pesos</span>';
 }
 
 function switchPagoTab(tab) {
@@ -3819,17 +3896,13 @@ function vincularPago(pagoId) {
   const cotiz = state.gastos.find(x => x.id === pagoGastoId);
   const pago  = state.gastos.find(x => x.id === pagoId);
   if (!cotiz || !pago) return;
-  // Verificar que no supere el saldo
-  const yaPagado = getTotalPagadoDe(pagoGastoId);
-  const restante = Math.max(0, (Number(cotiz.monto)||0) - yaPagado);
-  if ((Number(pago.monto)||0) > restante) {
-    showToast('⚠️ El pago (' + fmt(pago.monto) + ') supera el saldo pendiente (' + fmt(restante) + ')');
-    return;
-  }
   pago.vinculadoA = pagoGastoId;
+  checkAutoCompleteCotz(pagoGastoId);
+  autoSave();
   closePagoModal();
   renderCotizaciones();
-  showToast('🔗 Pago vinculado: ' + fmt(pago.monto));
+  if (currentTab === 'resumen') renderResumenCompleto();
+  showToast('Pago vinculado: ' + fmt(pago.monto));
 }
 
 function closePagoModal() {
@@ -3838,19 +3911,23 @@ function closePagoModal() {
 }
 
 function savePago() {
-  const monto = Number(document.getElementById('pagoMonto').value) || 0;
-  if (!monto || monto <= 0) { showToast('⚠️ Ingresá un monto válido'); return; }
+  const montoRaw = Number(document.getElementById('pagoMonto').value) || 0;
+  if (!montoRaw || montoRaw <= 0) { showToast('Ingresá un monto válido'); return; }
+  const monto = montoRaw; // kept for ARS conversion in block below
   const cotiz = state.gastos.find(x => x.id === pagoGastoId);
   if (!cotiz) return;
-  const restante = getRestanteDe(cotiz);
-  if (monto > restante) { showToast('⚠️ El monto supera el saldo pendiente (' + fmt(restante) + ')'); return; }
   const desc = document.getElementById('pagoNuevoDesc').value.trim() || cotiz.desc;
+  // Handle ARS→USD conversion
+  let montoFinal = monto;
+  if (_pagoCurrency === 'ARS' && monto > 0 && _tcOficial) {
+    montoFinal = Math.round(monto / _tcOficial);
+  }
   const nuevoPago = {
     id: state.nextId++,
     desc,
     ambiente: cotiz.ambiente,
     categoria: cotiz.categoria,
-    monto,
+    monto: montoFinal,
     estado: 'pagado',
     proveedor: document.getElementById('pagoNotas').value.trim(),
     fecha: document.getElementById('pagoFecha').value,
@@ -3858,10 +3935,86 @@ function savePago() {
     vinculadoA: pagoGastoId,
   };
   state.gastos.push(nuevoPago);
+  checkAutoCompleteCotz(pagoGastoId);
   autoSave();
   closePagoModal();
   renderCotizaciones();
-  showToast('✅ Pago de ' + fmt(monto) + ' registrado');
+  if (currentTab === 'resumen') renderResumenCompleto();
+  showToast('Pago de ' + fmt(montoFinal) + ' registrado');
+}
+
+function deleteGasto(id) {
+  if (!confirm('¿Eliminar este ítem?')) return;
+  // Si es un pago vinculado, eliminarlo directamente
+  // Si tiene pagos vinculados, también eliminarlos
+  state.gastos = state.gastos.filter(g => g.id !== id && g.vinculadoA !== id);
+  autoSave();
+  renderCotizaciones();
+  if (currentTab === 'resumen') renderResumenCompleto();
+}
+
+function desvincularPago(pagoId) {
+  const pago = state.gastos.find(g => g.id === pagoId);
+  if (!pago) return;
+  const cotizId = pago.vinculadoA;
+  pago.vinculadoA = null;
+  // Revertir estado de cotización si estaba 'pagado' por esta vinculación
+  if (cotizId) {
+    const cotiz = state.gastos.find(g => g.id === cotizId);
+    if (cotiz && cotiz.estado === 'pagado') {
+      cotiz.estado = 'cotizado';
+    }
+  }
+  autoSave();
+  renderCotizaciones();
+  if (currentTab === 'resumen') renderResumenCompleto();
+  showToast('Pago desvinculado');
+}
+
+function showCotizPagos(cotizId) {
+  const cotiz = state.gastos.find(g => g.id === cotizId);
+  if (!cotiz) return;
+  const pagos = getPagosDe(cotizId);
+  if (!pagos.length) return;
+  // Show inline popup below the card - use a toast-like overlay
+  const existing = document.getElementById('cotizPagosPopup');
+  if (existing) existing.remove();
+  const pop = document.createElement('div');
+  pop.id = 'cotizPagosPopup';
+  pop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;';
+  pop.innerHTML = `<div style="background:var(--bg2);border:1px solid var(--border-s);border-radius:var(--radius);padding:20px;width:100%;max-width:400px;max-height:80vh;overflow-y:auto;">
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;">${esc(cotiz.desc)} — Pagos asociados</div>
+    ${pagos.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);gap:10px;">
+      <div>
+        <div style="font-size:13px;color:var(--text);font-weight:500;">${esc(p.desc||'Pago')}</div>
+        <div style="font-size:11px;color:var(--text3);">${p.fecha||''}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <span style="font-family:var(--font-mono);font-size:13px;color:var(--green);">${fmt(p.monto)}</span>
+        <button onclick="document.getElementById('cotizPagosPopup').remove();desvincularPago(${p.id})" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text2);cursor:pointer;font-size:11px;">Desvincular</button>
+      </div>
+    </div>`).join('')}
+    <div style="margin-top:14px;text-align:right;">
+      <button onclick="document.getElementById('cotizPagosPopup').remove()" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 16px;color:var(--text2);cursor:pointer;font-size:13px;">Cerrar</button>
+    </div>
+  </div>`;
+  pop.onclick = e => { if (e.target === pop) pop.remove(); };
+  document.body.appendChild(pop);
+}
+
+function checkAutoCompleteCotz(cotizId) {
+  const cotiz = state.gastos.find(g => g.id === cotizId);
+  if (!cotiz) return;
+  if (cotiz.estado !== 'cotizado' && cotiz.estado !== 'pendiente') return;
+  const totalPagado = getTotalPagadoDe(cotizId);
+  if (totalPagado <= 0) return;
+  if (totalPagado >= (Number(cotiz.monto)||0)) {
+    // Si supera el monto, actualizar monto
+    if (totalPagado > (Number(cotiz.monto)||0)) {
+      cotiz.monto = totalPagado;
+    }
+    cotiz.estado = 'pagado';
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -4448,7 +4601,12 @@ function fp3dLight(mode, btn) {
 // KEYBOARD SHORTCUTS
 // ══════════════════════════════════════════════
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closePagoModal(); closeDocModal(); }
+  if (e.key === 'Escape') { closeModal(); closePagoModal(); closeDocModal(); closeDocView2(); closeDocNotes(); }
+  const dv2Open = document.getElementById('modalDocView2')?.classList.contains('open');
+  if (dv2Open) {
+    if (e.key === 'ArrowLeft') navDoc2(-1);
+    if (e.key === 'ArrowRight') navDoc2(1);
+  }
   if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveData(); }
 });
 document.getElementById('modal').addEventListener('click', e => {
@@ -4535,20 +4693,23 @@ loadData();
 
 <!-- MODAL: Visor de documento -->
 <div class="modal-bg" id="modalDocView2" onclick="if(event.target===this)closeDocView2()">
-  <div class="modal" style="width:680px;max-height:92vh;overflow-y:auto;">
+  <div class="modal" style="width:min(680px,calc(100vw - 24px));max-height:92vh;overflow-y:auto;">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px;">
       <div>
         <div style="font-size:14px;font-weight:700;color:var(--text);" id="dv2Name"></div>
         <div style="font-size:11.5px;color:var(--text3);margin-top:2px;" id="dv2Cat"></div>
       </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
-        <a id="dv2Download" class="btn btn-ghost btn-sm" download>⬇ Descargar</a>
+      <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+        <button class="btn btn-ghost btn-sm btn-icon" id="dv2Prev" onclick="navDoc2(-1)" title="Anterior">&#8592;</button>
+        <button class="btn btn-ghost btn-sm btn-icon" id="dv2Next" onclick="navDoc2(1)" title="Siguiente">&#8594;</button>
+        <a id="dv2Download" class="btn btn-ghost btn-sm" download>&#11015; Descargar</a>
         <button class="btn btn-ghost btn-sm" id="dv2EditBtn" style="display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/><path d="M4 8h8M4 11h5"/></svg> Notas</button>
         <button class="btn btn-ghost btn-sm btn-icon" onclick="closeDocView2()">✕</button>
       </div>
     </div>
     <div id="dv2Body"></div>
     <div id="dv2Notes" style="margin-top:14px;font-size:13px;color:var(--text2);background:var(--surface);border-radius:8px;padding:12px;white-space:pre-wrap;display:none;"></div>
+    <div id="dv2Counter" style="text-align:center;font-size:11px;color:var(--text3);margin-top:10px;font-family:var(--font-mono);"></div>
   </div>
 </div>
 
