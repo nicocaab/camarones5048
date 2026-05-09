@@ -83,18 +83,6 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": 2
-    },
-    {
-      "id": 8,
-      "desc": "Obra",
-      "ambiente": "General",
-      "categoria": "Construcción",
-      "monto": 10,
-      "estado": "pagado",
-      "proveedor": "",
-      "fecha": "2026-05-09",
-      "notas": "",
-      "vinculadoA": null
     }
   ],
   "presupuesto": 190000,
