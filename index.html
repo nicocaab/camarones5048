@@ -2147,6 +2147,12 @@ async function loadData() {
   await githubLoad(token);
 }
 
+// Datos que van a GitHub (sin src de docs — las fotos quedan en localStorage)
+function stateForCloud() {
+  const docsLight = (state.docs || []).map(({ src, ...meta }) => meta); // strip src
+  return { ...state, docs: docsLight };
+}
+
 async function githubLoad(token) {
   setSyncStatus('syncing', '⟳ Cargando...');
   try {
@@ -2158,26 +2164,32 @@ async function githubLoad(token) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
     _ghSHA = d.sha;
-    // GitHub devuelve content vacío para archivos >1MB — usar download_url como fallback
     let parsed;
     if (d.content && d.content.trim()) {
       parsed = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, '')))));
     } else if (d.download_url) {
-      setSyncStatus('syncing', '⟳ Cargando (archivo grande)...');
-      const raw = await fetch(d.download_url, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (!raw.ok) throw new Error('download_url HTTP ' + raw.status);
+      setSyncStatus('syncing', '⟳ Sincronizando...');
+      const raw = await fetch(d.download_url);
+      if (!raw.ok) throw new Error('download HTTP ' + raw.status);
       parsed = await raw.json();
     } else {
-      throw new Error('Sin contenido disponible');
+      throw new Error('Sin contenido');
     }
+    // Preservar src de docs desde localStorage (no viajan en GitHub)
+    const localDocs = state.docs || [];
     applyLoaded(parsed);
+    state.docs = (state.docs || []).map(meta => {
+      const local = localDocs.find(d => d.id === meta.id);
+      return local ? { ...meta, src: local.src } : meta;
+    });
+    // Guardar completo en localStorage (con src)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     setSyncStatus('synced', '✓ Sincronizado');
     renderCoverPhoto();
     renderTab(currentTab);
   } catch(e) {
     console.error('GitHub load error:', e);
-    setSyncStatus('error', '✗ Error al cargar');
+    setSyncStatus('error', '✗ Error (' + (e.message || 'desconocido') + ')');
     renderTab(currentTab);
   }
 }
@@ -2188,7 +2200,8 @@ async function githubSave() {
   _syncing = true;
   setSyncStatus('syncing', '⟳ Guardando...');
   try {
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+    // Guardar solo datos livianos en GitHub (sin fotos base64)
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(stateForCloud(), null, 2))));
     const now = new Date().toLocaleString('es-AR');
     const body = { message: `Update ${now}`, content, ...(_ghSHA ? { sha: _ghSHA } : {}) };
     const r = await fetch(GH_API, {
