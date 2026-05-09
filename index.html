@@ -223,7 +223,7 @@
     }
     .menu-nav-btn:hover { background: var(--surface-h); color: var(--text); }
     .menu-nav-btn.active { background: var(--cyan-dim); color: var(--cyan); font-weight: 600; }
-    .menu-nav-btn .m-icon { font-size: 15px; width: 20px; text-align: center; opacity: .85; }
+    .menu-nav-btn .m-icon { font-size: 15px; width: 20px; text-align: center; opacity: .85; display:flex; align-items:center; justify-content:center; }
     .menu-action-btn {
       display: flex; align-items: center; gap: 11px;
       width: 100%; padding: 10px 10px;
@@ -232,6 +232,7 @@
       font-size: 12.5px; color: var(--text2); font-family: 'Inter', sans-serif;
       transition: all .13s; text-align: left;
     }
+    .menu-action-btn .m-icon { display:flex; align-items:center; justify-content:center; width:20px; }
     .menu-action-btn:hover { background: var(--surface-h); color: var(--text); }
     .menu-action-btn .m-icon { font-size: 15px; width: 20px; text-align: center; opacity: .8; }
 
@@ -331,7 +332,7 @@
     .kpi-value.c-green { color: var(--green); }
     .kpi-value.c-text { color: var(--text); }
     .kpi-sub { font-size: 11.5px; color: var(--text3); margin-top: 6px; }
-    .kpi-icon { position: absolute; top: 18px; right: 18px; font-size: 20px; opacity: .4; }
+    .kpi-icon { position: absolute; top: 18px; right: 18px; font-size: 20px; opacity: .45; display:flex; align-items:center; justify-content:center; }
 
     /* ── SECTION HEADER ── */
     .sec-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
@@ -442,7 +443,7 @@
     }
     .amb-card:hover { border-color: rgba(34,211,238,.25); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
     .amb-card:hover::after { opacity: 1; }
-    .amb-icon { font-size: 26px; margin-bottom: 10px; }
+    .amb-icon { font-size: 26px; margin-bottom: 10px; display:flex; align-items:center; justify-content:center; color:var(--cyan); opacity:.7; }
     .amb-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
     .amb-count { font-size: 11.5px; color: var(--text3); }
     .amb-total { font-size: 21px; font-weight: 700; color: var(--cyan); font-family: var(--font-mono); font-variant-numeric: tabular-nums; margin: 8px 0 4px; }
@@ -494,12 +495,16 @@
     .presup-wrap input:focus { outline: none; border-bottom-color: var(--cyan); }
     .presup-wrap input::placeholder { color: var(--text3); }
 
-    .desglose-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .desglose-table th { padding: 8px 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--text3); border-bottom: 1px solid var(--border); text-align: right; }
-    .desglose-table th:first-child { text-align: left; }
-    .desglose-table td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; text-align: right; }
-    .desglose-table td:first-child { text-align: left; font-weight: 600; }
-    .desglose-table tfoot td { font-weight: 700; font-size: 14px; border-top: 1px solid var(--border-s); padding-top: 12px; border-bottom: none; }
+    .desglose-list { display: flex; flex-direction: column; gap: 8px; }
+    .desglose-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .desglose-row:last-child { border-bottom: none; }
+    .desglose-cat { font-size: 13px; font-weight: 600; color: var(--text); }
+    .desglose-bar-wrap { grid-column: 1 / -1; }
+    .desglose-amounts { display: flex; gap: 12px; align-items: center; }
+    .desglose-amt { font-family: var(--font-mono); font-size: 12px; }
+    .desglose-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border-s); margin-top: 4px; }
+    .desglose-footer-lbl { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+    .desglose-footer-nums { display: flex; gap: 16px; font-family: var(--font-mono); font-size: 13px; }
     .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
     /* ── MODAL ── */
@@ -1075,8 +1080,8 @@
       /* Drag handle: más grande en touch */
       .drag-handle { padding: 0 14px 0 6px; font-size: 18px; }
 
-      /* Desglose table */
-      .desglose-table { font-size: 12px; }
+      /* Desglose */
+      .desglose-amounts { flex-wrap: wrap; gap: 8px; }
     }
 
     /* Extra pequeño */
@@ -1219,7 +1224,7 @@
 <!-- SETUP SCREEN (visible hasta que el token esté configurado) -->
 <div id="setupScreen" style="display:none;">
   <div class="setup-card">
-    <div class="setup-icon">🏠</div>
+    <div class="setup-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".6"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
     <div class="setup-title">Casa Nueva</div>
     <div class="setup-sub">Pegá tu GitHub Personal Access Token para sincronizar los datos entre todos tus dispositivos.</div>
     <input id="setupToken" class="setup-input" type="password" placeholder="github_pat_..." autocomplete="off" />
@@ -1249,7 +1254,7 @@
       <div class="menu-brand-icon"><img src="icon.svg" alt="Buga House" /></div>
       <span class="menu-brand-name">Buga House</span>
     </div>
-    <button class="menu-close" onclick="closeMenu()">✕</button>
+    <button class="menu-close" onclick="closeMenu()"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 2l12 12M14 2L2 14"/></svg></button>
   </div>
 
   <!-- Sync status -->
@@ -1261,11 +1266,11 @@
   <div class="menu-section">
     <div class="menu-section-lbl">Datos</div>
     <label class="menu-action-btn" style="cursor:pointer;">
-      <span class="m-icon">⬆️</span> Importar JSON
+      <span class="m-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M5 7l3-3 3 3M2 13h12"/></svg></span> Importar JSON
       <input type="file" accept=".json" onchange="importJSON(event)" style="display:none;" />
     </label>
     <button class="menu-action-btn" onclick="exportJSON();closeMenu()">
-      <span class="m-icon">⬇️</span> Exportar JSON
+      <span class="m-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v8M5 9l3 3 3-3M2 13h12"/></svg></span> Exportar JSON
     </button>
   </div>
 
@@ -1273,7 +1278,7 @@
   <div class="menu-section">
     <div class="menu-section-lbl">Configuración</div>
     <button class="menu-action-btn" onclick="openSetup();closeMenu()">
-      <span class="m-icon">⚙️</span> GitHub Token
+      <span class="m-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.54 11.54l1.41 1.41M3.05 12.95l1.42-1.42M11.54 4.46l1.41-1.41"/></svg></span> GitHub Token
     </button>
   </div>
 </div>
@@ -1296,10 +1301,22 @@
 </header>
 
 <nav id="tabNav">
-  <button class="tab-btn active" data-tab="resumen" onclick="showTab('resumen')">Resumen</button>
-  <button class="tab-btn" data-tab="cotizaciones" onclick="showTab('cotizaciones')">Tu Actividad</button>
-  <button class="tab-btn" data-tab="documentos" onclick="showTab('documentos')">Documentos</button>
-  <button class="tab-btn" data-tab="moodboard" onclick="showTab('moodboard')">Moodboard</button>
+  <button class="tab-btn active" data-tab="resumen" onclick="showTab('resumen')">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L1 7v8h4v-5h6v5h4V7L8 1z"/></svg>
+    Resumen
+  </button>
+  <button class="tab-btn" data-tab="cotizaciones" onclick="showTab('cotizaciones')">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
+    Tu Actividad
+  </button>
+  <button class="tab-btn" data-tab="documentos" onclick="showTab('documentos')">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/></svg>
+    Docs
+  </button>
+  <button class="tab-btn" data-tab="moodboard" onclick="showTab('moodboard')">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+    Moodboard
+  </button>
 </nav>
 
 <!-- COVER BANNER -->
@@ -1307,16 +1324,16 @@
   <img id="coverImg" alt="Frente de la casa" />
   <div class="cover-reframe-hint">Arrastrá para reencuadrar · clic para confirmar</div>
   <div class="cover-overlay">
-    <button class="cover-btn" onclick="startReframe()">↔ Reencuadrar</button>
+    <button class="cover-btn" onclick="startReframe()" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8h12M4 5l-4 3 4 3M12 5l4 3-4 3"/></svg> Reencuadrar</button>
     <label class="cover-btn" style="cursor:pointer;">
-      🖼 Cambiar foto
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="14" height="12" rx="2"/><circle cx="5.5" cy="6.5" r="1.5"/><path d="M1 11l3.5-3.5a1.5 1.5 0 0 1 2 0L10 11"/><path d="M10 10l1.5-1.5a1.5 1.5 0 0 1 2 0L15 11"/></svg> Cambiar foto
       <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
     </label>
   </div>
 </div>
 <div id="coverEmpty" style="display:none;">
   <label class="cover-add-btn">
-    📷 Agregar foto de portada
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/><circle cx="8" cy="9" r="2.5"/><path d="M12 1v6M9 4h6"/></svg> Agregar foto de portada
     <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
   </label>
 </div>
@@ -1412,10 +1429,10 @@
         <option value="otro">Otro</option>
       </select>
       <div class="docs-add-group">
-        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('url')" title="Agregar desde URL">🔗</button>
-        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('clip')" title="Pegar desde portapapeles">📋</button>
+        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('url')" title="Agregar desde URL"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5H5a3 3 0 0 0 0 6h2M8.5 12.5H11a3 3 0 0 0 0-6H9M5.5 8h5"/></svg></button>
+        <button class="btn btn-ghost btn-sm" onclick="openDocAdd('clip')" title="Pegar desde portapapeles"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="9" height="10" rx="1"/><path d="M4 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1"/><path d="M7 2h2a1 1 0 0 1 1 1v1"/></svg></button>
         <label class="btn btn-cyan btn-sm" style="cursor:pointer;">
-          + Subir
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 11V3M5 6l3-3 3 3M2 12v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1"/></svg> Subir
           <input type="file" id="docFileInput" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.mp4,.mov,.avi" style="display:none" onchange="onDocFilesSelected(this)" />
         </label>
       </div>
@@ -2172,7 +2189,7 @@
 <!-- MODAL PAGO -->
 <div class="modal-bg" id="modalPago">
   <div class="modal" style="width:460px;">
-    <h3>💰 Asignar pago</h3>
+    <h3>Asignar pago</h3>
     <!-- Info de la cotización -->
     <div class="pago-info-box">
       <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Cotización</div>
@@ -2235,8 +2252,14 @@ const CATEGORIAS = ['Adquisición','Honorarios','Profesionales','Construcción',
 const ESTADOS = ['cotizado','pagado','pendiente','cancelado'];
 
 const AMB_ICONS = {
-  'General':'🏠','Living / Comedor':'🛋️','Cocina':'🍳',
-  'Dormitorios':'🛏️','Baños':'🚿','Terraza':'🌿','Patio':'🌳','Cochera':'🚗'
+  'General': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>',
+  'Living / Comedor': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3H3v-3z"/><path d="M3 13v5h18v-5"/><path d="M5 18v2M19 18v2"/></svg>',
+  'Cocina': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/><circle cx="16" cy="8" r="2"/><path d="M15 14h4M15 17h4"/></svg>',
+  'Dormitorios': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v11"/><path d="M2 14h20"/><path d="M7 7V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/><path d="M2 20h20"/></svg>',
+  'Baños': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v4a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-4z"/><path d="M4 12V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/><path d="M20 6v6"/><path d="M8 20v2M16 20v2"/></svg>',
+  'Terraza': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 14v7M14 14v7"/><path d="M10 10h4"/></svg>',
+  'Patio': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10M9 6c0 0-3 2-3 6h12c0-4-3-6-3-6"/><path d="M6 18h12M8 21h8M12 12v9"/></svg>',
+  'Cochera': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/><circle cx="9.5" cy="17.5" r="1.5"/><circle cx="14.5" cy="17.5" r="1.5"/></svg>'
 };
 
 // Dark chart defaults
@@ -2570,31 +2593,31 @@ function renderResumen() {
           title="Editá la inversión estimada" />
       </div>
       <div class="kpi-sub" style="margin-top:4px;">${presup > 0 ? pct + '% ejecutado · editá el valor' : 'Editá para definir el objetivo'}</div>
-      <div class="kpi-icon">🎯</div>
+      <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><circle cx="8" cy="8" r="7"/><circle cx="8" cy="8" r="4"/><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg></div>
     </div>
     <div class="kpi-card c-cyan">
       <div class="kpi-label">Total Pagado</div>
       <div class="kpi-value c-cyan num">${fmt(pagadoReal)}</div>
       <div class="kpi-sub">${pct > 0 ? pct + '% de la inversión estimada' : 'Sin inversión estimada'}</div>
-      <div class="kpi-icon">💳</div>
+      <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><rect x="1" y="4" width="14" height="9" rx="2"/><path d="M1 7h14"/><circle cx="4.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/><circle cx="7" cy="10.5" r=".75" fill="currentColor" stroke="none"/></svg></div>
     </div>
     <div class="kpi-card c-amber">
       <div class="kpi-label">Cotizado</div>
       <div class="kpi-value c-amber num">${fmt(cotizadoRest)}</div>
       <div class="kpi-sub">${pendCount} ítem${pendCount!==1?'s':''} pendiente${pendCount!==1?'s':''}</div>
-      <div class="kpi-icon">📋</div>
+      <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><path d="M2 4h12M2 8h8M2 12h5"/></svg></div>
     </div>
     <div class="kpi-card c-green">
       <div class="kpi-label">Progreso</div>
       <div class="kpi-value c-text num">${pct > 0 ? pct + '%' : '—'}</div>
       <div class="kpi-sub">${presup > 0 ? fmt(pagadoReal) + ' de ' + fmt(presup) : 'Definí tu inversión estimada'}</div>
-      <div class="kpi-icon">📊</div>
+      <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><rect x="1" y="9" width="3" height="6" rx=".5"/><rect x="6.5" y="5" width="3" height="10" rx=".5"/><rect x="12" y="2" width="3" height="13" rx=".5"/></svg></div>
     </div>
     <div class="kpi-card" style="border-color:${balance !== null && balance < 0 ? 'rgba(248,113,113,.3)' : 'rgba(52,211,153,.3)'};">
       <div class="kpi-label">Balance Disponible</div>
       <div class="kpi-value num" style="color:${balance === null ? 'var(--text2)' : balance < 0 ? '#f87171' : '#34d399'}">${balance !== null ? fmt(balance) : '—'}</div>
       <div class="kpi-sub">Estimada − Pagado − Cotizado</div>
-      <div class="kpi-icon">${balance !== null && balance < 0 ? '⚠️' : '✅'}</div>
+      <div class="kpi-icon">${balance !== null && balance < 0 ? '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"><path d="M8 1L1 14h14L8 1z"/><path d="M8 6v4M8 12v.5"/></svg>' : '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".45"><circle cx="8" cy="8" r="7"/><path d="M5 8l2 2 4-4"/></svg>'}</div>
     </div>`;
 
   renderChartCat();
@@ -2603,7 +2626,7 @@ function renderResumen() {
   // Últimas filas
   const last5 = [...state.gastos].reverse().slice(0, 5);
   if (!last5.length) {
-    document.getElementById('resumenTable').innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-msg">Todavía no hay gastos registrados</div></div>';
+    document.getElementById('resumenTable').innerHTML = '<div class="empty"><div class="empty-icon" style="opacity:.3"><svg width="28" height="28" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2 4h12M2 8h8M2 12h5"/></svg></div><div class="empty-msg">Todavía no hay gastos registrados</div></div>';
     return;
   }
   document.getElementById('resumenTable').innerHTML = `
@@ -2785,44 +2808,40 @@ function renderDesglose() {
     .filter(([, v]) => v.pagado > 0 || v.restante > 0)
     .sort((a,b) => (b[1].pagado+b[1].restante) - (a[1].pagado+a[1].restante));
   if (!entries.length) {
-    document.getElementById('invDesglose').innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div class="empty-msg">Agregá gastos para ver el desglose</div></div>';
+    document.getElementById('invDesglose').innerHTML = '<div class="empty"><div class="empty-icon" style="opacity:.3"><svg width="28" height="28" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="9" width="3" height="6" rx=".5"/><rect x="6" y="5" width="3" height="10" rx=".5"/><rect x="11" y="2" width="3" height="13" rx=".5"/></svg></div><div class="empty-msg">Agregá gastos para ver el desglose</div></div>';
     return;
   }
   document.getElementById('invDesglose').innerHTML = `
-    <table class="desglose-table">
-      <thead><tr>
-        <th>Categoría</th>
-        <th style="text-align:right">Monto total</th>
-        <th style="text-align:right">Pagado</th>
-        <th style="text-align:right">Restante</th>
-        <th style="min-width:120px;text-align:left;padding-left:14px;">% pagado</th>
-      </tr></thead>
-      <tbody>${entries.map(([cat, v]) => {
+    <div class="desglose-list">
+      ${entries.map(([cat, v]) => {
         const montoTotal = v.pagado + v.restante;
         const pct = montoTotal > 0 ? Math.round((v.pagado/montoTotal)*100) : 0;
-        return `<tr>
-          <td>${cat}</td>
-          <td class="num" style="color:var(--text2)">${montoTotal > 0 ? fmt(montoTotal) : '<span style="color:var(--text3)">—</span>'}</td>
-          <td class="num" style="color:var(--green)">${v.pagado > 0 ? fmt(v.pagado) : '<span style="color:var(--text3)">—</span>'}</td>
-          <td class="num" style="color:var(--amber)">${v.restante > 0 ? fmt(v.restante) : '<span style="color:var(--green)">✓ Saldado</span>'}</td>
-          <td style="text-align:left;padding-left:14px;">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div style="flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;">
-                <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:4px;transition:width .3s;"></div>
-              </div>
-              <span class="num" style="font-size:11px;color:${pct>=100?'var(--green)':pct>50?'var(--cyan)':'var(--text3)'};min-width:32px;text-align:right;">${pct}%</span>
+        const pctColor = pct>=100?'var(--green)':pct>50?'var(--cyan)':'var(--text3)';
+        return `<div class="desglose-row">
+          <div class="desglose-cat">${cat}</div>
+          <div class="desglose-amounts">
+            <span class="desglose-amt" style="color:var(--green)" title="Pagado">${v.pagado>0?fmt(v.pagado):'—'}</span>
+            <span style="color:var(--text3);font-size:11px;">/</span>
+            <span class="desglose-amt" style="color:var(--text2)" title="Total">${montoTotal>0?fmt(montoTotal):'—'}</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:${pctColor};text-align:right;min-width:36px;">${pct}%</div>
+          <div class="desglose-bar-wrap">
+            <div style="height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;">
+              <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:4px;transition:width .4s;"></div>
             </div>
-          </td>
-        </tr>`;
-      }).join('')}</tbody>
-      <tfoot><tr>
-        <td style="font-weight:700">TOTAL</td>
-        <td class="num" style="color:var(--text2);font-size:14px;">${fmt(totalPag+totalRest)}</td>
-        <td class="num" style="color:var(--green);font-size:14px;">${fmt(totalPag)}</td>
-        <td class="num" style="color:var(--amber);font-size:14px;">${fmt(totalRest)}</td>
-        <td></td>
-      </tr></tfoot>
-    </table>`;
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="desglose-footer">
+        <span class="desglose-footer-lbl">Total</span>
+        <div class="desglose-footer-nums">
+          <span style="color:var(--green)">${fmt(totalPag)}</span>
+          <span style="color:var(--text3)">+</span>
+          <span style="color:var(--amber)">${fmt(totalRest)}</span>
+          <span style="color:var(--text2);font-weight:700;">${fmt(totalPag+totalRest)}</span>
+        </div>
+      </div>
+    </div>`;
 }
 
 // ══════════════════════════════════════════════
@@ -2831,16 +2850,12 @@ function renderDesglose() {
 function populateFilters() { /* filters simplified — no-op */ }
 
 function getFiltered() {
-  const amb = document.getElementById('fAmbiente')?.value||'';
-  const cat = '';  // filter removed
-  const est = document.getElementById('fEstado')?.value||'';
-  const bus = (document.getElementById('fBuscar')?.value||'').toLowerCase();
-  return state.gastos.filter(g =>
-    (!amb || g.ambiente===amb) &&
-    (!cat || g.categoria===cat) &&
-    (!est || g.estado===est) &&
-    (!bus || g.desc.toLowerCase().includes(bus) || (g.proveedor||'').toLowerCase().includes(bus))
-  );
+  const est = (document.getElementById('fEstado')?.value||'').trim();
+  try {
+    return state.gastos.filter(g =>
+      (!est || (g.estado||'')=== est)
+    );
+  } catch(e) { return [...state.gastos]; }
 }
 
 let _actSearchOpen = false;
@@ -2855,6 +2870,7 @@ function toggleActSearch() {
 
 function renderCotizaciones() {
   populateFilters();
+  // Ensure filter select doesn't retain a browser-cached non-default value unexpectedly
   const items = getFiltered();
   const pagadosNoVinc = items.filter(g=>g.estado==='pagado'&&g.vinculadoA==null).reduce((s,g)=>s+(Number(g.monto)||0),0);
   const pagadoViaCotz = items.filter(g=>g.estado==='cotizado'||g.estado==='pendiente').reduce((s,g)=>s+getTotalPagadoDe(g.id),0);
@@ -2862,14 +2878,17 @@ function renderCotizaciones() {
   const totalPagFilt = pagadosNoVinc + pagadoViaCotz + pagadosHuerfanos;
   const totalCotFilt = items.filter(g=>g.estado==='cotizado'||g.estado==='pendiente').reduce((s,g)=>s+getRestanteDe(g),0);
   if (!items.length) {
-    document.getElementById('cotizTable').innerHTML = '<div class="empty" style="padding:48px 20px;"><div class="empty-icon">🔍</div><div class="empty-msg">No hay ítems que coincidan</div></div>';
+    document.getElementById('cotizTable').innerHTML = '<div class="empty" style="padding:48px 20px;"><div class="empty-icon" style="opacity:.3"><svg width="28" height="28" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M14 14l-3.5-3.5"/></svg></div><div class="empty-msg">No hay ítems que coincidan</div></div>';
     document.getElementById('cotizTotals').textContent = '';
     return;
   }
-  document.getElementById('cotizTable').innerHTML = `<div class="activity-cards">${items.map(g => {
+  try {
+    document.getElementById('cotizTable').innerHTML = `<div class="activity-cards">${items.map(g => {
     const monto = Number(g.monto)||0;
-    const esCotiz = g.estado === 'cotizado' || g.estado === 'pendiente';
-    const esPagado = g.estado === 'pagado';
+    const desc = g.desc || '(sin descripción)';
+    const estado = g.estado || 'pendiente';
+    const esCotiz = estado === 'cotizado' || estado === 'pendiente';
+    const esPagado = estado === 'pagado';
     const pagadoLinked = getTotalPagadoDe(g.id);
     const restante = getRestanteDe(g);
     const cotizLinked = esPagado && g.vinculadoA != null ? state.gastos.find(x=>x.id===g.vinculadoA) : null;
@@ -2879,31 +2898,38 @@ function renderCotizaciones() {
     const displayAmount = esPagado ? fmt(monto) : esCotiz ? (monto ? fmt(monto) : '—') : '—';
     return `
     <div class="ac-card" data-id="${g.id}" draggable="false">
-      <div class="ac-drag-handle" title="Arrastrar para reordenar">⋮⋮</div>
+      <div class="ac-drag-handle" title="Arrastrar para reordenar">
+        <svg width="12" height="16" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4" cy="4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="4" r=".8" fill="currentColor" stroke="none"/><circle cx="4" cy="8" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="12" r=".8" fill="currentColor" stroke="none"/></svg>
+      </div>
       <div class="ac-main">
         <div class="ac-info">
-          <div class="ac-title">${esc(g.desc)}</div>
-          <div class="ac-meta">${g.ambiente} · ${g.categoria}${g.fecha ? ' · ' + fechaFmt : ''}</div>
-          ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc)}</div>` : ''}
+          <div class="ac-title">${esc(desc)}</div>
+          <div class="ac-meta">${g.ambiente||''} · ${g.categoria||''}${g.fecha ? ' · ' + fechaFmt : ''}</div>
+          ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc||'')}</div>` : ''}
           ${esCotiz && pagos.length > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ${pagos.length} pago${pagos.length!==1?'s':''} · ${fmt(pagadoLinked)} pagado</div>` : ''}
         </div>
         <div class="ac-right">
-          ${badgeHtml(g.estado)}
+          ${badgeHtml(estado)}
           <div class="ac-amount" style="color:${amountColor};">${displayAmount}</div>
           ${esCotiz && restante > 0 ? `<div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);">resta ${fmt(restante)}</div>` : ''}
         </div>
       </div>
       <div class="ac-footer">
-        <div class="ac-extra">${g.notas ? '📝 ' + esc(g.notas).slice(0,40) + (g.notas.length>40?'…':'') : ''}</div>
+        <div class="ac-extra">${g.notas ? esc(g.notas).slice(0,40) + (g.notas.length>40?'…':'') : ''}</div>
         <div class="ac-actions">
-          <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal(${g.id})" title="Editar">✏️</button>
-          ${esCotiz && restante > 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" style="font-size:11px;padding:4px 10px;">💰 Pagar</button>` : ''}
-          ${esPagado && g.vinculadoA != null ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="desvincularPago(${g.id})" title="Desvincular">🔓</button>` : ''}
-          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteGasto(${g.id})" title="Eliminar">✕</button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal(${g.id})" title="Editar"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l.686.686a1.75 1.75 0 0 1 0 2.474l-9.75 9.75a.75.75 0 0 1-.304.19l-4 1a.75.75 0 0 1-.9-.9l1-4a.75.75 0 0 1 .19-.303l9.75-9.75z"/></svg></button>
+          ${esCotiz && restante > 0 ? `<button class="btn btn-cyan btn-sm" onclick="openPagoModal(${g.id})" style="font-size:11px;padding:4px 10px;display:flex;align-items:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="14" height="9" rx="2"/><path d="M1 7h14"/><circle cx="4.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/></svg> Pagar</button>` : ''}
+          ${esPagado && g.vinculadoA != null ? `<button class="btn btn-ghost btn-sm btn-icon" onclick="desvincularPago(${g.id})" title="Desvincular"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.586 5.586L2.05 2.05M10.414 10.414l3.536 3.536M6.5 9.5l-.707.707a3 3 0 0 1-4.243-4.243l.707-.707M9.5 6.5l.707-.707a3 3 0 0 1 4.243 4.243l-.707.707"/></svg></button>` : ''}
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteGasto(${g.id})" title="Eliminar"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5 4V2.5A.5.5 0 0 1 5.5 2h5a.5.5 0 0 1 .5.5V4M6 7v5M10 7v5M3.5 4l.5 9.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5L12.5 4"/></svg></button>
         </div>
       </div>
     </div>`;
   }).join('')}</div>`;
+  } catch(renderErr) {
+    console.error('renderCotizaciones error:', renderErr);
+    document.getElementById('cotizTable').innerHTML = `<div class="empty" style="padding:48px 20px;"><div class="empty-icon"><svg width="32" height="32" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".4"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11v.5"/></svg></div><div class="empty-msg">Error al renderizar ítems</div></div>`;
+    return;
+  }
   document.getElementById('cotizTotals').innerHTML =
     `${items.length} ítem${items.length!==1?'s':''} · Pagado: <span style="color:var(--green)">${fmt(totalPagFilt)}</span> · En cotización: <span style="color:var(--amber)">${fmt(totalCotFilt)}</span>`;
   initDragDrop();
@@ -3082,7 +3108,7 @@ function closeModal() {
 
 async function saveModal() {
   const desc = document.getElementById('mDesc').value.trim();
-  if (!desc) { showToast('⚠️ Agregá una descripción'); return; }
+  if (!desc) { showToast('Agregá una descripción'); return; }
 
   let montoRaw = Number(document.getElementById('mMonto').value) || 0;
   let montoUSD = montoRaw;
@@ -3162,7 +3188,7 @@ function renderAmbientes() {
     const pct = total > 0 ? Math.min(100, Math.round((d.total/total)*100)) : 0;
     return `
     <div class="amb-card" onclick="filterByAmbiente('${amb}')">
-      <div class="amb-icon">${AMB_ICONS[amb]||'🏠'}</div>
+      <div class="amb-icon">${AMB_ICONS[amb]||'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9.5L12 3l9 6.5V21H4V9.5z"/></svg>'}</div>
       <div class="amb-name">${amb}</div>
       <div class="amb-count">${d.count} ítem${d.count!==1?'s':''}</div>
       <div class="amb-total">${fmt(d.total)}</div>
@@ -3342,7 +3368,7 @@ function renderDocumentos() {
     <div class="doc-card-new" onclick="openDocView(${d.id})">
       ${d.notes ? '<div class="doc-has-notes"></div>' : ''}
       <div class="doc-card-actions" onclick="event.stopPropagation()">
-        <button class="doc-act-btn" onclick="openDocNotes(${d.id})" title="Notas">📝</button>
+        <button class="doc-act-btn" onclick="openDocNotes(${d.id})" title="Notas"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/><path d="M4 8h8M4 11h5"/></svg></button>
         <button class="doc-act-btn" onclick="deleteDoc(${d.id})" title="Eliminar" style="color:var(--red);">✕</button>
       </div>
       ${isImg
@@ -3542,7 +3568,7 @@ function saveDocNotes() {
   const doc = state.docs.find(d => d.id === _docNotesId);
   if (doc) { doc.notes = document.getElementById('dnNotes').value; autoSave(); renderDocumentos(); }
   closeDocNotes();
-  showToast('📝 Notas guardadas');
+  showToast('Notas guardadas');
 }
 function changeDocCat(id, cat) {
   const doc = state.docs.find(d => d.id === id);
@@ -4471,7 +4497,7 @@ loadData();
       </div>
     </div>
     <div id="docAddClipRow" style="display:none;">
-      <button class="btn btn-ghost" style="width:100%;margin-bottom:12px;" onclick="pasteFromClipboard()">📋 Pegar imagen del portapapeles</button>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;" onclick="pasteFromClipboard()"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="9" height="10" rx="1"/><path d="M4 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1"/><path d="M7 2h2a1 1 0 0 1 1 1v1"/></svg> Pegar imagen del portapapeles</button>
     </div>
     <div id="docAddPreview"></div>
     <div class="f-grid2" style="margin-top:12px;">
@@ -4511,7 +4537,7 @@ loadData();
       </div>
       <div style="display:flex;gap:6px;flex-shrink:0;">
         <a id="dv2Download" class="btn btn-ghost btn-sm" download>⬇ Descargar</a>
-        <button class="btn btn-ghost btn-sm" id="dv2EditBtn">📝 Notas</button>
+        <button class="btn btn-ghost btn-sm" id="dv2EditBtn" style="display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3a1 1 0 0 1 1-1h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3z"/><path d="M9 2v3h3"/><path d="M4 8h8M4 11h5"/></svg> Notas</button>
         <button class="btn btn-ghost btn-sm btn-icon" onclick="closeDocView2()">✕</button>
       </div>
     </div>
