@@ -71,10 +71,22 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": null
+    },
+    {
+      "id": 7,
+      "desc": "35% Inmobiliaria",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 2000,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": null
     }
   ],
   "presupuesto": 890333,
-  "nextId": 7,
+  "nextId": 8,
   "docs": [],
   "docNextId": 3,
   "mbLinks": {},
