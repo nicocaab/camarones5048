@@ -1103,7 +1103,9 @@
       overflow: hidden;
       background: var(--surface);
     }
-    #coverBanner img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; }
+    #coverBanner img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; transition:object-position .05s; }
+    #coverBanner.reframing img { cursor:grab; user-select:none; }
+    #coverBanner.reframing img:active { cursor:grabbing; }
     .cover-empty {
       width:100%; height:100%;
       display:flex; align-items:center; justify-content:center;
@@ -1119,15 +1121,30 @@
       cursor:pointer; transition:all .15s;
     }
     .cover-add-btn:hover { color:var(--text2); border-color:rgba(34,211,238,.3); }
-    .cover-change-btn {
+    /* Cover overlay — only visible on hover */
+    .cover-overlay {
       position:absolute; bottom:10px; right:10px;
-      padding:5px 12px;
-      background:rgba(7,9,15,.75); border:1px solid var(--border-s);
+      display:flex; gap:6px;
+      opacity:0; transition:opacity .2s;
+    }
+    #coverBanner:hover .cover-overlay { opacity:1; }
+    .cover-btn {
+      padding:5px 11px;
+      background:rgba(7,9,15,.8); border:1px solid var(--border-s);
       border-radius:var(--radius-sm); color:var(--text2); font-size:11.5px;
       font-family:'Inter',sans-serif; cursor:pointer; backdrop-filter:blur(8px);
-      transition:all .15s;
+      transition:all .15s; white-space:nowrap;
     }
-    .cover-change-btn:hover { color:var(--text); }
+    .cover-btn:hover { color:var(--cyan); border-color:rgba(34,211,238,.3); }
+    .cover-reframe-hint {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:rgba(7,9,15,.75); border:1px solid var(--border-s);
+      border-radius:var(--radius-sm); color:var(--text2); font-size:12px;
+      padding:6px 14px; font-family:'Inter',sans-serif;
+      backdrop-filter:blur(8px); pointer-events:none;
+      opacity:0; transition:opacity .2s;
+    }
+    #coverBanner.reframing .cover-reframe-hint { opacity:1; }
 
     /* ── DOCS CATEGORY SELECT ── */
     .docs-cat-select {
@@ -1246,10 +1263,14 @@
 <!-- COVER BANNER -->
 <div id="coverBanner" style="display:none;">
   <img id="coverImg" alt="Frente de la casa" />
-  <label class="cover-change-btn">
-    🖼️ Cambiar foto
-    <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
-  </label>
+  <div class="cover-reframe-hint">Arrastrá para reencuadrar · clic para confirmar</div>
+  <div class="cover-overlay">
+    <button class="cover-btn" onclick="startReframe()">↔ Reencuadrar</button>
+    <label class="cover-btn" style="cursor:pointer;">
+      🖼 Cambiar foto
+      <input type="file" accept="image/*" style="display:none" onchange="uploadCoverPhoto(this)" />
+    </label>
+  </div>
 </div>
 <div id="coverEmpty" style="display:none;">
   <label class="cover-add-btn">
@@ -2245,6 +2266,7 @@ function applyLoaded(loaded) {
   if (!state.mbLinks) state.mbLinks = {};
   if (!state.mbHeros) state.mbHeros = {};
   if (state.coverPhoto === undefined) state.coverPhoto = null;
+  if (state.coverPosition === undefined) state.coverPosition = { x: 50, y: 35 };
 }
 
 async function loadData() {
@@ -3134,6 +3156,7 @@ function uploadCoverPhoto(input) {
   if (!file) return;
   compressImage(file, 1800, 0.85).then(b64 => {
     state.coverPhoto = b64;
+    if (!state.coverPosition) state.coverPosition = { x: 50, y: 35 };
     autoSave();
     renderCoverPhoto();
   });
@@ -3146,6 +3169,8 @@ function renderCoverPhoto() {
   if (!banner || !img || !empty) return;
   if (state.coverPhoto) {
     img.src = state.coverPhoto;
+    const pos = state.coverPosition || { x: 50, y: 35 };
+    img.style.objectPosition = `${pos.x}% ${pos.y}%`;
     banner.style.display = 'block';
     empty.style.display = 'none';
   } else {
@@ -3157,6 +3182,52 @@ function renderCoverPhoto() {
     empty.style.padding = '8px 20px';
   }
 }
+
+// ── Reframe (drag to reposition) ──
+let _reframing = false;
+let _rfDrag = null;
+
+function startReframe() {
+  const banner = document.getElementById('coverBanner');
+  const img = document.getElementById('coverImg');
+  if (!banner || !img) return;
+  _reframing = true;
+  banner.classList.add('reframing');
+  const pos = state.coverPosition || { x: 50, y: 35 };
+
+  function onDown(e) {
+    e.preventDefault();
+    const startX = e.clientX, startY = e.clientY;
+    const startPos = { ...pos };
+    function onMove(ev) {
+      const dx = ((startX - ev.clientX) / banner.offsetWidth) * 100;
+      const dy = ((startY - ev.clientY) / banner.offsetHeight) * 100;
+      pos.x = Math.max(0, Math.min(100, startPos.x + dx));
+      pos.y = Math.max(0, Math.min(100, startPos.y + dy));
+      img.style.objectPosition = `${pos.x}% ${pos.y}%`;
+    }
+    function onUp() {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    }
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }
+
+  img.addEventListener('mousedown', onDown);
+
+  function stopReframe() {
+    _reframing = false;
+    banner.classList.remove('reframing');
+    img.removeEventListener('mousedown', onDown);
+    banner.removeEventListener('click', stopReframe);
+    state.coverPosition = { x: Math.round(pos.x), y: Math.round(pos.y) };
+    autoSave();
+  }
+  // click anywhere on banner to confirm
+  setTimeout(() => banner.addEventListener('click', stopReframe), 100);
+}
+
 
 // ══════════════════════════════════════════════
 // DOCUMENTOS — escáner de carpeta en vivo
