@@ -2921,7 +2921,7 @@ function renderCotizaciones() {
           <div class="ac-title">${esc(desc)}</div>
           <div class="ac-meta">${g.ambiente||''} · ${g.categoria||''}${g.fecha ? ' · ' + fechaFmt : ''}</div>
           ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc||'')}</div>` : ''}
-          \${esCotiz && pagos.length > 0 ? `<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ \${pagos.length} pago\${pagos.length!==1?'s':''} · \${fmt(pagadoLinked)} pagado · <span onclick="event.stopPropagation();showCotizPagos(\${g.id})" style="color:var(--cyan);cursor:pointer;text-decoration:underline;">ver pagos</span></div>` : ''}
+          ${esCotiz && pagos.length > 0 ? '<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ' + pagos.length + ' pago' + (pagos.length!==1?'s':'') + ' · ' + fmt(pagadoLinked) + ' pagado · <span onclick="event.stopPropagation();showCotizPagos(' + g.id + ')" style="color:var(--cyan);cursor:pointer;text-decoration:underline;">ver pagos</span></div>' : ''}
         </div>
         <div class="ac-right">
           ${badgeHtml(estado)}
@@ -3807,7 +3807,6 @@ async function uploadMbHero(section, input) {
 // ══════════════════════════════════════════════
 let pagoGastoId = null;
 let _pagoCurrency = 'USD';
-let pagoTabActivo = 'nuevo';
 let pagoTabActivo = 'nuevo';
 
 function openPagoModal(id) {
