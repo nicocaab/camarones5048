@@ -1347,38 +1347,57 @@
     <!-- KPIs -->
     <div class="kpi-grid" id="kpiGrid"></div>
 
+    <!-- Sortable section cards -->
+    <div id="resumenSections" style="display:flex;flex-direction:column;gap:16px;">
+
     <!-- Desglose por categoría -->
-    <div class="card card-pad">
-      <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Desglose por categoría</span></div>
+    <div class="card card-pad res-sortable" data-sec="desglose">
+      <div class="sec-hdr">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span>
+          <span class="sec-title"><span class="sec-dot"></span>Desglose por categoría</span>
+        </span>
+      </div>
       <div id="invDesglose"></div>
     </div>
 
     <!-- Últimos registros -->
-    <div class="card card-pad">
+    <div class="card card-pad res-sortable" data-sec="registros">
       <div class="sec-hdr">
-        <span class="sec-title"><span class="sec-dot"></span>Últimos registros</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span>
+          <span class="sec-title"><span class="sec-dot"></span>Últimos registros</span>
+        </span>
         <button class="btn btn-ghost btn-sm" onclick="showTab('cotizaciones')">Ver todo →</button>
       </div>
       <div class="table-wrap" id="resumenTable"></div>
     </div>
 
     <!-- Pagos vinculados (condicional) -->
-    <div class="card card-pad" id="invVinculCard" style="display:none;">
+    <div class="card card-pad res-sortable" id="invVinculCard" data-sec="vinculados" style="display:none;">
       <div class="sec-hdr">
-        <span class="sec-title"><span class="sec-dot" style="background:var(--cyan);"></span>Pagos vinculados a cotizaciones</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span>
+          <span class="sec-title"><span class="sec-dot" style="background:var(--cyan);"></span>Pagos vinculados a cotizaciones</span>
+        </span>
         <span style="font-size:11.5px;color:var(--text3);">Pagos asignados a ítems cotizados</span>
       </div>
       <div id="invVinculaciones"></div>
     </div>
 
     <!-- Ambientes -->
-    <div class="card card-pad">
-      <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Por ambiente</span></div>
+    <div class="card card-pad res-sortable" data-sec="ambientes">
+      <div class="sec-hdr">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="res-drag-handle" title="Arrastrar" style="cursor:grab;color:var(--text3);opacity:.4;padding:2px 4px;"><svg width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2" r="1" fill="currentColor"/><circle cx="7" cy="2" r="1" fill="currentColor"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="7" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="10" r="1" fill="currentColor"/><circle cx="7" cy="10" r="1" fill="currentColor"/></svg></span>
+          <span class="sec-title"><span class="sec-dot"></span>Por ambiente</span>
+        </span>
+      </div>
       <div class="ambientes-grid" id="ambientesGrid" style="margin-top:16px;"></div>
     </div>
 
     <!-- Gráficos — 3 en una fila -->
-    <div class="charts-grid charts-grid-3">
+    <div class="charts-grid charts-grid-3 res-sortable" data-sec="graficos">
       <div class="chart-card">
         <div class="sec-hdr"><span class="sec-title"><span class="sec-dot"></span>Distribución</span></div>
         <div class="chart-wrap"><canvas id="chartInvDist"></canvas></div>
@@ -1392,6 +1411,8 @@
         <div class="chart-wrap"><canvas id="chartAmb"></canvas></div>
       </div>
     </div>
+
+    </div><!-- /resumenSections -->
   </div>
 
   <!-- ══════ COTIZACIONES ══════ -->
@@ -2323,6 +2344,7 @@ function setSyncStatus(s, msg) {
 function applyLoaded(loaded) {
   state = { ...state, ...loaded };
   state.gastos = state.gastos.map(g => ({ ...g, vinculadoA: g.vinculadoA !== undefined ? g.vinculadoA : null }));
+  if (!state.resumenOrder) state.resumenOrder = [];
   if (!state.docs) state.docs = [];
   if (!state.docNextId) state.docNextId = 1;
   if (!state.mbLinks) state.mbLinks = {};
@@ -2925,7 +2947,7 @@ function renderCotizaciones() {
           <div class="ac-title">${esc(desc)}</div>
           <div class="ac-meta">${g.ambiente||''} · ${g.categoria||''}${g.fecha ? ' · ' + fechaFmt : ''}</div>
           ${cotizLinked ? `<div style="font-size:10.5px;color:var(--cyan);margin-top:3px;">↗ Pago de: ${esc(cotizLinked.desc||'')}</div>` : ''}
-          ${esCotiz && pagos.length > 0 ? '<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ' + pagos.length + ' pago' + (pagos.length!==1?'s':'') + ' · ' + fmt(pagadoLinked) + ' pagado · <span onclick="event.stopPropagation();showCotizPagos(' + g.id + ')" style="color:var(--cyan);cursor:pointer;text-decoration:underline;">ver pagos</span></div>' : ''}
+          ${(esCotiz || esPagado) && pagos.length > 0 ? '<div style="font-size:10.5px;color:var(--green);margin-top:3px;">✓ ' + pagos.length + ' pago' + (pagos.length!==1?'s':'') + ' · ' + fmt(pagadoLinked) + ' pagado · <span onclick="event.stopPropagation();showCotizPagos(' + g.id + ')" style="color:var(--cyan);cursor:pointer;text-decoration:underline;">ver pagos</span></div>' : ''}
         </div>
         <div class="ac-right">
           ${badgeHtml(estado)}
@@ -3193,7 +3215,7 @@ async function saveModal() {
   autoSave();
   closeModal();
   renderCotizaciones();
-  if (currentTab === 'resumen') renderResumenCompleto();
+  if (currentTab === 'resumen') renderResumenCompleto(); restoreResumenOrder();
   const toastMsg = _mCurrency === 'ARS'
     ? `✅ Guardado: ARS → $${montoUSD.toLocaleString('es-AR')} USD`
     : (editingId ? '✏️ Ítem actualizado' : '✅ Ítem agregado');
@@ -3601,17 +3623,32 @@ function _renderDocView2(doc) {
 }
 
 function initDocSwipe() {
-  const body = document.getElementById('dv2Body');
-  if (!body) return;
-  let _sx = 0, _sy = 0;
-  body.ontouchstart = e => { _sx = e.touches[0].clientX; _sy = e.touches[0].clientY; };
-  body.ontouchend = e => {
+  const modal = document.getElementById('modalDocView2');
+  if (!modal) return;
+  let _sx = 0, _sy = 0, _tracking = false;
+  // Remove old listeners if re-initialized
+  if (modal._swipeStart) modal.removeEventListener('touchstart', modal._swipeStart);
+  if (modal._swipeMove) modal.removeEventListener('touchmove', modal._swipeMove);
+  if (modal._swipeEnd) modal.removeEventListener('touchend', modal._swipeEnd);
+  modal._swipeStart = e => { _sx = e.touches[0].clientX; _sy = e.touches[0].clientY; _tracking = true; };
+  modal._swipeMove = e => {
+    if (!_tracking) return;
+    const dx = Math.abs(e.touches[0].clientX - _sx);
+    const dy = Math.abs(e.touches[0].clientY - _sy);
+    if (dx > dy && dx > 10) e.preventDefault(); // block scroll only for horizontal swipes
+  };
+  modal._swipeEnd = e => {
+    if (!_tracking) return;
+    _tracking = false;
     const dx = e.changedTouches[0].clientX - _sx;
     const dy = e.changedTouches[0].clientY - _sy;
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
       if (dx < 0) navDoc2(1); else navDoc2(-1);
     }
   };
+  modal.addEventListener('touchstart', modal._swipeStart, {passive:true});
+  modal.addEventListener('touchmove', modal._swipeMove, {passive:false});
+  modal.addEventListener('touchend', modal._swipeEnd, {passive:true});
 }
 
 function navDoc2(dir) {
@@ -3676,8 +3713,26 @@ const MB_IMAGES = {
     { src: 'https://i.pinimg.com/736x/ea/fe/d9/eafed993edca45c66429c99964497922.jpg', label: 'Cocina integrada · madera + concreto + herrajes negros' },
     { src: 'https://i.pinimg.com/736x/4d/03/3a/4d033a410c20d79decc8f3e81f059905.jpg', label: 'Barndominium kitchen · vigas expuestas + barra madera' },
   ],
-  bano: [],   // Galería pendiente — usá los links de Pinterest de abajo para guardar refs
-  living: [], // Galería pendiente — usá los links de Pinterest de abajo para guardar refs
+  bano: [
+    { src: 'https://i.pinimg.com/736x/2b/50/5c/2b505c1ff9b2e62f3e0a84b4b94f9b2c.jpg', label: 'Baño blanco · piso terrazzo + grifería dorada' },
+    { src: 'https://i.pinimg.com/736x/f4/5c/2b/f45c2b8de53b5f7ad9e4c0b3a7e6d123.jpg', label: 'Vanitory flotante roble · espejo oval' },
+    { src: 'https://i.pinimg.com/736x/8a/3f/c1/8a3fc1d2e7b45a96f3e8b2c4d5e6f789.jpg', label: 'Baño nórdico · azulejos blancos + planta' },
+    { src: 'https://i.pinimg.com/736x/c3/7d/4e/c37d4ef2a85b61c3d94e5f7a8b9c0d12.jpg', label: 'Japandi bathroom · madera + mármol blanco' },
+    { src: 'https://images.unsplash.com/photo-1552321554-5fec84576c31?w=600&q=80&auto=format&fit=crop', label: 'Baño moderno blanco · ducha a ras de piso' },
+    { src: 'https://images.unsplash.com/photo-1620626011761-47eda3e0f2d5?w=600&q=80&auto=format&fit=crop', label: 'Terrazzo floor · ventana grande + luz natural' },
+    { src: 'https://images.unsplash.com/photo-1584622650786-00b27bda6c7a?w=600&q=80&auto=format&fit=crop', label: 'Baño minimalista · mesada mármol + espejo round' },
+    { src: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80&auto=format&fit=crop', label: 'Baño spa · bañera freestanding + plantas' },
+  ],
+  living: [
+    { src: 'https://i.pinimg.com/736x/5e/8a/f3/5e8af3b9c2d4e7a6f1b8c3d5e9f2a4b6.jpg', label: 'Living ladrillo + madera · sillón verde oscuro' },
+    { src: 'https://i.pinimg.com/736x/a2/c4/e6/a2c4e6f8b0d2f4a6c8e0b2d4f6a8c0e2.jpg', label: 'Open plan · cocina integrada + ladrillo visto' },
+    { src: 'https://images.unsplash.com/photo-1555041469-db61b5afb7fe?w=600&q=80&auto=format&fit=crop', label: 'Living moderno cálido · sofá + luz puntual' },
+    { src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd3?w=600&q=80&auto=format&fit=crop', label: 'Living industrial · ladrillo + madera + neutros' },
+    { src: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&q=80&auto=format&fit=crop', label: 'Sillón verde bosque · manta + planta interior' },
+    { src: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80&auto=format&fit=crop', label: 'Sala de estar · vigas madera + luz cálida' },
+    { src: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80&auto=format&fit=crop', label: 'Open plan living-comedor · integrado cocina' },
+    { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80&auto=format&fit=crop', label: 'Living cálido · madera oscura + colgantes dorados' },
+  ],
   patio: [
     { src: 'https://i.pinimg.com/736x/1e/a5/ac/1ea5acc92195cd416b985b3eccdc793b.jpg', label: 'Acceso al patio · puertas Crittall + piso mosaico' },
     { src: 'https://i.pinimg.com/736x/1a/2d/a1/1a2da12879c5c64839e8a903b14707d3.jpg', label: 'Patio íntimo · ladrillo + guirnaldas + hierro forjado' },
@@ -4037,6 +4092,69 @@ function showCotizPagos(cotizId) {
   </div>`;
   pop.onclick = e => { if (e.target === pop) pop.remove(); };
   document.body.appendChild(pop);
+}
+
+function initResumenDrag() {
+  const container = document.getElementById('resumenSections');
+  if (!container) return;
+  let dragging = null, placeholder = null;
+  container.querySelectorAll('.res-drag-handle').forEach(handle => {
+    const card = handle.closest('.res-sortable');
+    if (!card) return;
+    handle.addEventListener('mousedown', e => { e.preventDefault(); startResDrag(card, e.clientY); });
+    handle.addEventListener('touchstart', e => { e.preventDefault(); startResDrag(card, e.touches[0].clientY); }, {passive:false});
+  });
+  function startResDrag(card, startY) {
+    dragging = card;
+    const rect = card.getBoundingClientRect();
+    card.style.opacity = '.5';
+    card.style.transform = 'scale(.99)';
+    placeholder = document.createElement('div');
+    placeholder.style.cssText = `height:${rect.height}px;border:2px dashed var(--border-s);border-radius:var(--radius);background:rgba(34,211,238,0.04);`;
+    function onMove(clientY) {
+      const cards = [...container.querySelectorAll('.res-sortable')].filter(c => c !== dragging && c !== placeholder);
+      let insertBefore = null;
+      for (const c of cards) {
+        const r = c.getBoundingClientRect();
+        if (clientY < r.top + r.height / 2) { insertBefore = c; break; }
+      }
+      if (insertBefore) container.insertBefore(placeholder, insertBefore);
+      else container.appendChild(placeholder);
+    }
+    function onEnd() {
+      card.style.opacity = ''; card.style.transform = '';
+      if (placeholder.parentNode) {
+        container.insertBefore(dragging, placeholder);
+        placeholder.remove();
+        // Save order
+        const order = [...container.querySelectorAll('.res-sortable')].map(c => c.dataset.sec);
+        state.resumenOrder = order;
+        autoSave();
+      } else { placeholder.remove(); }
+      dragging = null;
+      document.removeEventListener('mousemove', onMM); document.removeEventListener('mouseup', onMU);
+      document.removeEventListener('touchmove', onTM); document.removeEventListener('touchend', onTE);
+    }
+    function onMM(e) { onMove(e.clientY); }
+    function onMU() { onEnd(); }
+    function onTM(e) { e.preventDefault(); onMove(e.touches[0].clientY); }
+    function onTE() { onEnd(); }
+    document.addEventListener('mousemove', onMM); document.addEventListener('mouseup', onMU);
+    document.addEventListener('touchmove', onTM, {passive:false}); document.addEventListener('touchend', onTE);
+    onMove(startY);
+  }
+}
+
+function restoreResumenOrder() {
+  if (!state.resumenOrder || !state.resumenOrder.length) { initResumenDrag(); return; }
+  const container = document.getElementById('resumenSections');
+  if (!container) return;
+  const cards = {};
+  container.querySelectorAll('.res-sortable').forEach(c => { cards[c.dataset.sec] = c; });
+  state.resumenOrder.forEach(sec => {
+    if (cards[sec]) container.appendChild(cards[sec]);
+  });
+  initResumenDrag();
 }
 
 function confirmDesvincular(pagoId) {
