@@ -1190,6 +1190,28 @@
     .recent-row:last-child { border-bottom:none; }
     .recent-desc { flex:1; font-size:13px; color:var(--text); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .recent-amt { font-size:13px; font-family:var(--font-mono); color:var(--text2); white-space:nowrap; flex-shrink:0; }
+
+    /* ── AC-CARD DRAG HANDLE ── */
+    .ac-drag-handle {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text3); font-size: 12px; letter-spacing: -1px;
+      cursor: grab; border-radius: var(--radius) 0 0 var(--radius);
+      transition: color .15s, background .15s;
+      user-select: none; touch-action: none;
+    }
+    .ac-drag-handle:hover { color: var(--cyan); background: rgba(34,211,238,.05); }
+    .ac-drag-handle:active { cursor: grabbing; }
+    .ac-card { position: relative; padding-left: 28px !important; }
+    .ac-card.dnd-dragging { opacity: 0.3; }
+    .ac-card.dnd-over { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan); }
+    .ac-dnd-placeholder {
+      border: 1.5px dashed rgba(34,211,238,.4);
+      border-radius: var(--radius);
+      background: rgba(34,211,238,.05);
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
@@ -1355,21 +1377,15 @@
 
   <!-- ══════ COTIZACIONES ══════ -->
   <div id="tab-cotizaciones" class="tab-content">
-    <div class="act-toolbar">
-      <div class="filters">
-        <select id="fEstado" onchange="renderCotizaciones()">
-          <option value="">Todos los estados</option>
-          <option value="cotizado">Cotizado</option>
-          <option value="pagado">Pagado</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
-      </div>
-      <div class="act-search-wrap">
-        <input type="text" id="fBuscar" class="act-search-input" placeholder="Buscar…" oninput="renderCotizaciones()" />
-        <div class="act-search-icon" id="actSearchIcon" onclick="toggleActSearch()">🔍</div>
-      </div>
-      <button class="act-add-btn" onclick="openModal()" title="Nueva entrada">+</button>
+    <div class="act-toolbar" style="gap:10px;align-items:center;">
+      <select id="fEstado" onchange="renderCotizaciones()" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;color:var(--text2);font-family:'Inter',sans-serif;cursor:pointer;">
+        <option value="">Todos los estados</option>
+        <option value="cotizado">Cotizado</option>
+        <option value="pagado">Pagado</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+      <button class="btn btn-cyan btn-sm" onclick="openModal()" style="flex-shrink:0;white-space:nowrap;">+ Añadir gasto</button>
     </div>
     <div id="cotizTable"></div>
     <div id="cotizTotals" style="margin-top:10px;text-align:right;font-size:12px;color:var(--text3);font-family:var(--font-mono);padding:0 4px;"></div>
@@ -2137,15 +2153,10 @@
         </select>
       </div>
     </div>
-    <div class="f-grid2" style="margin-bottom:14px;">
-      <div>
-        <label class="f-label">Proveedor</label>
-        <input class="f-input" id="mProv" type="text" placeholder="Empresa o persona" />
-      </div>
-      <div>
-        <label class="f-label">Fecha</label>
-        <input class="f-input" id="mFecha" type="date" />
-      </div>
+    <div class="f-row" style="margin-bottom:14px;">
+      <label class="f-label">Fecha</label>
+      <input class="f-input" id="mFecha" type="date" />
+      <input id="mProv" type="hidden" value="" />
     </div>
     <div class="f-row">
       <label class="f-label">Notas</label>
@@ -2817,15 +2828,7 @@ function renderDesglose() {
 // ══════════════════════════════════════════════
 // COTIZACIONES
 // ══════════════════════════════════════════════
-function populateFilters() {
-  const fAmb = document.getElementById('fAmbiente');
-  const fCat = null; // removed
-  if (!fAmb) return;
-  const curAmb = fAmb.value, curCat = fCat.value;
-  fAmb.innerHTML = '<option value="">Todos los ambientes</option>' + AMBIENTES.map(a=>`<option value="${a}">${a}</option>`).join('');
-  fCat.innerHTML = '<option value="">Todas las categorías</option>' + CATEGORIAS.map(c=>`<option value="${c}">${c}</option>`).join('');
-  fAmb.value = curAmb; fCat.value = curCat;
-}
+function populateFilters() { /* filters simplified — no-op */ }
 
 function getFiltered() {
   const amb = document.getElementById('fAmbiente')?.value||'';
@@ -2875,7 +2878,8 @@ function renderCotizaciones() {
     const amountColor = esPagado ? 'var(--green)' : esCotiz ? 'var(--amber)' : 'var(--cyan)';
     const displayAmount = esPagado ? fmt(monto) : esCotiz ? (monto ? fmt(monto) : '—') : '—';
     return `
-    <div class="ac-card" data-id="${g.id}">
+    <div class="ac-card" data-id="${g.id}" draggable="false">
+      <div class="ac-drag-handle" title="Arrastrar para reordenar">⋮⋮</div>
       <div class="ac-main">
         <div class="ac-info">
           <div class="ac-title">${esc(g.desc)}</div>
@@ -2902,106 +2906,84 @@ function renderCotizaciones() {
   }).join('')}</div>`;
   document.getElementById('cotizTotals').innerHTML =
     `${items.length} ítem${items.length!==1?'s':''} · Pagado: <span style="color:var(--green)">${fmt(totalPagFilt)}</span> · En cotización: <span style="color:var(--amber)">${fmt(totalCotFilt)}</span>`;
+  initDragDrop();
 }
 
 // ══════════════════════════════════════════════
-// DRAG & DROP REORDER
+// DRAG & DROP REORDER (cards)
 // ══════════════════════════════════════════════
-let _dndDragId = null;
-
 function initDragDrop() {
-  const tbody = document.querySelector('#cotizTable tbody');
-  if (!tbody) return;
+  const container = document.querySelector('#cotizTable .activity-cards');
+  if (!container) return;
+  let dragging = null, clone = null, ph = null;
 
-  tbody.addEventListener('dragstart', e => {
-    // Solo arrancar si el puntero está sobre el handle o el tr pero no sobre un input/select
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON') {
-      e.preventDefault(); return;
-    }
-    const tr = e.target.closest('tr[data-id]');
-    if (!tr) return;
-    _dndDragId = parseInt(tr.dataset.id);
-    tr.classList.add('dnd-dragging');
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', _dndDragId);
-  }, true);
+  function getCards() { return [...container.querySelectorAll('.ac-card')]; }
 
-  tbody.addEventListener('dragend', () => {
-    tbody.querySelectorAll('tr').forEach(r => r.classList.remove('dnd-dragging','dnd-over-top','dnd-over-bot'));
-    _dndDragId = null;
-  });
-
-  tbody.addEventListener('dragover', e => {
-    e.preventDefault();
-    const tr = e.target.closest('tr[data-id]');
-    if (!tr || parseInt(tr.dataset.id) === _dndDragId) return;
-    tbody.querySelectorAll('tr').forEach(r => r.classList.remove('dnd-over-top','dnd-over-bot'));
-    const rect = tr.getBoundingClientRect();
-    const mid = rect.top + rect.height / 2;
-    tr.classList.add(e.clientY < mid ? 'dnd-over-top' : 'dnd-over-bot');
-  });
-
-  tbody.addEventListener('dragleave', e => {
-    const tr = e.target.closest('tr[data-id]');
-    if (tr) tr.classList.remove('dnd-over-top','dnd-over-bot');
-  });
-
-  tbody.addEventListener('drop', e => {
-    e.preventDefault();
-    const tr = e.target.closest('tr[data-id]');
-    if (!tr || !_dndDragId) return;
-    const targetId = parseInt(tr.dataset.id);
-    if (targetId === _dndDragId) return;
-
-    const rect = tr.getBoundingClientRect();
-    const insertBefore = e.clientY < rect.top + rect.height / 2;
-
-    const fromIdx = state.gastos.findIndex(g => g.id === _dndDragId);
-    let toIdx   = state.gastos.findIndex(g => g.id === targetId);
-    if (fromIdx === -1 || toIdx === -1) return;
-
-    const [item] = state.gastos.splice(fromIdx, 1);
-    // Recalcular toIdx después del splice
-    toIdx = state.gastos.findIndex(g => g.id === targetId);
-    state.gastos.splice(insertBefore ? toIdx : toIdx + 1, 0, item);
-    autoSave();
-    renderCotizaciones();
-  });
-}
-
-function esc(str) { return String(str).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
-
-function updateField(id, field, value) {
-  const item = state.gastos.find(g => g.id === id);
-  if (!item) return;
-  // coerce numeric fields
-  item[field] = (field === 'monto') ? (Number(value) || 0) : value;
-  autoSave();
-  // Re-render affected views
-  if (field === 'estado' || field === 'monto') {
-    if (currentTab === 'resumen') renderResumenCompleto();
-    if (currentTab === 'cotizaciones') renderCotizaciones();
+  function startDrag(card, clientY) {
+    dragging = card;
+    card.classList.add('dnd-dragging');
+    const rect = card.getBoundingClientRect();
+    // Placeholder
+    ph = document.createElement('div');
+    ph.className = 'ac-dnd-placeholder';
+    ph.style.height = rect.height + 'px';
+    card.after(ph);
+    // Clone
+    clone = card.cloneNode(true);
+    clone.style.cssText = `position:fixed;width:${rect.width}px;top:${rect.top}px;left:${rect.left}px;z-index:1000;pointer-events:none;opacity:.92;box-shadow:0 20px 50px rgba(0,0,0,.7);transform:scale(1.01);transition:none;`;
+    document.body.appendChild(clone);
+    clone._baseY = clientY - rect.top;
   }
-}
 
-function deleteGasto(id) {
-  if (!confirm('¿Eliminar este ítem?')) return;
-  state.gastos.forEach(g => { if (g.vinculadoA === id) g.vinculadoA = null; });
-  state.gastos = state.gastos.filter(g => g.id !== id);
-  autoSave();
-  renderCotizaciones();
-  showToast('🗑️ Ítem eliminado');
-}
+  function moveDrag(clientY) {
+    if (!clone || !dragging) return;
+    clone.style.top = (clientY - clone._baseY) + 'px';
+    const mid = clone.getBoundingClientRect().top + clone.getBoundingClientRect().height / 2;
+    const others = getCards().filter(c => c !== dragging);
+    let inserted = false;
+    for (const c of others) {
+      const cr = c.getBoundingClientRect();
+      if (mid < cr.top + cr.height / 2) { c.before(ph); inserted = true; break; }
+    }
+    if (!inserted) container.appendChild(ph);
+  }
 
-function desvincularPago(id) {
-  const g = state.gastos.find(x => x.id === id);
-  if (!g) return;
-  if (!confirm('¿Desvincular este pago de la cotización? El pago seguirá registrado pero ya no estará asignado.')) return;
-  g.vinculadoA = null;
-  autoSave();
-  renderCotizaciones();
-  if (currentTab === 'resumen') renderVinculaciones();
-  showToast('🔓 Pago desvinculado');
+  function endDrag() {
+    if (!dragging) return;
+    clone && clone.remove();
+    dragging.classList.remove('dnd-dragging');
+    ph && ph.replaceWith(dragging);
+    // Sync order to state
+    const newIds = getCards().map(c => parseInt(c.dataset.id));
+    const map = Object.fromEntries(state.gastos.map(g => [g.id, g]));
+    const rest = state.gastos.filter(g => !newIds.includes(g.id));
+    state.gastos = [...newIds.map(id => map[id]).filter(Boolean), ...rest];
+    autoSave();
+    dragging = null; clone = null; ph = null;
+  }
+
+  // Attach events to handles
+  container.querySelectorAll('.ac-drag-handle').forEach(handle => {
+    const card = handle.closest('.ac-card');
+    // Mouse
+    handle.addEventListener('mousedown', e => {
+      e.preventDefault();
+      startDrag(card, e.clientY);
+      const onMove = e => moveDrag(e.clientY);
+      const onUp = () => { endDrag(); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    });
+    // Touch
+    handle.addEventListener('touchstart', e => {
+      e.preventDefault();
+      startDrag(card, e.touches[0].clientY);
+      const onMove = e => { e.preventDefault(); moveDrag(e.touches[0].clientY); };
+      const onEnd = () => { endDrag(); handle.removeEventListener('touchmove', onMove); handle.removeEventListener('touchend', onEnd); };
+      handle.addEventListener('touchmove', onMove, { passive: false });
+      handle.addEventListener('touchend', onEnd);
+    }, { passive: false });
+  });
 }
 
 // ══════════════════════════════════════════════
