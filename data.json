@@ -145,8 +145,8 @@
     "y": 64
   },
   "resumenOrder": [
-    "desglose",
     "registros",
+    "desglose",
     "vinculados",
     "ambientes",
     "graficos"
