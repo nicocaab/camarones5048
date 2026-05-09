@@ -2524,6 +2524,12 @@ function renderTab(name) {
 // ══════════════════════════════════════════════
 // UTILIDADES
 // ══════════════════════════════════════════════
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 function fmt(n) {
   if (!n) return '$0';
   return '$' + Number(n).toLocaleString('es-AR', { maximumFractionDigits: 0 });
