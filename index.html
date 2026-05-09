@@ -1444,8 +1444,8 @@
         <option value="fotos">Fotos</option>
         <option value="avances">Avances</option>
         <option value="referencias">Referencias</option>
+        <option value="materiales">Materiales</option>
         <option value="renders">Renders</option>
-        <option value="planillas">Planillas</option>
         <option value="documentos">Documentos</option>
         <option value="videos">Videos</option>
         <option value="otro">Otro</option>
@@ -3137,8 +3137,8 @@ function updateDocCount() {
 let _docCat = 'todos';
 const DOC_CATS = {
   todos:'Todos', planos:'📐 Planos', fotos:'🖼️ Fotos', avances:'🔨 Avances',
-  referencias:'📌 Referencias', renders:'✨ Renders', planillas:'📊 Planillas',
-  documentos:'📄 Documentos', materiales:'Materiales', videos:'🎬 Videos', otro:'📁 Otro'
+  referencias:'📌 Referencias', materiales:'🧱 Materiales', renders:'✨ Renders',
+  documentos:'📄 Documentos', videos:'🎬 Videos', otro:'📁 Otro'
 };
 const DOC_ICONS = {
   jpg:'🖼️', jpeg:'🖼️', png:'🖼️', webp:'🖼️', gif:'🖼️', bmp:'🖼️',
@@ -3186,7 +3186,7 @@ function renderDocumentos() {
         <div class="doc-card-name" title="${esc(d.name)}">${shortName}</div>
         <div class="doc-card-footer">
           <select class="doc-cat-inline" onclick="event.stopPropagation()" onchange="changeDocCat(${d.id},this.value)">
-            ${['planos','fotos','avances','referencias','materiales','renders','planillas','documentos','videos','otro'].map(c=>`<option value="${c}"${d.category===c?' selected':''}>${{planos:'Planos',fotos:'Fotos',avances:'Avances',referencias:'Referencias',materiales:'Materiales',renders:'Renders',planillas:'Planillas',documentos:'Documentos',videos:'Videos',otro:'Otro'}[c]}</option>`).join('')}
+            ${['planos','fotos','avances','referencias','materiales','renders','documentos','videos','otro'].map(c=>`<option value="${c}"${d.category===c?' selected':''}>${{planos:'Planos',fotos:'Fotos',avances:'Avances',referencias:'Referencias',materiales:'Materiales',renders:'Renders',documentos:'Documentos',videos:'Videos',otro:'Otro'}[c]}</option>`).join('')}
           </select>
         </div>
       </div>
@@ -4674,7 +4674,11 @@ loadData();
           <option value="referencias" selected>Referencias</option>
           <option value="materiales">Materiales</option>
           <option value="renders">Renders</option>
-          <option value="planillas">Planillas</option>
+          <option value="documentos">Documentos</option>
+          <option value="videos">Videos</option>
+          <option value="otro">Otro</option>
+          <option value="renders">Renders</option>
+
           <option value="documentos">Documentos</option>
           <option value="videos">Videos</option>
           <option value="otro">Otro</option>
