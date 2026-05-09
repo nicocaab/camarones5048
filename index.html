@@ -2158,7 +2158,19 @@ async function githubLoad(token) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
     _ghSHA = d.sha;
-    applyLoaded(JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, ''))))));
+    // GitHub devuelve content vacío para archivos >1MB — usar download_url como fallback
+    let parsed;
+    if (d.content && d.content.trim()) {
+      parsed = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, '')))));
+    } else if (d.download_url) {
+      setSyncStatus('syncing', '⟳ Cargando (archivo grande)...');
+      const raw = await fetch(d.download_url, { headers: { 'Authorization': `Bearer ${token}` } });
+      if (!raw.ok) throw new Error('download_url HTTP ' + raw.status);
+      parsed = await raw.json();
+    } else {
+      throw new Error('Sin contenido disponible');
+    }
+    applyLoaded(parsed);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     setSyncStatus('synced', '✓ Sincronizado');
     renderCoverPhoto();
@@ -3266,7 +3278,7 @@ function readFileAsDataURL(file) {
   return new Promise(res => { const r = new FileReader(); r.onload = e => res(e.target.result); r.readAsDataURL(file); });
 }
 
-function compressImage(file, maxPx=1400, quality=0.78) {
+function compressImage(file, maxPx=1200, quality=0.72) {
   return new Promise(res => {
     const img = new Image();
     const url = URL.createObjectURL(file);
