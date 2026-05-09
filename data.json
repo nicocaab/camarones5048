@@ -47,10 +47,22 @@
       "fecha": "2026-04-18",
       "notas": "Estimado inicial",
       "vinculadoA": null
+    },
+    {
+      "id": 5,
+      "desc": "Honorarios Arquitecto",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 7000,
+      "estado": "cotizado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": null
     }
   ],
   "presupuesto": 190000,
-  "nextId": 5,
+  "nextId": 6,
   "docs": [
     {
       "id": 1,
