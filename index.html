@@ -955,6 +955,26 @@
       transition: opacity .15s;
     }
     .doc-card-new:hover .doc-card-actions { opacity: 1; }
+    /* Doc card footer: category + delete — always visible */
+    .doc-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 5px; gap: 4px;
+    }
+    .doc-cat-inline {
+      flex: 1; background: transparent; border: none;
+      font-size: 10px; color: var(--text3); font-family: 'Inter', sans-serif;
+      cursor: pointer; padding: 0; text-transform: uppercase; letter-spacing: .4px;
+      min-width: 0;
+    }
+    .doc-cat-inline:focus { outline: none; color: var(--cyan); }
+    .doc-del-btn {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: transparent; border: none;
+      color: var(--text3); font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border-radius: 4px; transition: all .12s;
+    }
+    .doc-del-btn:hover { color: var(--red); background: var(--red-dim); }
     .doc-act-btn {
       width: 26px; height: 26px;
       background: rgba(13,17,23,.85); border: 1px solid var(--border-s);
@@ -1337,7 +1357,6 @@
   <div id="tab-cotizaciones" class="tab-content">
     <div class="act-toolbar">
       <div class="filters">
-        <select id="fCategoria" onchange="renderCotizaciones()"><option value="">Todas las categorías</option></select>
         <select id="fEstado" onchange="renderCotizaciones()">
           <option value="">Todos los estados</option>
           <option value="cotizado">Cotizado</option>
@@ -2420,26 +2439,53 @@ function closeMenu() {
 // ══════════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════════
+const TAB_ORDER = ['resumen', 'cotizaciones', 'documentos', 'moodboard'];
 let currentTab = 'resumen';
+
 function showTab(name) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  // Update menu active state
   document.querySelectorAll('.menu-nav-btn').forEach(el => el.classList.remove('active'));
   const menuBtn = document.querySelector(`.menu-nav-btn[data-tab="${name}"]`);
   if (menuBtn) menuBtn.classList.add('active');
   document.querySelectorAll('#tabNav .tab-btn').forEach(el => el.classList.remove('active'));
   const navBtn = document.querySelector(`#tabNav .tab-btn[data-tab="${name}"]`);
   if (navBtn) navBtn.classList.add('active');
+  // Cover banner: solo en resumen
+  const cover = document.getElementById('coverBanner');
+  const coverEmpty = document.getElementById('coverEmpty');
+  if (cover) cover.style.display = (name === 'resumen' && state.coverPhoto) ? 'block' : 'none';
+  if (coverEmpty) coverEmpty.style.display = (name === 'resumen' && !state.coverPhoto) ? 'flex' : 'none';
   currentTab = name;
   try { localStorage.setItem('casaNuevaDash_tab', name); } catch(e) {}
   closeMenu();
   renderTab(name);
 }
+
 function renderTab(name) {
   const map = { resumen: renderResumenCompleto, cotizaciones: renderCotizaciones, documentos: renderDocumentos, moodboard: renderMoodboard };
   if (map[name]) map[name]();
 }
+
+// ── Swipe para cambiar sección ──
+(function() {
+  let _tx = 0, _ty = 0;
+  document.addEventListener('touchstart', e => {
+    _tx = e.touches[0].clientX;
+    _ty = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - _tx;
+    const dy = e.changedTouches[0].clientY - _ty;
+    // Solo swipe horizontal claro (más horizontal que vertical, mínimo 55px)
+    if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    // No swipear si el menú está abierto
+    if (document.getElementById('sideMenu').classList.contains('open')) return;
+    const idx = TAB_ORDER.indexOf(currentTab);
+    if (dx < 0 && idx < TAB_ORDER.length - 1) showTab(TAB_ORDER[idx + 1]); // swipe left → siguiente
+    if (dx > 0 && idx > 0) showTab(TAB_ORDER[idx - 1]);                     // swipe right → anterior
+  }, { passive: true });
+})();
 
 // ══════════════════════════════════════════════
 // UTILIDADES
@@ -2773,7 +2819,7 @@ function renderDesglose() {
 // ══════════════════════════════════════════════
 function populateFilters() {
   const fAmb = document.getElementById('fAmbiente');
-  const fCat = document.getElementById('fCategoria');
+  const fCat = null; // removed
   if (!fAmb) return;
   const curAmb = fAmb.value, curCat = fCat.value;
   fAmb.innerHTML = '<option value="">Todos los ambientes</option>' + AMBIENTES.map(a=>`<option value="${a}">${a}</option>`).join('');
@@ -2783,7 +2829,7 @@ function populateFilters() {
 
 function getFiltered() {
   const amb = document.getElementById('fAmbiente')?.value||'';
-  const cat = document.getElementById('fCategoria')?.value||'';
+  const cat = '';  // filter removed
   const est = document.getElementById('fEstado')?.value||'';
   const bus = (document.getElementById('fBuscar')?.value||'').toLowerCase();
   return state.gastos.filter(g =>
@@ -3171,11 +3217,11 @@ function renderCoverPhoto() {
     img.src = state.coverPhoto;
     const pos = state.coverPosition || { x: 50, y: 35 };
     img.style.objectPosition = `${pos.x}% ${pos.y}%`;
-    banner.style.display = 'block';
+    banner.style.display = currentTab === 'resumen' ? 'block' : 'none';
     empty.style.display = 'none';
   } else {
     banner.style.display = 'none';
-    empty.style.display = 'flex';
+    empty.style.display = currentTab === 'resumen' ? 'flex' : 'none';
     empty.style.height = '48px';
     empty.style.alignItems = 'center';
     empty.style.justifyContent = 'center';
@@ -3322,7 +3368,12 @@ function renderDocumentos() {
         : `<div class="doc-thumb-icon-new">${icon}</div>`}
       <div class="doc-card-body">
         <div class="doc-card-name" title="${esc(d.name)}">${shortName}</div>
-        <div class="doc-card-cat">${DOC_CATS[d.category] || d.category} · ${d.addedAt || ''}</div>
+        <div class="doc-card-footer">
+          <select class="doc-cat-inline" onclick="event.stopPropagation()" onchange="changeDocCat(${d.id},this.value)">
+            ${['planos','fotos','avances','referencias','renders','planillas','documentos','videos','otro'].map(c=>`<option value="${c}"${d.category===c?' selected':''}>${{planos:'Planos',fotos:'Fotos',avances:'Avances',referencias:'Referencias',renders:'Renders',planillas:'Planillas',documentos:'Documentos',videos:'Videos',otro:'Otro'}[c]}</option>`).join('')}
+          </select>
+          <button class="doc-del-btn" onclick="event.stopPropagation();deleteDoc(${d.id})" title="Eliminar">✕</button>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -3511,6 +3562,13 @@ function saveDocNotes() {
   closeDocNotes();
   showToast('📝 Notas guardadas');
 }
+function changeDocCat(id, cat) {
+  const doc = state.docs.find(d => d.id === id);
+  if (!doc) return;
+  doc.category = cat;
+  autoSave();
+}
+
 function deleteDoc(id) {
   if (!confirm('¿Eliminar este archivo?')) return;
   state.docs = state.docs.filter(d => d.id !== id);
