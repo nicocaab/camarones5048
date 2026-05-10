@@ -3262,8 +3262,9 @@ function renderDocumentos() {
   }
   grid.innerHTML = docs.map(d => {
     const ext = (d.name.split('.').pop() || '').toLowerCase();
-    const isImg = IMG_EXTS.includes(ext) || (d.src && d.src.startsWith('data:image'));
     const isVid = VIDEO_EXTS.includes(ext);
+    const isPdf = ext === 'pdf';
+    const isImg = !isVid && !isPdf && (IMG_EXTS.includes(ext) || (d.src && (d.src.startsWith('data:image') || d.src.startsWith('http'))));
     const icon = DOC_ICONS[ext] || (d.srcType === 'url' ? '🔗' : '📁');
     const shortName = d.name.length > 28 ? d.name.slice(0,26)+'…' : d.name;
     const isSel = _docSelected.has(d.id);
@@ -3611,7 +3612,7 @@ function openDocNotes(id) {
   document.getElementById('dnName').textContent = doc.name;
   document.getElementById('dnNotes').value = doc.notes || '';
   const ext = (doc.name.split('.').pop() || '').toLowerCase();
-  const isImg = IMG_EXTS.includes(ext) || (doc.src && doc.src.startsWith('data:image'));
+  const isImg = !VIDEO_EXTS.includes(ext) && (IMG_EXTS.includes(ext) || (doc.src && (doc.src.startsWith('data:image') || doc.src.startsWith('http'))));
   const prev = document.getElementById('dnPreview');
   prev.innerHTML = isImg ? `<img class="doc-notes-img" src="${doc.src}" />` : '';
   modal.classList.add('open');
