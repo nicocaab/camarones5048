@@ -83,10 +83,22 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": 1
+    },
+    {
+      "id": 8,
+      "desc": "Honorarios Direccion de obra",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 4577,
+      "estado": "cotizado",
+      "proveedor": "",
+      "fecha": "2026-05-10",
+      "notas": "Ingresado como ARS $6.500.000 · TC oficial venta $1.420 · 10/5/2026",
+      "vinculadoA": null
     }
   ],
   "presupuesto": 190000,
-  "nextId": 8,
+  "nextId": 9,
   "docs": [
     {
       "id": 53,
