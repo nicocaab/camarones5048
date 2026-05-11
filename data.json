@@ -331,16 +331,6 @@
       "addedAt": "10/5/2026"
     },
     {
-      "id": 79,
-      "name": "Plano sin medidas",
-      "category": "planos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1778423127639_Plano_sin_medidas",
-      "srcType": "github",
-      "ghPath": "docs/1778423127639_Plano_sin_medidas",
-      "notes": "",
-      "addedAt": "10/5/2026"
-    },
-    {
       "id": 81,
       "name": "WhatsApp Video 2026-04-24 at 21.16.31.mp4",
       "category": "videos",
