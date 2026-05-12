@@ -18,7 +18,7 @@
       "ambiente": "General",
       "categoria": "Honorarios",
       "monto": 5520,
-      "estado": "cotizado",
+      "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-04-18",
       "notas": "",
@@ -107,10 +107,22 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": 1
+    },
+    {
+      "id": 10,
+      "desc": "Honorarios inmobiliaria",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 3520,
+      "estado": "pagado",
+      "proveedor": "Saldo",
+      "fecha": "2026-05-12",
+      "notas": "",
+      "vinculadoA": 2
     }
   ],
   "presupuesto": 200000,
-  "nextId": 10,
+  "nextId": 11,
   "docs": [
     {
       "id": 53,
