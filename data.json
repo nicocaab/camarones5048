@@ -119,10 +119,22 @@
       "fecha": "2026-05-12",
       "notas": "",
       "vinculadoA": 2
+    },
+    {
+      "id": 11,
+      "desc": "1ra cuota proyecto",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 1413,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-15",
+      "notas": "",
+      "vinculadoA": 4
     }
   ],
   "presupuesto": 200000,
-  "nextId": 11,
+  "nextId": 12,
   "docs": [
     {
       "id": 53,
