@@ -2783,10 +2783,11 @@ function renderCotizaciones() {
     const cotizLinked = esPagado && g.vinculadoA != null ? state.gastos.find(x=>x.id===g.vinculadoA) : null;
     const pagos = getPagosDe(g.id);
     const fechaFmt = g.fecha ? new Date(g.fecha + 'T12:00:00').toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit'}) : '—';
-    const amountColor = esPagado ? 'var(--green)' : esCotiz ? 'var(--amber)' : 'var(--cyan)';
+    const esSubPago = esPagado && cotizLinked != null;
+    const amountColor = esSubPago ? 'var(--text3)' : esPagado ? 'var(--green)' : esCotiz ? 'var(--amber)' : 'var(--cyan)';
     const displayAmount = esPagado ? fmt(monto) : esCotiz ? (monto ? fmt(monto) : '—') : '—';
     return `
-    <div class="ac-card" data-id="${g.id}" draggable="false">
+    <div class="ac-card" data-id="${g.id}" draggable="false" style="${esSubPago ? 'opacity:0.6;' : ''}">
       <div class="ac-drag-handle" title="Arrastrar para reordenar">
         <svg width="12" height="16" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4" cy="4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="4" r=".8" fill="currentColor" stroke="none"/><circle cx="4" cy="8" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="12" r=".8" fill="currentColor" stroke="none"/></svg>
       </div>
@@ -2799,7 +2800,7 @@ function renderCotizaciones() {
         </div>
         <div class="ac-right">
           ${badgeHtml(estado)}
-          <div class="ac-amount" style="color:${amountColor};">${displayAmount}</div>
+          <div class="ac-amount" style="color:${amountColor};${esSubPago ? 'text-decoration:line-through;font-size:13px;' : ''}">${displayAmount}</div>
           ${esCotiz && restante > 0 ? `<div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);">resta ${fmt(restante)}</div>` : ''}
         </div>
       </div>
