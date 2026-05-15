@@ -85,18 +85,6 @@
       "vinculadoA": null
     },
     {
-      "id": 11,
-      "desc": "1ra cuota proyecto",
-      "ambiente": "General",
-      "categoria": "Honorarios",
-      "monto": 1413,
-      "estado": "pagado",
-      "proveedor": "",
-      "fecha": "2026-05-15",
-      "notas": "",
-      "vinculadoA": 4
-    },
-    {
       "id": 8,
       "desc": "Honorarios Direccion de obra",
       "ambiente": "General",
@@ -131,6 +119,18 @@
       "fecha": "2026-05-11",
       "notas": "",
       "vinculadoA": null
+    },
+    {
+      "id": 11,
+      "desc": "1ra cuota proyecto",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 1413,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-15",
+      "notas": "",
+      "vinculadoA": 4
     }
   ],
   "presupuesto": 200000,
