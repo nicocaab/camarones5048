@@ -73,18 +73,6 @@
       "vinculadoA": null
     },
     {
-      "id": 7,
-      "desc": "35% Inmobiliaria",
-      "ambiente": "General",
-      "categoria": "Honorarios",
-      "monto": 2000,
-      "estado": "pagado",
-      "proveedor": "",
-      "fecha": "2026-05-09",
-      "notas": "",
-      "vinculadoA": 2
-    },
-    {
       "id": 5,
       "desc": "Obra",
       "ambiente": "General",
@@ -119,6 +107,18 @@
       "fecha": "2026-05-09",
       "notas": "",
       "vinculadoA": 1
+    },
+    {
+      "id": 7,
+      "desc": "35% Inmobiliaria",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 2000,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": 2
     },
     {
       "id": 11,
