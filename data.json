@@ -73,18 +73,6 @@
       "vinculadoA": null
     },
     {
-      "id": 6,
-      "desc": "50% Compra",
-      "ambiente": "General",
-      "categoria": "Adquisición",
-      "monto": 56500,
-      "estado": "pagado",
-      "proveedor": "",
-      "fecha": "2026-05-09",
-      "notas": "",
-      "vinculadoA": 1
-    },
-    {
       "id": 8,
       "desc": "Honorarios Direccion de obra",
       "ambiente": "General",
@@ -119,6 +107,18 @@
       "fecha": "2026-05-11",
       "notas": "",
       "vinculadoA": null
+    },
+    {
+      "id": 6,
+      "desc": "50% Compra",
+      "ambiente": "General",
+      "categoria": "Adquisición",
+      "monto": 56500,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": 1
     },
     {
       "id": 11,
