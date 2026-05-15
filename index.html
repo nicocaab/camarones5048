@@ -2404,10 +2404,11 @@ function getRestanteDe(cotiz) {
   return Math.max(0, (Number(cotiz.monto)||0) - getTotalPagadoDe(cotiz.id));
 }
 
-// Pagado real = todos los items con estado 'pagado'
+// Pagado real = items pagados de nivel raíz (sin vinculadoA),
+// los sub-pagos ya están contados en el monto del padre
 function getPagadoReal() {
   return state.gastos
-    .filter(g => g.estado === 'pagado')
+    .filter(g => g.estado === 'pagado' && g.vinculadoA == null)
     .reduce((s, g) => s + (Number(g.monto) || 0), 0);
 }
 // Cotizado restante = saldo pendiente en cotizaciones (descontando pagos vinculados)
