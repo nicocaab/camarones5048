@@ -25,18 +25,6 @@
       "vinculadoA": null
     },
     {
-      "id": 7,
-      "desc": "35% Inmobiliaria",
-      "ambiente": "General",
-      "categoria": "Honorarios",
-      "monto": 2000,
-      "estado": "pagado",
-      "proveedor": "",
-      "fecha": "2026-05-09",
-      "notas": "",
-      "vinculadoA": 2
-    },
-    {
       "id": 10,
       "desc": "Honorarios inmobiliaria",
       "ambiente": "General",
@@ -71,6 +59,18 @@
       "fecha": "2026-04-18",
       "notas": "Ingresado como ARS $3.500.000 · TC oficial venta $1.420 · 9/5/2026\nIngresado como ARS $5.822.993 · TC oficial venta $1.420 · 10/5/2026",
       "vinculadoA": null
+    },
+    {
+      "id": 7,
+      "desc": "35% Inmobiliaria",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 2000,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-05-09",
+      "notas": "",
+      "vinculadoA": 2
     },
     {
       "id": 8,
