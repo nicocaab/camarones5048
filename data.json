@@ -137,16 +137,6 @@
   "nextId": 12,
   "docs": [
     {
-      "id": 75,
-      "name": "Plano hecho con IA.png",
-      "category": "planos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1778367722945_Plano_hecho_con_IA.png",
-      "srcType": "github",
-      "ghPath": "docs/1778367722945_Plano_hecho_con_IA.png",
-      "notes": "",
-      "addedAt": "9/5/2026"
-    },
-    {
       "id": 78,
       "name": "Plano completo.jpg",
       "category": "planos",
