@@ -18,7 +18,7 @@
       "ambiente": "General",
       "categoria": "Adquisición",
       "monto": 113000,
-      "estado": "pagado",
+      "estado": "cotizado",
       "proveedor": "",
       "fecha": "2026-04-18",
       "notas": "",
@@ -94,7 +94,7 @@
       "proveedor": "",
       "fecha": "2026-05-09",
       "notas": "",
-      "vinculadoA": 1
+      "vinculadoA": null
     },
     {
       "id": 10,
