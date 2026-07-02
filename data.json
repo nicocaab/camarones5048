@@ -41,11 +41,11 @@
       "desc": "Honorarios escribanía",
       "ambiente": "General",
       "categoria": "Honorarios",
-      "monto": 4101,
-      "estado": "cotizado",
+      "monto": 3519,
+      "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-04-18",
-      "notas": "",
+      "notas": "Ingresado como ARS $5.313.290 · TC oficial venta $1.510 · 2/7/2026",
       "vinculadoA": null
     },
     {
