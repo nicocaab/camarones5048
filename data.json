@@ -1,11 +1,11 @@
 {
   "gastos": [
     {
-      "id": 2,
-      "desc": "Honorarios inmobiliaria",
+      "id": 1,
+      "desc": "Compra de la casa",
       "ambiente": "General",
-      "categoria": "Honorarios",
-      "monto": 5520,
+      "categoria": "Adquisición",
+      "monto": 113000,
       "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-04-18",
@@ -13,11 +13,11 @@
       "vinculadoA": null
     },
     {
-      "id": 1,
-      "desc": "Compra de la casa",
+      "id": 2,
+      "desc": "Honorarios inmobiliaria",
       "ambiente": "General",
-      "categoria": "Adquisición",
-      "monto": 113000,
+      "categoria": "Honorarios",
+      "monto": 5520,
       "estado": "pagado",
       "proveedor": "",
       "fecha": "2026-04-18",
