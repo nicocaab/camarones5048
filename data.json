@@ -131,10 +131,22 @@
       "fecha": "2026-06-18",
       "notas": "Ingresado como ARS $1.728.350 · TC oficial venta $1.461,27 · 18/6/2026",
       "vinculadoA": 4
+    },
+    {
+      "id": 13,
+      "desc": "3ra cuota del proyecto",
+      "ambiente": "General",
+      "categoria": "Honorarios",
+      "monto": 1152,
+      "estado": "pagado",
+      "proveedor": "",
+      "fecha": "2026-07-21",
+      "notas": "Ingresado como ARS $1.728.350 · TC oficial venta $1.500 · 21/7/2026",
+      "vinculadoA": null
     }
   ],
   "presupuesto": 200000,
-  "nextId": 13,
+  "nextId": 14,
   "docs": [
     {
       "id": 78,
