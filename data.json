@@ -73,18 +73,6 @@
       "vinculadoA": null
     },
     {
-      "id": 9,
-      "desc": "Calefacción con caldera",
-      "ambiente": "General",
-      "categoria": "Construcción",
-      "monto": 4600,
-      "estado": "cotizado",
-      "proveedor": "",
-      "fecha": "2026-05-11",
-      "notas": "",
-      "vinculadoA": null
-    },
-    {
       "id": 10,
       "desc": "65% inmobiliaria",
       "ambiente": "General",
