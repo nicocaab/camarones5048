@@ -167,16 +167,6 @@
       "addedAt": "10/5/2026"
     },
     {
-      "id": 93,
-      "name": "Cochera.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503545373_Cochera.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503545373_Cochera.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
       "id": 94,
       "name": "Cochera02.jpeg",
       "category": "fotos",
@@ -207,32 +197,12 @@
       "addedAt": "22/5/2026"
     },
     {
-      "id": 97,
-      "name": "Cocina03.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503567150_Cocina03.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503567150_Cocina03.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
       "id": 98,
       "name": "Frente01.jpeg",
       "category": "fotos",
       "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503586487_Frente01.jpeg",
       "srcType": "github",
       "ghPath": "docs/1779503586487_Frente01.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 99,
-      "name": "Habitacion01.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503592620_Habitacion01.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503592620_Habitacion01.jpeg",
       "notes": "",
       "addedAt": "22/5/2026"
     },
@@ -247,52 +217,12 @@
       "addedAt": "22/5/2026"
     },
     {
-      "id": 101,
-      "name": "Living01.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503595153_Living01.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503595153_Living01.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 102,
-      "name": "Living02.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503596485_Living02.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503596485_Living02.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 103,
-      "name": "Living03.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503598034_Living03.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503598034_Living03.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
       "id": 104,
       "name": "Patio vista cocina.jpeg",
       "category": "fotos",
       "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503608157_Patio_vista_cocina.jpeg",
       "srcType": "github",
       "ghPath": "docs/1779503608157_Patio_vista_cocina.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 105,
-      "name": "Patio vista frente.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503609487_Patio_vista_frente.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503609487_Patio_vista_frente.jpeg",
       "notes": "",
       "addedAt": "22/5/2026"
     },
@@ -317,132 +247,12 @@
       "addedAt": "22/5/2026"
     },
     {
-      "id": 108,
-      "name": "Terraza pasillo.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503640518_Terraza_pasillo.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503640518_Terraza_pasillo.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 109,
-      "name": "Terraza01.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503641980_Terraza01.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503641980_Terraza01.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 110,
-      "name": "Vista calle.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503643424_Vista_calle.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503643424_Vista_calle.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 111,
-      "name": "Vista desde baño.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503644855_Vista_desde_ban_o.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503644855_Vista_desde_ban_o.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 112,
-      "name": "Vista desde entrada.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503646155_Vista_desde_entrada.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503646155_Vista_desde_entrada.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 113,
-      "name": "Vista desde escalera.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503647509_Vista_desde_escalera.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503647509_Vista_desde_escalera.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 114,
-      "name": "Vista desde terraza 02.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503649135_Vista_desde_terraza_02.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503649135_Vista_desde_terraza_02.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 115,
-      "name": "Vista desde terraza.jpeg",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503650617_Vista_desde_terraza.jpeg",
-      "srcType": "github",
-      "ghPath": "docs/1779503650617_Vista_desde_terraza.jpeg",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 116,
-      "name": "Baño01.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503653434_Ban_o01.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503653434_Ban_o01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
       "id": 117,
       "name": "Cocina01.png",
       "category": "renders",
       "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503655018_Cocina01.png",
       "srcType": "github",
       "ghPath": "docs/1779503655018_Cocina01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 118,
-      "name": "Cocina02.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503656542_Cocina02.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503656542_Cocina02.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 119,
-      "name": "Cocina03.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503657909_Cocina03.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503657909_Cocina03.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 120,
-      "name": "Cocina04.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503659367_Cocina04.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503659367_Cocina04.png",
       "notes": "",
       "addedAt": "22/5/2026"
     },
@@ -457,32 +267,12 @@
       "addedAt": "22/5/2026"
     },
     {
-      "id": 122,
-      "name": "habitacion01.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503662060_habitacion01.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503662060_habitacion01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
       "id": 123,
       "name": "Habitacion02.png",
       "category": "renders",
       "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503663391_Habitacion02.png",
       "srcType": "github",
       "ghPath": "docs/1779503663391_Habitacion02.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 124,
-      "name": "habitacion03.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503664711_habitacion03.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503664711_habitacion03.png",
       "notes": "",
       "addedAt": "22/5/2026"
     },
@@ -497,232 +287,12 @@
       "addedAt": "22/5/2026"
     },
     {
-      "id": 126,
-      "name": "lavadero01.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503667593_lavadero01.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503667593_lavadero01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 128,
-      "name": "Living01.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503670395_Living01.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503670395_Living01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 131,
-      "name": "Patio.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503674771_Patio.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503674771_Patio.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 132,
-      "name": "Patio01.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503676186_Patio01.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503676186_Patio01.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 133,
-      "name": "Patio02.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779503677663_Patio02.png",
-      "srcType": "github",
-      "ghPath": "docs/1779503677663_Patio02.png",
-      "notes": "",
-      "addedAt": "22/5/2026"
-    },
-    {
-      "id": 134,
-      "name": "Patio03.png",
-      "category": "renders",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1779634205316_Patio03.png",
-      "srcType": "github",
-      "ghPath": "docs/1779634205316_Patio03.png",
-      "notes": "",
-      "addedAt": "24/5/2026"
-    },
-    {
-      "id": 135,
-      "name": "Cocina05.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023406123_Cocina05.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023406123_Cocina05.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 136,
-      "name": "baño Nico 2.png",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023414598_ban_o_Nico_2.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023414598_ban_o_Nico_2.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 137,
-      "name": "baño Nico.png",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023415980_ban_o_Nico.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023415980_ban_o_Nico.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 138,
-      "name": "cocina comedor.png",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023417420_cocina_comedor.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023417420_cocina_comedor.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 139,
-      "name": "comedor a patio.png",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023418952_comedor_a_patio.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023418952_comedor_a_patio.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 140,
-      "name": "patio de acceso.png",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023420228_patio_de_acceso.png",
-      "srcType": "github",
-      "ghPath": "docs/1780023420228_patio_de_acceso.png",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 141,
-      "name": "PLANTA (2).pdf",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023421665_PLANTA__2_.pdf",
-      "srcType": "github",
-      "ghPath": "docs/1780023421665_PLANTA__2_.pdf",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 142,
-      "name": "PLANTA (3).pdf",
-      "category": "avances",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1780023423242_PLANTA__3_.pdf",
-      "srcType": "github",
-      "ghPath": "docs/1780023423242_PLANTA__3_.pdf",
-      "notes": "",
-      "addedAt": "28/5/2026"
-    },
-    {
-      "id": 143,
-      "name": "Cocina06.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447517414_Cocina06.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447517414_Cocina06.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 144,
-      "name": "Cocina07.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447519160_Cocina07.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447519160_Cocina07.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 145,
-      "name": "Cocina08.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447520635_Cocina08.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447520635_Cocina08.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 146,
-      "name": "Cocina09.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447522118_Cocina09.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447522118_Cocina09.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 147,
-      "name": "Cocina10.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447523614_Cocina10.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447523614_Cocina10.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 148,
-      "name": "Cocina11.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447525120_Cocina11.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447525120_Cocina11.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
       "id": 149,
       "name": "Cocina12.png",
       "category": "fotos",
       "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447526572_Cocina12.png",
       "srcType": "github",
       "ghPath": "docs/1781447526572_Cocina12.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 150,
-      "name": "Cocina13.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447527997_Cocina13.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447527997_Cocina13.png",
-      "notes": "",
-      "addedAt": "14/6/2026"
-    },
-    {
-      "id": 151,
-      "name": "Cocina14.png",
-      "category": "fotos",
-      "src": "https://raw.githubusercontent.com/nicocaab/camarones5048/main/docs/1781447529457_Cocina14.png",
-      "srcType": "github",
-      "ghPath": "docs/1781447529457_Cocina14.png",
       "notes": "",
       "addedAt": "14/6/2026"
     },
